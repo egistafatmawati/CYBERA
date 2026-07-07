@@ -98,4 +98,22 @@ Route::middleware(['auth', 'admin'])
             ->except(['show']);
     });
 
+// UI Routes
+Route::prefix('user')->group(function () {
+    Route::view('/dashboard', 'user.dashboard')->name('user.dashboard');
+    Route::view('/materi', 'user.materi')->name('user.materi');
+    Route::view('/simulasi', 'user.simulasi')->name('user.simulasi');
+    Route::view('/quiz', 'user.quiz')->name('user.quiz');
+    Route::view('/profile', 'user.profile')->name('user.profile');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
+    Route::view('/pengguna', 'admin.pengguna')->name('admin.pengguna');
+    Route::view('/materi', 'admin.materi')->name('admin.materi');
+    Route::view('/simulasi', 'admin.simulasi')->name('admin.simulasi');
+    Route::view('/quiz', 'admin.quiz')->name('admin.quiz');
+    Route::view('/profile', 'admin.profile')->name('admin.profile');
+});
+
 require __DIR__.'/auth.php';

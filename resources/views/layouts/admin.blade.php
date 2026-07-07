@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin CYBERA</title>
-</head>
-<body>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ config('app.name', 'CYBERA') }} - Admin</title>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="admin-container">
+            @include('layouts.sidebar')
 
-    <h2>Admin CYBERA</h2>
+            <main>
+                @yield('content')
+            </main>
+        </div>
 
-    <hr>
-
-    @yield('content')
-
-</body>
+        @include('partials.footer')
+    </body>
 </html>
