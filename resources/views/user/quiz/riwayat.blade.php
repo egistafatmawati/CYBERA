@@ -1,1 +1,0 @@
-<h1>Riwayat Quiz</h1>

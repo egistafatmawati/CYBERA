@@ -12,25 +12,20 @@ class SimulasiController extends Controller
      * Tampilkan data simulasi (3 skenario) untuk sebuah materi.
      * jawaban_benar TIDAK dikirim ke user di sini.
      */
-    public function show(Materi $materi)
+    public function show($id)
     {
-        $materi->load(['simulasi.skenarios.opsis']);
+        // Mock $materi for prototyping
+        $materi = (object) ['id' => $id, 'judul' => 'Keamanan Siber'];
+        return view('user.simulasi.show', compact('materi'));
+    }
 
-        $skenarios = $materi->simulasi?->skenarios->map(function ($skenario) {
-            return [
-                'id' => $skenario->id,
-                'urutan' => $skenario->urutan,
-                'skenario' => $skenario->skenario,
-                'pertanyaan' => $skenario->pertanyaan,
-                'jenis_jawaban' => $skenario->jenis_jawaban,
-                'opsis' => $skenario->opsis->map(fn ($o) => [
-                    'kode' => $o->kode,
-                    'teks_opsi' => $o->teks_opsi,
-                ]),
-            ];
-        }) ?? collect();
-
-        return view('user.simulasi.show', compact('materi', 'skenarios'));
+    /**
+     * Tampilkan halaman interaktif bermain simulasi.
+     */
+    public function play($id)
+    {
+        $materi = (object) ['id' => $id, 'judul' => 'Keamanan Siber'];
+        return view('user.simulasi.play', compact('materi'));
     }
 
     

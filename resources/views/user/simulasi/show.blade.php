@@ -1,104 +1,149 @@
-<x-app-layout>
-    <div
-        x-data="simulasiApp({{ $skenarios->toJson() }}, '{{ route('user.simulasi.submit', $materi) }}', '{{ route('user.materi.show', $materi) }}')"
-        class="max-w-4xl mx-auto py-8 px-6"
-    >
-        <a href="{{ route('user.simulasi.index') }}" class="text-yellow-400">&larr; Keluar</a>
+@extends('layouts.user')
 
-        <template x-for="s in [current]" :key="s.id">
-            <div>
-                <div class="bg-[#2a2f52] text-white rounded-xl p-6 mt-6 whitespace-pre-line" x-text="s.skenario"></div>
+@section('content')
 
-                <div class="mt-8">
-                    <p class="font-semibold mb-3" x-text="s.pertanyaan"></p>
+@php
+    $id = $materi->id ?? 1;
 
-                    <template x-if="s.jenis_jawaban === 'ya_tidak'">
-                        <div class="space-y-3">
-                            <button type="button" @click="pilih('ya')"
-                                class="w-full text-left p-4 rounded-lg border"
-                                :class="warnaOpsi('ya')">
-                                A. Ya
-                            </button>
-                            <button type="button" @click="pilih('tidak')"
-                                class="w-full text-left p-4 rounded-lg border"
-                                :class="warnaOpsi('tidak')">
-                                B. Tidak
-                            </button>
-                        </div>
-                    </template>
+    // Hardcode data 7 simulasi
+    $semuaTips = [
+        1 => [
+            'judul' => 'Simulasi Phishing Email',
+            'desc' => 'Latih kemampuan Anda mengidentifikasi email phishing. Anda akan diberikan contoh email realistis dan harus menentukan mana yang phishing dan mana yang aman. Pelajari pola-pola serangan phishing yang umum digunakan peretas untuk mencuri data pribadi.',
+            'tips_title' => 'Tips Mengenali Phishing',
+            'tips' => [
+                'Periksa alamat pengirim — domain harus resmi dan tidak mencurigakan',
+                'Waspadai nada mendesak atau mengancam seperti "AKUN ANDA AKAN DIBLOKIR!"',
+                'Jangan klik tautan mencurigakan — arahkan kursor untuk melihat URL sebenarnya',
+                'Email resmi biasanya menyapa dengan nama Anda, bukan "Pengguna" atau "Nasabah"'
+            ]
+        ],
+        2 => [
+            'judul' => 'Simulasi Website Palsu',
+            'desc' => 'Belajar membedakan website asli dan palsu. Anda akan diperlihatkan contoh website berbeda dan harus mengidentifikasi apakah website tersebut resmi atau tiruan. Kenali ciri-ciri website palsu seperti URL mencurigakan, kurangnya HTTPS, dan desain yang tidak konsisten.',
+            'tips_title' => 'Ciri-Ciri Website Palsu',
+            'tips' => [
+                'URL mencurigakan — domain aneh, typo, atau TLD tidak umum (.xyz, .site, .online)',
+                'Tidak ada ikon gembok (SSL/HTTPS) di address bar',
+                'Desain tidak konsisten, banyak typo, atau gambar berkualitas rendah',
+                'Tidak ada informasi kontak yang jelas atau halaman kebijakan privasi'
+            ]
+        ],
+        3 => [
+            'judul' => 'Simulasi Password Security',
+            'desc' => 'Kuasai seni membuat dan mengelola password yang aman. Simulasi ini mencakup analisis kekuatan password, kuis tentang best practices keamanan password, dan skenario dunia nyata tentang pengelolaan kredensial yang aman.',
+            'tips_title' => 'Apa yang Akan Anda Pelajari:',
+            'tips' => [
+                'Cara membuat password yang kuat dan mudah diingat',
+                'Mengapa passphrase lebih aman daripada password kompleks',
+                'Bahaya menggunakan password yang sama di banyak akun',
+                'Pentingnya Two-Factor Authentication (2FA)'
+            ]
+        ],
+        4 => [
+            'judul' => 'Simulasi Social Engineering',
+            'desc' => 'Social engineering adalah seni manipulasi psikologis untuk mendapatkan informasi rahasia. Dalam simulasi ini, Anda akan menghadapi skenario realistis — dari telepon penipuan, pesan WhatsApp mencurigakan, hingga perangkap media sosial — dan belajar mengenali taktik manipulasi.',
+            'tips_title' => 'Taktik Social Engineering yang Akan Anda Hadapi:',
+            'tips' => [
+                'Vishing — Penipuan melalui panggilan telepon dengan menyamar sebagai pihak berwenang',
+                'CEO Fraud — Penipu menyamar sebagai petinggi perusahaan untuk meminta transfer dana',
+                'Pretexting — Membangun cerita palsu untuk mendapatkan kepercayaan korban',
+                'Baiting — Menggunakan umpan (seperti USB drive) untuk menjebak korban'
+            ]
+        ],
+        5 => [
+            'judul' => 'Simulasi Ransomware',
+            'desc' => 'Ransomware adalah salah satu ancaman siber paling merusak. Dalam simulasi ini, Anda akan menghadapi skenario terkait ransomware — dari cara masuknya, tanda-tanda infeksi, hingga langkah penanganan yang benar — dan belajar bagaimana merespons dengan tepat.',
+            'tips_title' => 'Yang Akan Anda Pelajari:',
+            'tips' => [
+                'Mengenali vektor masuk ransomware (email, RDP, software bajakan)',
+                'Tanda-tanda awal infeksi ransomware',
+                'Langkah penanganan yang benar saat terinfeksi',
+                'Strategi pencegahan dan backup yang efektif'
+            ]
+        ],
+        6 => [
+            'judul' => 'Simulasi Malware Detection',
+            'desc' => 'Dari virus hingga rootkit, malware hadir dalam berbagai bentuk. Simulasi ini menyajikan skenario realistis di mana Anda harus mengidentifikasi jenis malware berdasarkan gejala, memilih tindakan yang tepat, dan memahami cara pencegahannya.',
+            'tips_title' => 'Yang Akan Anda Pelajari:',
+            'tips' => [
+                'Mengenali gejala awal infeksi malware pada perangkat',
+                'Membedakan berbagai jenis malware (Virus, Trojan, Worm, Spyware)',
+                'Tindakan darurat saat perangkat dicurigai terinfeksi',
+                'Praktik terbaik untuk mencegah masuknya malware'
+            ]
+        ],
+        7 => [
+            'judul' => 'Simulasi Clear Screen & Digital Hygiene',
+            'desc' => 'Keamanan tidak hanya tentang teknologi — kebiasaan sederhana seperti mengunci layar dan membersihkan jejak digital sama pentingnya. Hadapi skenario tentang keamanan fisik, clear desk policy, dan digital hygiene untuk membangun kebiasaan aman.',
+            'tips_title' => 'Fokus Pembelajaran:',
+            'tips' => [
+                'Pentingnya mengunci layar (Lock Screen) saat meninggalkan meja',
+                'Menerapkan Clear Desk Policy untuk dokumen fisik',
+                'Membersihkan jejak digital (cache, cookies, history) secara berkala',
+                'Mencegah pencurian informasi melalui shoulder surfing'
+            ]
+        ]
+    ];
 
-                    <template x-if="s.jenis_jawaban === 'pilihan_ganda'">
-                        <div class="space-y-3">
-                            <template x-for="o in s.opsis" :key="o.kode">
-                                <button type="button" @click="pilih(o.kode)"
-                                    class="w-full text-left p-4 rounded-lg border"
-                                    :class="warnaOpsi(o.kode)">
-                                    <span x-text="o.kode + '. ' + o.teks_opsi"></span>
-                                </button>
-                            </template>
-                        </div>
-                    </template>
-                </div>
+    $data = $semuaTips[$id] ?? $semuaTips[1];
+@endphp
 
-                <div x-show="terjawab" x-cloak class="mt-6 border rounded-lg p-4">
-                    <p class="font-bold flex items-center gap-2">⚠ Penjelasan</p>
-                    <p class="mt-2 text-sm" x-text="s.penjelasan"></p>
-                </div>
-
-                <div class="flex justify-end mt-6">
-                    <button type="button" @click="next()" x-show="terjawab"
-                        class="bg-[#0b1330] text-yellow-400 font-semibold px-6 py-3 rounded-lg">
-                        <span x-text="isLast ? 'Selesai' : 'Berikutnya'"></span>
-                    </button>
-                </div>
+<div class="bg-[#090F31] min-h-screen w-full">
+    <div class="w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-8 pb-20">
+        
+        <!-- Banner Section -->
+        <div class="relative w-full rounded-[20px] overflow-hidden mb-12 shadow-xl bg-black">
+            <div class="absolute top-0 left-0 w-full h-[350px] z-0">
+                <!-- Bisa diganti dengan gambar dinamis nanti -->
+                <img src="{{ asset('images/bg simulasi.png') }}" alt="{{ $data['judul'] }}" class="w-full h-full object-cover">
+                <!-- Overlay to darken background slightly for text readability -->
+                <div class="absolute inset-0 bg-gradient-to-t from-[#090F31]/80 to-[#090F31]/30"></div>
             </div>
-        </template>
-    </div>
+            <div class="relative z-10 text-center py-20 px-6 h-[350px] flex flex-col justify-center items-center">
+                <h1 class="text-3xl md:text-5xl lg:text-5xl leading-tight mb-4 text-white font-bold tracking-wide" style="font-family: 'Audiowide', sans-serif;">
+                    {{ $data['judul'] }}
+                </h1>
+                <p class="text-gray-200 text-sm md:text-base max-w-3xl mx-auto leading-relaxed">
+                    {{ $data['desc'] }}
+                </p>
+            </div>
+        </div>
 
-    <script>
-        function simulasiApp(skenarios, submitUrl, redirectUrl) {
-            return {
-                skenarios: skenarios,
-                index: 0,
-                terjawab: false,
-                jawabanUser: null,
-                jawabanTersimpan: [],
-                get current() { return this.skenarios[this.index]; },
-                get isLast() { return this.index === this.skenarios.length - 1; },
-                pilih(kode) {
-                    if (this.terjawab) return; // sudah dijawab, tidak bisa ganti
-                    this.jawabanUser = kode;
-                    this.terjawab = true;
-                    this.jawabanTersimpan.push({
-                        skenario_id: this.current.id,
-                        jawaban_user: kode,
-                    });
-                },
-                warnaOpsi(kode) {
-                    if (!this.terjawab) return 'border-gray-500 text-white';
-                    if (kode === this.current.jawaban_benar) return 'bg-green-500 border-green-600 text-black';
-                    if (kode === this.jawabanUser) return 'bg-red-500 border-red-600 text-black';
-                    return 'border-gray-500 text-white opacity-50';
-                },
-                next() {
-                    if (this.isLast) {
-                        fetch(submitUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            },
-                            body: JSON.stringify({ jawaban: this.jawabanTersimpan }),
-                        }).finally(() => {
-                            window.location.href = redirectUrl;
-                        });
-                        return;
-                    }
-                    this.index++;
-                    this.terjawab = false;
-                    this.jawabanUser = null;
-                },
-            };
-        }
-    </script>
-</x-app-layout>
+        <!-- Tips Section -->
+        <div class="max-w-[1000px] mx-auto bg-white rounded-[20px] p-8 md:p-12 shadow-2xl mb-12">
+            <div class="flex items-center gap-4 mb-6">
+                <!-- Yellow Lightbulb Icon -->
+                <div class="bg-[#FFCC00] p-2 rounded-lg text-[#090F31]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl md:text-3xl text-[#090F31] font-bold" style="font-family: 'Audiowide', sans-serif;">
+                    {{ $data['tips_title'] }}
+                </h2>
+            </div>
+
+            <ul class="space-y-3">
+                @foreach($data['tips'] as $tip)
+                    <li class="flex items-start gap-3 text-[#090F31] text-base md:text-lg">
+                        <span class="text-[#090F31] mt-1.5 text-[10px]">●</span>
+                        <span class="font-medium">{{ $tip }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-center gap-6">
+            <a href="{{ route('user.simulasi') }}" class="px-10 py-3 bg-[#FFCC00] text-[#090F31] font-bold rounded-full hover:bg-yellow-500 transition-colors shadow-lg text-lg">
+                Kembali
+            </a>
+            <a href="{{ route('user.simulasi.play', ['materi' => $id]) }}" class="px-10 py-3 bg-white text-[#090F31] font-bold rounded-full hover:bg-gray-200 transition-colors shadow-lg text-lg">
+                Mulai Simulasi
+            </a>
+        </div>
+    </div>
+</div>
+
+@endsection
