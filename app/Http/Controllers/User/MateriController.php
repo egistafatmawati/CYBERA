@@ -17,7 +17,7 @@ class MateriController extends Controller
             ->latest()
             ->paginate(9);
 
-        return view('user.materi.index', compact('materis'));
+        return view('user.materi', compact('materis'));
     }
 
     /**
@@ -42,7 +42,7 @@ class MateriController extends Controller
                 ->value('skor');
         }
 
-        return view('user.materi.show', [
+        return view('user.materi-detail', [
             'materi' => $materi,
             'adaSimulasi' => $adaSimulasi,
             'adaQuiz' => $adaQuiz,

@@ -94,7 +94,7 @@
             <div class="p-6 flex flex-col flex-grow">
                 <h3 class="font-bold text-[17px] mb-3" style="color: #090F31; font-family: 'Audiowide', sans-serif;">{{ $item['title'] }}</h3>
                 <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">{{ $item['desc'] }}</p>
-                <a href="{{ route('user.quiz.preview', ['id' => $item['id']]) }}" style="color: #FFCC00;" class="font-bold text-sm flex items-center hover:text-yellow-500 transition-colors">
+                <a href="{{ route('user.quiz.preview', ['quiz' => $item['id']]) }}" style="color: #FFCC00;" class="font-bold text-sm flex items-center hover:text-yellow-500 transition-colors">
                     Mulai Kuis <span class="ml-2 text-lg">→</span>
                 </a>
             </div>

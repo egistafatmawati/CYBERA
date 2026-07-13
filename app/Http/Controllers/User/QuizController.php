@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
 {
+    public function index()
+    {
+        // For now, return the view. You can pass quiz data if needed later.
+        return view('user.quiz');
+    }
     
      // Tampilkan soal quiz untuk dikerjakan.
      // jawaban_benar TIDAK ikut dikirim ke frontend.

@@ -14,7 +14,7 @@ class SimulasiController extends Controller
     {
         $simulasis = Simulasi::latest()->get();
 
-        return view('admin.simulasi.index', compact('simulasis'));
+        return view('admin.simulasi', compact('simulasis'));
     }
 
     public function create()

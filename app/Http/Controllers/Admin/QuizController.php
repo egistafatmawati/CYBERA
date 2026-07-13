@@ -14,7 +14,7 @@ class QuizController extends Controller
     {
         $quizzes = Quiz::with('materi')->withCount('questions')->latest()->paginate(10);
 
-        return view('admin.quiz.index', compact('quizzes'));
+        return view('admin.quiz', compact('quizzes'));
     }
 
     public function create()
