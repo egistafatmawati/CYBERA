@@ -14,13 +14,6 @@
                 <span class="font-bold text-[#090F31]">{{ $materis->count() }}</span> Materi pembelajaran
             </p>
         </div>
-        <!-- Tombol Tambah Materi -->
-        <button onclick="openAddMateriModal()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#090F31] text-white font-bold text-sm hover:bg-blue-900 transition-colors shadow">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Tambah Materi
-        </button>
     </div>
 
     <!-- Flash message -->
@@ -47,13 +40,15 @@
                     @forelse($materis as $m)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                         <!-- Judul -->
-                        <td class="px-6 py-5 text-left font-medium text-[#090F31]">
+                        <td class="px-6 py-5 text-center font-medium text-[#090F31]">
                             {{ $m->judul }}
                         </td>
 
                         <!-- Deskripsi -->
-                        <td class="px-6 py-5 text-gray-600 text-[13px] leading-relaxed text-left pr-12">
-                            {{ $m->deskripsi }}
+                        <td class="px-6 py-5 text-gray-600 text-[13px] leading-relaxed text-center pr-12">
+                            <div class="max-w-[330px] mx-auto text-left break-words">
+                                {{ $m->deskripsi }}
+                            </div>
                         </td>
 
                         <!-- Aksi -->
@@ -67,29 +62,10 @@
                                     </svg>
                                     Edit
                                 </button>
-
-                                <!-- Tombol Hapus -->
-                                <form action="{{ route('admin.materi.destroy', $m->id) }}" method="POST"
-                                    onsubmit="return confirm('Yakin ingin menghapus materi ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-md border border-red-400 text-red-400 hover:bg-red-400 hover:text-white transition-colors font-medium text-xs">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                        </svg>
-                                        Hapus
-                                    </button>
-                                </form>
                             </div>
                         </td>
                     </tr>
                     @empty
-                    <tr>
-                        <td colspan="3" class="px-6 py-12 text-center text-gray-400">
-                            Belum ada materi. Klik "Tambah Materi" untuk mulai.
-                        </td>
-                    </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -112,7 +88,6 @@
         </div>
 
         <div class="p-6 pt-2 overflow-y-auto custom-scrollbar">
-            <h2 class="text-xl font-bold mb-6">Tambah Materi Baru</h2>
             <form action="{{ route('admin.materi.store') }}" method="POST" class="space-y-6">
                 @csrf
 

@@ -13,8 +13,8 @@ class QuizController extends Controller
 {
     public function index()
     {
-        // For now, return the view. You can pass quiz data if needed later.
-        return view('user.quiz');
+        $quizzes = Quiz::with('materi')->latest()->get();
+        return view('user.quiz', compact('quizzes'));
     }
     
      // Tampilkan soal quiz untuk dikerjakan.
@@ -38,6 +38,23 @@ class QuizController extends Controller
         });
 
         return view('user.quiz.show', compact('quiz', 'questions'));
+    }
+
+    public function play(Quiz $quiz)
+    {
+        $quiz->load(['questions.options']);
+
+        $questions = $quiz->questions->map(function ($q) {
+            return [
+                'id' => $q->id,
+                'urutan' => $q->urutan,
+                'pertanyaan' => $q->pertanyaan,
+                'jenis_jawaban' => $q->jenis_jawaban,
+                'opsis' => $q->options
+            ];
+        });
+
+        return view('user.quiz.play', compact('quiz', 'questions'));
     }
 
     //Submit jawaban quiz, hitung skor, simpan Hasil Quiz + detail per soal.

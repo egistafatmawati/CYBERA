@@ -1,57 +1,26 @@
 @extends('layouts.admin')
 
 @section('content')
-@php
-$simulasis = [
-    [
-        'judul' => 'Phishing Email', 
-        'deskripsi' => 'Kenali ciri-ciri email phishing dan bedakan dari email resmi melalui skenario interaktif.',
-        'skenario' => '3 skenario'
-    ],
-    [
-        'judul' => 'Website Palsu', 
-        'deskripsi' => 'Belajar mengidentifikasi website palsu yang meniru situs resmi untuk mencuri kredensial login Anda.',
-        'skenario' => '3 skenario'
-    ],
-    [
-        'judul' => 'Password Security', 
-        'deskripsi' => 'Uji kemampuan Anda dalam mengidentifikasi password yang aman dan praktik pengelolaan kredensial.',
-        'skenario' => '3 skenario'
-    ],
-    [
-        'judul' => 'Social Engineering', 
-        'deskripsi' => 'Hadapi berbagai skenario manipulasi psikologis dan belajar cara meresponsnya dengan tepat.',
-        'skenario' => '3 skenario'
-    ],
-    [
-        'judul' => 'Malware', 
-        'deskripsi' => 'Identifikasi situasi berisiko malware dan pelajari respons yang tepat untuk setiap skenario.',
-        'skenario' => '3 skenario'
-    ],
-    [
-        'judul' => 'Ransomware', 
-        'deskripsi' => 'Simulasikan respons terhadap indikasi serangan ransomware dan belajar langkah mitigasi yang tepat.',
-        'skenario' => '3 skenario'
-    ],
-    [
-        'judul' => 'Clear Screen', 
-        'deskripsi' => 'Praktikkan kebiasaan digital hygiene dalam berbagai situasi kerja sehari-hari.',
-        'skenario' => '3 skenario'
-    ]
-];
-@endphp
 
 <div class="max-w-7xl mx-auto space-y-6">
 
     <!-- Header -->
-    <div class="mb-8">
-        <h1 class="text-3xl md:text-4xl font-bold text-[#090F31] mb-2" style="font-family: 'Inter', sans-serif;">
-            Manajemen Simulasi
-        </h1>
-        <p class="text-gray-600 text-sm">
-            <span class="font-bold text-[#090F31]">7</span> Materi pembelajaran
-        </p>
+    <div class="mb-8 flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-bold text-[#090F31] mb-2" style="font-family: 'Inter', sans-serif;">
+                Manajemen Simulasi
+            </h1>
+            <p class="text-gray-600 text-sm">
+                <span class="font-bold text-[#090F31]">{{ $simulasis->count() }}</span> Materi pembelajaran
+            </p>
+        </div>
     </div>
+    
+    @if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <span class="block sm:inline">{{ session('success') }}</span>
+    </div>
+    @endif
 
     <!-- Table Card -->
     <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
@@ -68,28 +37,30 @@ $simulasis = [
                 </thead>
                 <!-- Table Body -->
                 <tbody class="text-sm">
-                    @foreach($simulasis as $s)
+                    @forelse($simulasis as $s)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                         <!-- Judul -->
-                        <td class="px-6 py-5 text-left font-medium text-[#090F31]">
-                            {{ $s['judul'] }}
+                        <td class="px-6 py-5 text-center font-medium text-[#090F31]">
+                            {{ $s->judul }}
                         </td>
 
                         <!-- Deskripsi -->
-                        <td class="px-6 py-5 text-gray-600 text-[13px] leading-relaxed text-left pr-12">
-                            {{ $s['deskripsi'] }}
+                        <td class="px-6 py-5 text-gray-600 text-[13px] leading-relaxed text-center pr-12">
+                            <div class="max-w-[320px] mx-auto text-left break-words">
+                                {{ $s->deskripsi }}
+                            </div>
                         </td>
 
                         <!-- Skenario -->
                         <td class="px-6 py-5 text-center">
                             <span class="px-3 py-1 bg-cyan-50 text-cyan-500 text-[11px] font-bold rounded-full">
-                                {{ $s['skenario'] }}
+                                {{ is_array($s->skenario) ? count($s->skenario) : 0 }} skenario
                             </span>
                         </td>
 
                         <!-- Aksi -->
-                        <td class="px-6 py-5 text-center">
-                            <button onclick="openEditSimulasiModal(`{{ $s['judul'] }}`, `{{ $s['deskripsi'] }}`)" class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-md border border-[#00E676] text-[#00E676] hover:bg-[#00E676] hover:text-white transition-colors font-medium text-xs">
+                        <td class="px-6 py-5 text-center flex items-center justify-center gap-2">
+                            <button onclick='openSimulasiModal(@json($s))' class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-md border border-[#00E676] text-[#00E676] hover:bg-[#00E676] hover:text-white transition-colors font-medium text-xs">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                                 </svg>
@@ -97,7 +68,13 @@ $simulasis = [
                             </button>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="4" class="px-6 py-10 text-center text-gray-500">
+                            Belum ada data simulasi.
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -108,84 +85,70 @@ $simulasis = [
 <div id="editSimulasiModal" class="fixed inset-0 z-[100] items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity p-4"
     x-data="{
         isOpen: false,
+        isEdit: false,
+        id: null,
+        materi_id: '',
         judul: '',
         deskripsi: '',
         tipe: '4-opsi',
         skenarios: [],
         
-        initModal(j, d) {
-            this.judul = j;
-            this.deskripsi = d;
-            
-            if (j === 'Phishing Email' || j === 'Website Palsu') {
-                this.tipe = '2-opsi';
-                this.skenarios = [
-                    {
-                        skenario_teks: 'Dari: security@bankbni.co.id\n\nSubjek: URGENT: Akun Anda Terdeteksi Aktivitas Mencurigakan!\n\nYth. Nasabah Setia BNI,\n\nSistem kami mendeteksi adanya upaya login...',
-                        pertanyaan: 'Apakah Email ini Phishing?',
-                        opsi: ['Ya, Ini Phishing', 'Tidak, Ini Aman'],
-                        jawaban_benar: 0,
-                        penjelasan: 'Ini adalah email phishing! Bank tidak akan pernah meminta Anda mengklik tautan dari domain tidak resmi.'
-                    },
-                    {
-                        skenario_teks: 'Dari: info@paypal-update.com\n\nSubjek: Konfirmasi Pembayaran Anda\n\nKami mendeteksi aktivitas login yang tidak wajar...',
-                        pertanyaan: 'Apakah Email ini Phishing?',
-                        opsi: ['Ya, Ini Phishing', 'Tidak, Ini Aman'],
-                        jawaban_benar: 0,
-                        penjelasan: 'Domain paypal-update.com bukan merupakan domain resmi PayPal.'
-                    }
-                ];
-            } else if (j === 'Social Engineering') {
-                this.tipe = 'percakapan';
-                this.skenarios = [
-                    {
-                        skenario_teks: 'Telepon dari \'Customer Service Bank\'\n\nAnda menerima telepon dari seseorang yang mengaku sebagai customer service bank Anda...',
-                        percakapan: [
-                            { pengirim: 'Penelepon', pesan: 'Selamat siang, Bapak/Ibu Budi Santoso? Saya Andi dari Customer Service BCA. Kami mendeteksi transaksi mencurigakan sebesar Rp 2.500.000...' },
-                            { pengirim: 'Anda', pesan: 'Transaksi apa? Saya tidak melakukan transaksi apa pun!' }
-                        ],
-                        pertanyaan: 'Apa yang harus Anda lakukan?',
-                        opsi: ['Berikan data yang diminta agar akun segera diblokir', 'Tutup telepon dan hubungi nomor resmi bank yang tertera di kartu ATM Anda', 'Tanyakan baik identitas penelepon secara detail', 'Ikuti instruksinya karena dia tahu nama dan bank Anda'],
-                        jawaban_benar: 1,
-                        penjelasan: 'Ini social engineering tipe vishing (voice phishing)! Bank TIDAK PERNAH meminta nomor kartu lengkap, CVV, PIN, atau OTP melalui telepon.'
-                    },
-                    {
-                        skenario_teks: 'Pesan WhatsApp dari \'Teman Dekat\'\n\nSeorang teman lama tiba-tiba menghubungi meminjam uang...',
-                        percakapan: [
-                            { pengirim: 'Teman', pesan: 'Bro, bisa pinjam uang 1 juta? M-banking gue lagi error nih, butuh cepat.' },
-                            { pengirim: 'Anda', pesan: 'Wah kenapa bro?' }
-                        ],
-                        pertanyaan: 'Apa langkah paling aman?',
-                        opsi: ['Langsung transfer', 'Abaikan pesannya', 'Telepon nomornya langsung atau video call untuk verifikasi suara/wajah', 'Blokir nomornya'],
-                        jawaban_benar: 2,
-                        penjelasan: 'Akun WhatsApp teman Anda mungkin diretas (takeover). Verifikasi suara/wajah adalah cara paling ampuh.'
-                    }
-                ];
-            } else {
+        initModal(data) {
+            if (data) {
+                this.isEdit = true;
+                this.id = data.id;
+                this.materi_id = data.materi_id;
+                this.judul = data.judul;
+                this.deskripsi = data.deskripsi;
+                this.skenarios = typeof data.skenario === 'string' ? JSON.parse(data.skenario) : data.skenario;
+                if (!Array.isArray(this.skenarios)) this.skenarios = [];
+                
                 this.tipe = '4-opsi';
-                this.skenarios = [
-                    {
-                        skenario_teks: 'Ini adalah dummy skenario pertama untuk malware...',
-                        pertanyaan: 'Apa indikasi utama dari malware ini?',
-                        opsi: ['Kinerja melambat drastis', 'Muncul banyak pop-up', 'Aplikasi asing terinstal', 'Semua jawaban benar'],
-                        jawaban_benar: 3,
-                        penjelasan: 'Semua hal di atas adalah indikasi umum infeksi malware.'
-                    },
-                    {
-                        skenario_teks: 'Ini adalah dummy skenario kedua untuk malware...',
-                        pertanyaan: 'Langkah pertama yang harus dilakukan adalah?',
-                        opsi: ['Format ulang PC', 'Putuskan koneksi internet', 'Biarkan saja', 'Bayar tebusan'],
-                        jawaban_benar: 1,
-                        penjelasan: 'Memutuskan koneksi mencegah malware menyebar atau mencuri lebih banyak data ke server peretas.'
+                if (this.skenarios.length > 0) {
+                    if (this.skenarios[0].percakapan !== undefined) {
+                        this.tipe = 'percakapan';
+                    } else if (this.skenarios[0].opsi && this.skenarios[0].opsi.length === 2) {
+                        this.tipe = '2-opsi';
                     }
-                ];
+                }
+            } else {
+                this.isEdit = false;
+                this.id = null;
+                this.materi_id = '';
+                this.judul = '';
+                this.deskripsi = '';
+                this.tipe = '4-opsi';
+                this.skenarios = [];
             }
-            
             this.isOpen = true;
         },
         
         closeModal() {
             this.isOpen = false;
+        },
+
+        addSkenario() {
+            let newSkenario = {
+                skenario_teks: '',
+                pertanyaan: '',
+                jawaban_benar: 0,
+                penjelasan: ''
+            };
+            
+            if (this.tipe === 'percakapan') {
+                newSkenario.percakapan = [{ pengirim: '', pesan: '' }];
+                newSkenario.opsi = ['', '', '', ''];
+            } else if (this.tipe === '2-opsi') {
+                newSkenario.opsi = ['Ya, Ini Phishing', 'Tidak, Ini Aman'];
+            } else {
+                newSkenario.opsi = ['', '', '', ''];
+            }
+            
+            this.skenarios.push(newSkenario);
+        },
+
+        removeSkenario(sIndex) {
+            this.skenarios.splice(sIndex, 1);
         },
 
         addPercakapan(sIndex) {
@@ -199,75 +162,108 @@ $simulasis = [
     x-show="isOpen"
     style="display: none;"
     :class="isOpen ? 'flex' : 'hidden'"
-    @open-simulasi-modal.window="initModal($event.detail.judul, $event.detail.deskripsi)">
+    @open-simulasi-modal.window="initModal($event.detail.data)">
     
     <!-- Modal Container -->
     <div class="bg-[#0b112c] text-white rounded-2xl w-full max-w-4xl flex flex-col max-h-[90vh] shadow-2xl relative border border-gray-700">
         
         <!-- Header: Keluar -->
-        <div class="p-5 md:p-6 border-b border-gray-800">
+        <div class="p-5 md:p-6 border-b border-gray-800 flex justify-between items-center">
+            <h2 class="text-xl font-bold" x-text="isEdit ? 'Edit Simulasi' "></h2>
             <button type="button" @click="closeModal()" class="flex items-center gap-2 text-[#FFCC00] font-bold hover:text-yellow-400 transition-colors text-sm md:text-base w-max">
                 <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
-                Keluar
+                Tutup
             </button>
         </div>
 
         <!-- Form Content (Scrollable) -->
         <div class="flex-1 p-5 md:p-6 overflow-y-auto custom-scrollbar">
-            <form id="simulasiForm" onsubmit="event.preventDefault();" class="space-y-6">
+            <form id="simulasiForm" :action="isEdit ? `/admin/simulasi/${id}` : `{{ route('admin.simulasi.store') }}`" method="POST" class="space-y-6">
+                @csrf
+                <template x-if="isEdit">
+                    <input type="hidden" name="_method" value="PUT">
+                </template>
                 
-                <!-- Judul Simulasi -->
-                <div>
-                    <label class="block text-sm font-bold mb-2">Judul Simulasi</label>
-                    <input type="text" x-model="judul" :name="'judul'" class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Judul Simulasi -->
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Judul Simulasi</label>
+                        <input type="text" x-model="judul" name="judul" required class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
+                    </div>
+
+                    <!-- Materi -->
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Materi Terkait</label>
+                        <select x-model="materi_id" name="materi_id" required class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
+                            <option value="">Pilih Materi</option>
+                            @foreach($materis as $m)
+                                <option value="{{ $m->id }}">{{ $m->judul }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Deskripsi -->
                 <div>
                     <label class="block text-sm font-bold mb-2">Deskripsi</label>
-                    <textarea x-model="deskripsi" :name="'deskripsi'" rows="3" class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"></textarea>
+                    <textarea x-model="deskripsi" name="deskripsi" rows="3" required class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"></textarea>
                 </div>
 
-                <div class="pt-2">
-                    <h3 class="text-white font-bold" x-text="`Simulasi (${skenarios.length})`"></h3>
+                <div class="pt-4 pb-2 flex justify-between items-center border-t border-gray-800">
+                    <h3 class="text-white font-bold text-lg" x-text="`Skenario (${skenarios.length})`"></h3>
+                    <div class="flex items-center gap-3">
+                        <select x-model="tipe" class="bg-[#050a24] border border-gray-700 rounded-lg px-3 py-2 text-xs text-white">
+                            <option value="4-opsi">Pilihan Ganda (4 Opsi)</option>
+                            <option value="2-opsi">Benar/Salah (2 Opsi)</option>
+                            <option value="percakapan">Skenario Percakapan</option>
+                        </select>
+                        <button type="button" @click="addSkenario()" class="bg-[#FFCC00] text-black text-xs font-bold px-4 py-2 rounded-lg hover:bg-yellow-500 shadow-md">
+                            + Tambah Skenario
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Skenarios Loop -->
                 <template x-for="(skenario, sIndex) in skenarios" :key="sIndex">
                     <div class="mb-8">
-                        <h4 class="text-[#FFCC00] font-bold text-sm mb-3" x-text="`Skenario ${sIndex + 1}`"></h4>
-                        <div class="border border-gray-700 rounded-xl p-4 md:p-6 bg-white/5">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="text-[#FFCC00] font-bold text-sm" x-text="`Skenario ${sIndex + 1}`"></h4>
+                            <button type="button" @click="removeSkenario(sIndex)" class="text-red-400 hover:text-red-500 text-xs font-bold flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                Hapus
+                            </button>
+                        </div>
+                        <div class="border border-gray-700 rounded-xl p-4 md:p-6 bg-white/5 relative">
                             
                             <!-- Skenario Teks -->
                             <div class="mb-5">
-                                <label class="block text-sm font-bold mb-2">Skenario</label>
-                                <textarea x-model="skenario.skenario_teks" :name="`skenario[${sIndex}][teks_skenario]`" rows="6" class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"></textarea>
+                                <label class="block text-sm font-bold mb-2">Teks Skenario</label>
+                                <textarea x-model="skenario.skenario_teks" :name="`skenario[${sIndex}][skenario_teks]`" rows="4" required class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"></textarea>
                             </div>
 
                             <!-- Percakapan (Only for Social Engineering) -->
-                            <template x-if="tipe === 'percakapan'">
+                            <template x-if="skenario.percakapan !== undefined">
                                 <div class="mb-5">
                                     <div class="flex justify-between items-center mb-3">
                                         <label class="block text-sm font-bold text-[#FFCC00]">Pesan/Percakapan</label>
                                         <button type="button" @click="addPercakapan(sIndex)" class="bg-[#FFCC00] text-black text-[10px] md:text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 hover:bg-yellow-500 transition-colors">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
-                                            Tambah
+                                            Tambah Pesan
                                         </button>
                                     </div>
                                     <div class="space-y-4">
                                         <template x-for="(bubble, pIndex) in skenario.percakapan" :key="pIndex">
                                             <div class="relative">
-                                                <label class="block text-xs font-bold mb-1 text-gray-400">bubble</label>
                                                 <div class="border border-gray-700 rounded-lg bg-[#050a24] p-3 flex flex-col gap-2">
                                                     <div class="flex justify-between items-center">
-                                                        <input type="text" x-model="bubble.pengirim" :name="`skenario[${sIndex}][percakapan][${pIndex}][pengirim]`" placeholder="Pengirim (ex: Anda / Penelepon)" class="bg-transparent border-none text-sm text-[#FFCC00] font-bold focus:outline-none w-full">
+                                                        <input type="text" x-model="bubble.pengirim" :name="`skenario[${sIndex}][percakapan][${pIndex}][pengirim]`" placeholder="Pengirim (ex: Anda / Penipu)" required class="bg-transparent border-none text-sm text-[#FFCC00] font-bold focus:outline-none focus:ring-0 w-full p-0">
                                                         <button type="button" @click="removePercakapan(sIndex, pIndex)" class="text-gray-500 hover:text-red-500 transition-colors">
                                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                                         </button>
                                                     </div>
-                                                    <textarea x-model="bubble.pesan" :name="`skenario[${sIndex}][percakapan][${pIndex}][pesan]`" rows="2" placeholder="Isi pesan..." class="bg-transparent border-none text-sm text-gray-300 focus:outline-none w-full resize-none"></textarea>
+                                                    <textarea x-model="bubble.pesan" :name="`skenario[${sIndex}][percakapan][${pIndex}][pesan]`" rows="2" placeholder="Isi pesan..." required class="bg-transparent border-none text-sm text-gray-300 focus:outline-none focus:ring-0 w-full p-0 resize-none"></textarea>
                                                 </div>
                                             </div>
                                         </template>
@@ -278,22 +274,22 @@ $simulasis = [
                             <!-- Pertanyaan -->
                             <div class="mb-5">
                                 <label class="block text-sm font-bold mb-2">Pertanyaan</label>
-                                <input type="text" x-model="skenario.pertanyaan" :name="`skenario[${sIndex}][pertanyaan]`" class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
+                                <input type="text" x-model="skenario.pertanyaan" :name="`skenario[${sIndex}][pertanyaan]`" required class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
                             </div>
 
                             <!-- Opsi Jawaban -->
                             <div class="mb-5">
-                                <label class="block text-sm font-bold mb-2">Opsi Jawaban <span class="text-[10px] font-normal text-gray-400 ml-1">(klik tombol bulat untuk jawaban benar)</span></label>
+                                <label class="block text-sm font-bold mb-2">Opsi Jawaban <span class="text-[10px] font-normal text-gray-400 ml-1">(pilih bulatan untuk menandai jawaban benar)</span></label>
                                 <div class="space-y-3">
                                     <template x-for="(opt, oIndex) in skenario.opsi" :key="oIndex">
                                         <div class="flex items-center gap-3">
                                             <!-- Radio for correct answer -->
                                             <div class="relative flex items-center justify-center w-5 h-5 flex-shrink-0">
-                                                <input type="radio" :name="`skenario[${sIndex}][jawaban_benar]`" :value="oIndex" x-model="skenario.jawaban_benar" class="peer appearance-none w-5 h-5 border border-gray-500 rounded-full checked:border-[#FFCC00] cursor-pointer transition-colors">
+                                                <input type="radio" :name="`skenario[${sIndex}][jawaban_benar]`" :value="oIndex" x-model="skenario.jawaban_benar" required class="peer appearance-none w-5 h-5 border border-gray-500 rounded-full checked:border-[#FFCC00] cursor-pointer transition-colors">
                                                 <div class="absolute w-2.5 h-2.5 bg-[#FFCC00] rounded-full hidden peer-checked:block pointer-events-none"></div>
                                             </div>
                                             <!-- Option Text -->
-                                            <input type="text" x-model="skenario.opsi[oIndex]" :name="`skenario[${sIndex}][opsi][${oIndex}]`" class="flex-1 bg-[#050a24] border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
+                                            <input type="text" x-model="skenario.opsi[oIndex]" :name="`skenario[${sIndex}][opsi][${oIndex}]`" required class="flex-1 bg-[#050a24] border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
                                         </div>
                                     </template>
                                 </div>
@@ -302,7 +298,7 @@ $simulasis = [
                             <!-- Penjelasan Jawaban -->
                             <div>
                                 <label class="block text-sm font-bold mb-2">Penjelasan Jawaban</label>
-                                <textarea x-model="skenario.penjelasan" :name="`skenario[${sIndex}][penjelasan]`" rows="4" class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"></textarea>
+                                <textarea x-model="skenario.penjelasan" :name="`skenario[${sIndex}][penjelasan]`" rows="3" required class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"></textarea>
                             </div>
 
                         </div>
@@ -326,9 +322,9 @@ $simulasis = [
 </div>
 
 <script>
-    function openEditSimulasiModal(judul, deskripsi) {
+    function openSimulasiModal(data = null) {
         window.dispatchEvent(new CustomEvent('open-simulasi-modal', {
-            detail: { judul: judul, deskripsi: deskripsi }
+            detail: { data: data }
         }));
     }
 </script>

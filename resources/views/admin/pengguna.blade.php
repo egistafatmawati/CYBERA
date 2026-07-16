@@ -1,18 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-@php
-$penggunas = [
-    ['inisial' => 'AP', 'nama' => 'Andi Pratama', 'email' => 'andi.pratama@bssn.go.id', 'role' => 'Peserta', 'kuis' => '4 selesai', 'rata_rata' => 75, 'bergabung' => '15 Januari 2026'],
-    ['inisial' => 'SR', 'nama' => 'Siti Rahayu', 'email' => 'siti.rahayu@bssn.go.id', 'role' => 'Peserta', 'kuis' => '5 selesai', 'rata_rata' => 93, 'bergabung' => '20 Januari 2026'],
-    ['inisial' => 'BS', 'nama' => 'Budi Santoso', 'email' => 'budi.santoso@bssn.go.id', 'role' => 'Peserta', 'kuis' => '2 selesai', 'rata_rata' => 59, 'bergabung' => '1 Februari 2026'],
-    ['inisial' => 'DL', 'nama' => 'Dewi Lestari', 'email' => 'dewi.lestari@bssn.go.id', 'role' => 'Peserta', 'kuis' => '3 selesai', 'rata_rata' => 72, 'bergabung' => '10 Februari 2026'],
-    ['inisial' => 'EW', 'nama' => 'Eko Wijaya', 'email' => 'eko.wijaya@bssn.go.id', 'role' => 'Peserta', 'kuis' => '3 selesai', 'rata_rata' => 72, 'bergabung' => '15 Februari 2026'],
-    ['inisial' => 'FH', 'nama' => 'Fitri Handayani', 'email' => 'fitri.handayani@bssn.go.id', 'role' => 'Peserta', 'kuis' => '2 selesai', 'rata_rata' => 75, 'bergabung' => '1 Maret 2026'],
-    ['inisial' => 'GK', 'nama' => 'Gunawan Kusuma', 'email' => 'gunawan.kusuma@bssn.go.id', 'role' => 'Peserta', 'kuis' => '4 selesai', 'rata_rata' => 96, 'bergabung' => '5 Maret 2026'],
-    ['inisial' => 'HG', 'nama' => 'Hendra Gunawan', 'email' => 'hendra.gunawan@bssn.go.id', 'role' => 'Peserta', 'kuis' => '1 selesai', 'rata_rata' => 83, 'bergabung' => '10 Maret 2026'],
-];
-@endphp
 
 <div class="max-w-7xl mx-auto space-y-6">
 
@@ -22,79 +10,109 @@ $penggunas = [
             Manajemen Pengguna
         </h1>
         <p class="text-gray-600 text-sm">
-            <span class="font-bold text-[#090F31]">8</span> Terdaftar, <span class="font-bold text-[#FFCC00]">8</span> Aktif
+            <span class="font-bold text-[#090F31]">{{ $totalTerdaftar }}</span> Terdaftar, <span class="font-bold text-[#FFCC00]">{{ $totalAktif }}</span> Aktif
         </p>
     </div>
 
+    <!-- Notifikasi -->
+    @if(session('success'))
+        <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-green-700 mb-6">
+            {{ session('success') }}
+        </div>
+    @endif
+    
+    @if($errors->any())
+        <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 mb-6">
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+
     <!-- Table Card -->
-    <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <!-- Table Head -->
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-200 text-xs text-[#090F31] font-bold uppercase tracking-wider">
-                        <th class="px-6 py-4">Pengguna</th>
-                        <th class="px-6 py-4">Role</th>
-                        <th class="px-6 py-4">Kuis</th>
-                        <th class="px-6 py-4">Rata-rata</th>
-                        <th class="px-6 py-4">Bergabung</th>
-                        <th class="px-6 py-4 text-center">Aksi</th>
-                    </tr>
-                </thead>
+                    <th class="px-6 py-4">Pengguna</th>
+                    <th class="px-6 py-4">Role</th>
+                    <th class="px-6 py-4">Kuis</th>
+                    <th class="px-6 py-4">Rata-rata</th>
+                    <th class="px-6 py-4">Bergabung</th>
+                    <th class="px-6 py-4 text-center">Aksi</th>
+                </tr>
+            </thead>
                 <!-- Table Body -->
                 <tbody class="text-sm">
-                    @foreach($penggunas as $p)
+                    @forelse($penggunas as $p)
+                    @php
+                        // Menghitung inisial dari nama
+                        $words = explode(' ', $p->name);
+                        $inisial = strtoupper(substr($words[0], 0, 1));
+                        if(count($words) > 1) {
+                            $inisial .= strtoupper(substr($words[1], 0, 1));
+                        }
+                        
+                        $kuisCount = $p->quizResults->count();
+                        $rataRata = $kuisCount > 0 ? round($p->quizResults->avg('skor')) : 0;
+                    @endphp
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                         <!-- Pengguna -->
                         <td class="px-6 py-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-[#FFCC00]/10 flex items-center justify-center shrink-0">
-                                    <span class="text-[#FFB300] font-bold text-xs">{{ $p['inisial'] }}</span>
-                                </div>
+                            <div class="flex items-center gap-4">
+                                @if($p->avatar)
+                                    <img src="{{ asset('storage/' . $p->avatar) }}" alt="{{ $p->name }}" class="w-10 h-10 rounded-full object-cover shrink-0">
+                                @else
+                                    <div class="w-10 h-10 rounded-full bg-[#FFCC00]/10 flex items-center justify-center shrink-0">
+                                        <span class="text-[#FFB300] font-bold text-xs">{{ $inisial }}</span>
+                                    </div>
+                                @endif
                                 <div>
-                                    <div class="font-semibold text-[#090F31]">{{ $p['nama'] }}</div>
-                                    <div class="text-[11px] text-gray-500">{{ $p['email'] }}</div>
+                                    <div class="font-bold text-[14px] text-[#090F31]">{{ $p->name }}</div>
+                                    <div class="text-[11px] text-gray-500">{{ $p->email }}</div>
                                 </div>
                             </div>
                         </td>
 
                         <!-- Role -->
                         <td class="px-6 py-4">
-                            <span class="px-3 py-1 bg-cyan-50 text-cyan-500 text-xs font-bold rounded-full">
-                                {{ $p['role'] }}
+                            <span class="inline-flex items-center rounded-full bg-cyan-50 px-3 py-1 text-[12px] font-bold text-cyan-500">
+                                Peserta
                             </span>
                         </td>
 
                         <!-- Kuis -->
                         <td class="px-6 py-4 text-gray-600 text-xs font-medium">
-                            {{ $p['kuis'] }}
+                            {{ $kuisCount }} selesai
                         </td>
 
                         <!-- Rata-rata -->
                         <td class="px-6 py-4 font-bold text-sm">
-                            @if($p['rata_rata'] < 60)
-                                <span class="text-[#CC0000]">{{ $p['rata_rata'] }}/100</span>
-                            @elseif($p['rata_rata'] < 80)
-                                <span class="text-[#FFCC00]">{{ $p['rata_rata'] }}/100</span>
+                            @if($rataRata < 60)
+                                <span class="text-[#CC0000]">{{ $rataRata }}/100</span>
+                            @elseif($rataRata < 80)
+                                <span class="text-[#FFCC00]">{{ $rataRata }}/100</span>
                             @else
-                                <span class="text-[#00E676]">{{ $p['rata_rata'] }}/100</span>
+                                <span class="text-[#00E676]">{{ $rataRata }}/100</span>
                             @endif
                         </td>
 
                         <!-- Bergabung -->
                         <td class="px-6 py-4 text-gray-500 text-xs">
-                            {{ $p['bergabung'] }}
+                            {{ $p->created_at->translatedFormat('d F Y') }}
                         </td>
 
                         <!-- Aksi -->
                         <td class="px-6 py-4">
                             <div class="flex items-center justify-center gap-3">
-                                <button onclick="openEditUserModal('{{ $p['nama'] }}')" class="text-green-500 hover:text-green-600 transition-colors">
+                                <button onclick="openEditUserModal('{{ $p->id }}', '{{ addslashes($p->name) }}', '{{ addslashes($p->email) }}')" class="text-green-500 hover:text-green-600 transition-colors" title="Edit">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                                     </svg>
                                 </button>
-                                <button onclick="openDeleteUserModal()" class="text-red-500 hover:text-red-600 transition-colors">
+                                <button onclick="openDeleteUserModal('{{ $p->id }}')" class="text-red-500 hover:text-red-600 transition-colors" title="Hapus">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                     </svg>
@@ -102,7 +120,11 @@ $penggunas = [
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="6" class="px-6 py-8 text-center text-gray-500">Belum ada pengguna terdaftar.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -119,21 +141,22 @@ $penggunas = [
         </h2>
 
         <!-- Form -->
-        <form onsubmit="event.preventDefault(); closeEditUserModal();" class="space-y-6">
+        <form id="editUserForm" action="" method="POST" class="space-y-6">
+            @csrf
+            @method('PATCH')
             
             <!-- Nama -->
             <div>
                 <label class="block text-sm font-bold mb-2">Nama</label>
-                <input type="text" id="editNama" placeholder="Masukkan nama" class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
+                <input type="text" name="name" id="editNama" placeholder="Masukkan nama" required class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
             </div>
 
             <!-- Email -->
             <div>
                 <label class="block text-sm font-bold mb-2">Email</label>
                 <div class="relative">
-                    <!-- Placeholder in image says 'Masukkan password' but we'll use email to make sense, while keeping the UI identical -->
-                    <input type="email" id="editEmail" placeholder="Masukkan email" class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
-                    <!-- Eye Icon (from user's design image, although weird for email) -->
+                    <input type="email" name="email" id="editEmail" placeholder="Masukkan email" required class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
+                    <!-- Eye Icon (from user's design image) -->
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -175,18 +198,28 @@ $penggunas = [
             <button type="button" onclick="closeDeleteUserModal()" class="flex-1 bg-black text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors text-lg">
                 Batal
             </button>
-            <!-- In a real app this would be a form submission to a delete route -->
-            <button type="button" onclick="closeDeleteUserModal()" class="flex-1 bg-[#C80000] text-white font-bold py-3 rounded-xl hover:bg-red-700 transition-colors text-lg">
-                Hapus
-            </button>
+            <!-- Form untuk hapus -->
+            <form id="deleteUserForm" action="" method="POST" class="flex-1">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="w-full h-full bg-[#C80000] text-white font-bold py-3 rounded-xl hover:bg-red-700 transition-colors text-lg">
+                    Hapus
+                </button>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
     // Edit Modal Functions
-    function openEditUserModal(nama) {
+    function openEditUserModal(id, nama, email) {
         document.getElementById('editNama').value = nama;
+        document.getElementById('editEmail').value = email;
+        
+        // Update URL form
+        const form = document.getElementById('editUserForm');
+        form.action = `/admin/pengguna/${id}`;
+
         const modal = document.getElementById('editUserModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
@@ -199,7 +232,11 @@ $penggunas = [
     }
 
     // Delete Modal Functions
-    function openDeleteUserModal() {
+    function openDeleteUserModal(id) {
+        // Update URL form
+        const form = document.getElementById('deleteUserForm');
+        form.action = `/admin/pengguna/${id}`;
+
         const modal = document.getElementById('deleteUserModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');

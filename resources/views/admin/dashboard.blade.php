@@ -22,7 +22,7 @@
             </div>
             <div>
                 <p class="text-gray-500 text-sm font-medium mb-1">Total Pengguna</p>
-                <h3 class="text-2xl font-bold text-[#090F31]">8</h3>
+                <h3 class="text-2xl font-bold text-[#090F31]">{{ $totalUser }}</h3>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
             </div>
             <div>
                 <p class="text-gray-500 text-sm font-medium mb-1">Kuis Dikerjakan</p>
-                <h3 class="text-2xl font-bold text-[#090F31]">24</h3>
+                <h3 class="text-2xl font-bold text-[#090F31]">{{ $totalAttempt }}</h3>
             </div>
         </div>
 
@@ -49,13 +49,13 @@
                 </div>
                 <div>
                     <p class="text-gray-500 text-sm font-medium mb-1">Rata-rata nilai</p>
-                    <h3 class="text-2xl font-bold text-green-500">81<span class="text-lg text-[#090F31]">/100</span></h3>
+                    <h3 class="text-2xl font-bold text-green-500">{{ $rataRataSkor }}<span class="text-lg text-[#090F31]">/100</span></h3>
                 </div>
             </div>
             <!-- Progress Bar at bottom of card -->
             <div class="absolute bottom-0 left-0 w-full h-1.5 flex px-6 pb-2">
                 <div class="w-full h-1.5 bg-[#090F31] rounded-full overflow-hidden flex">
-                    <div class="bg-green-500 h-full" style="width: 81%;"></div>
+                    <div class="bg-green-500 h-full" style="width: {{ $rataRataSkor }}%;"></div>
                 </div>
             </div>
         </div>
@@ -67,111 +67,24 @@
         <h3 class="font-bold text-lg text-[#090F31] mb-6">Rata-rata Nilai per Kuis (Semua Pengguna)</h3>
         
         <div class="space-y-4">
-            <!-- Item 1 -->
+            @forelse($skorPerMateri as $materi)
+            <!-- Item -->
             <div class="flex items-center">
                 <div class="w-48 shrink-0 pr-4">
-                    <h4 class="text-xs font-bold text-[#090F31]">Dasar Keamanan Siber</h4>
-                    <p class="text-[10px] text-gray-400">5 peserta</p>
+                    <h4 class="text-xs font-bold text-[#090F31]">{{ $materi->judul }}</h4>
+                    <p class="text-[10px] text-gray-400">{{ $materi->jumlah_peserta }} peserta</p>
                 </div>
                 <div class="flex-grow">
                     <div class="w-full h-6 bg-[#0b112c] rounded-full relative">
-                        <div class="h-full bg-[#FFCC00] rounded-full flex items-center justify-end pr-3" style="width: 80%;">
-                            <span class="text-[10px] font-bold text-[#090F31]">80</span>
+                        <div class="h-full bg-[#FFCC00] rounded-full flex items-center justify-end pr-3" style="width: {{ $materi->rata_rata }}%;">
+                            <span class="text-[10px] font-bold text-[#090F31]">{{ $materi->rata_rata }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Item 2 -->
-            <div class="flex items-center">
-                <div class="w-48 shrink-0 pr-4">
-                    <h4 class="text-xs font-bold text-[#090F31]">Phishing</h4>
-                    <p class="text-[10px] text-gray-400">4 peserta</p>
-                </div>
-                <div class="flex-grow">
-                    <div class="w-full h-6 bg-[#0b112c] rounded-full relative">
-                        <div class="h-full bg-[#FFCC00] rounded-full flex items-center justify-end pr-3" style="width: 71%;">
-                            <span class="text-[10px] font-bold text-[#090F31]">71</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="flex items-center">
-                <div class="w-48 shrink-0 pr-4">
-                    <h4 class="text-xs font-bold text-[#090F31]">Password Security</h4>
-                    <p class="text-[10px] text-gray-400">3 peserta</p>
-                </div>
-                <div class="flex-grow">
-                    <div class="w-full h-6 bg-[#0b112c] rounded-full relative">
-                        <div class="h-full bg-[#FFCC00] rounded-full flex items-center justify-end pr-3" style="width: 83%;">
-                            <span class="text-[10px] font-bold text-[#090F31]">83</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 4 -->
-            <div class="flex items-center">
-                <div class="w-48 shrink-0 pr-4">
-                    <h4 class="text-xs font-bold text-[#090F31]">Social Engineering</h4>
-                    <p class="text-[10px] text-gray-400">3 peserta</p>
-                </div>
-                <div class="flex-grow">
-                    <div class="w-full h-6 bg-[#0b112c] rounded-full relative">
-                        <div class="h-full bg-[#FFCC00] rounded-full flex items-center justify-end pr-3" style="width: 67%;">
-                            <span class="text-[10px] font-bold text-[#090F31]">67</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 5 -->
-            <div class="flex items-center">
-                <div class="w-48 shrink-0 pr-4">
-                    <h4 class="text-xs font-bold text-[#090F31]">Malware</h4>
-                    <p class="text-[10px] text-gray-400">3 peserta</p>
-                </div>
-                <div class="flex-grow">
-                    <div class="w-full h-6 bg-[#0b112c] rounded-full relative">
-                        <div class="h-full bg-[#FFCC00] rounded-full flex items-center justify-end pr-3" style="width: 83%;">
-                            <span class="text-[10px] font-bold text-[#090F31]">83</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 6 -->
-            <div class="flex items-center">
-                <div class="w-48 shrink-0 pr-4">
-                    <h4 class="text-xs font-bold text-[#090F31]">Ransomware</h4>
-                    <p class="text-[10px] text-gray-400">3 peserta</p>
-                </div>
-                <div class="flex-grow">
-                    <div class="w-full h-6 bg-[#0b112c] rounded-full relative">
-                        <div class="h-full bg-[#FFCC00] rounded-full flex items-center justify-end pr-3" style="width: 89%;">
-                            <span class="text-[10px] font-bold text-[#090F31]">89</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 7 -->
-            <div class="flex items-center">
-                <div class="w-48 shrink-0 pr-4">
-                    <h4 class="text-xs font-bold text-[#090F31]">Clear Screen</h4>
-                    <p class="text-[10px] text-gray-400">3 peserta</p>
-                </div>
-                <div class="flex-grow">
-                    <div class="w-full h-6 bg-[#0b112c] rounded-full relative">
-                        <div class="h-full bg-[#FFCC00] rounded-full flex items-center justify-end pr-3" style="width: 94%;">
-                            <span class="text-[10px] font-bold text-[#090F31]">94</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            @empty
+            <p class="text-sm text-gray-500 text-center">Belum ada data nilai per kuis.</p>
+            @endforelse
         </div>
     </div>
 
@@ -180,70 +93,38 @@
         <h3 class="font-bold text-lg text-[#090F31] mb-6">Distribusi Nilai</h3>
         
         <div class="space-y-3">
-            <!-- Range 90-100 -->
+            @foreach([
+                ['label' => '90-100', 'key' => '90-100', 'color' => 'bg-[#00E676]'],
+                ['label' => '80-89', 'key' => '80-89', 'color' => 'bg-[#69F0AE]'],
+                ['label' => '70-79', 'key' => '70-79', 'color' => 'bg-[#FF9800]'],
+                ['label' => '60-69', 'key' => '60-69', 'color' => 'bg-[#FFCC00]'],
+                ['label' => '<60', 'key' => '<60', 'color' => 'bg-[#CC0000]'],
+            ] as $range)
+            @php
+                $count = $distribusiNilai[$range['key']] ?? 0;
+                $width = $totalAttempt > 0 ? round(($count / $totalAttempt) * 100) : 0;
+            @endphp
+            <!-- Range {{ $range['label'] }} -->
             <div class="flex items-center text-sm">
-                <div class="w-16 shrink-0 font-medium text-[#090F31]">90-100</div>
+                <div class="w-16 shrink-0 font-medium text-[#090F31]">{{ $range['label'] }}</div>
                 <div class="flex-grow">
                     <div class="w-full h-4 bg-[#0b112c] rounded-full overflow-hidden">
-                        <div class="h-full bg-[#00E676] rounded-r-full" style="width: 35%;"></div>
+                        <div class="h-full {{ $range['color'] }} rounded-r-full" style="width: {{ $width }}%;"></div>
                     </div>
                 </div>
-                <div class="w-8 shrink-0 text-right text-xs text-gray-600">7</div>
+                <div class="w-8 shrink-0 text-right text-xs text-gray-600">{{ $count }}</div>
             </div>
-
-            <!-- Range 80-89 -->
-            <div class="flex items-center text-sm">
-                <div class="w-16 shrink-0 font-medium text-[#090F31]">80-89</div>
-                <div class="flex-grow">
-                    <div class="w-full h-4 bg-[#0b112c] rounded-full overflow-hidden">
-                        <div class="h-full bg-[#69F0AE] rounded-r-full" style="width: 45%;"></div>
-                    </div>
-                </div>
-                <div class="w-8 shrink-0 text-right text-xs text-gray-600">9</div>
-            </div>
-
-            <!-- Range 70-79 -->
-            <div class="flex items-center text-sm">
-                <div class="w-16 shrink-0 font-medium text-[#090F31]">70-79</div>
-                <div class="flex-grow">
-                    <div class="w-full h-4 bg-[#0b112c] rounded-full overflow-hidden">
-                        <div class="h-full bg-[#FF9800] rounded-r-full" style="width: 10%;"></div>
-                    </div>
-                </div>
-                <div class="w-8 shrink-0 text-right text-xs text-gray-600">2</div>
-            </div>
-
-            <!-- Range 60-69 -->
-            <div class="flex items-center text-sm">
-                <div class="w-16 shrink-0 font-medium text-[#090F31]">60-69</div>
-                <div class="flex-grow">
-                    <div class="w-full h-4 bg-[#0b112c] rounded-full overflow-hidden">
-                        <div class="h-full bg-[#FFCC00] rounded-r-full" style="width: 25%;"></div>
-                    </div>
-                </div>
-                <div class="w-8 shrink-0 text-right text-xs text-gray-600">5</div>
-            </div>
-
-            <!-- Range <60 -->
-            <div class="flex items-center text-sm">
-                <div class="w-16 shrink-0 font-medium text-[#090F31]">&lt;60</div>
-                <div class="flex-grow">
-                    <div class="w-full h-4 bg-[#0b112c] rounded-full overflow-hidden">
-                        <div class="h-full bg-[#CC0000] rounded-r-full" style="width: 15%;"></div>
-                    </div>
-                </div>
-                <div class="w-8 shrink-0 text-right text-xs text-gray-600">3</div>
-            </div>
+            @endforeach
         </div>
 
         <div class="mt-8 pt-4 flex flex-col w-full border-t border-gray-100 text-sm font-bold text-[#090F31]">
             <div class="flex justify-between w-full mb-1">
                 <span>Total Nilai</span>
-                <span>24</span>
+                <span>{{ $totalAttempt }}</span>
             </div>
             <div class="flex justify-between w-full text-[#00E676]">
                 <span>Nilai ≥ 80</span>
-                <span>16 (67%)</span>
+                <span>{{ $nilaiTinggi }} ({{ $persenNilaiTinggi }}%)</span>
             </div>
         </div>
     </div>

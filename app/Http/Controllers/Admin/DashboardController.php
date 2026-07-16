@@ -15,7 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         // Statistik ringkas
-        $totalUser = User::where('role', 'user')->count();
+        $totalUser = User::where('role', 'pengguna')->count();
         $totalMateri = Materi::count();
         $totalQuiz = Quiz::count();
         $totalAttempt = QuizResult::count();

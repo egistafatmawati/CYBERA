@@ -84,7 +84,7 @@
                 <a href="{{ route('user.quiz') }}" class="px-10 py-3 bg-[#FFCC00] text-[#090F31] font-bold rounded-full hover:bg-yellow-500 transition-colors shadow-lg text-lg text-center min-w-[200px]">
                     Kembali
                 </a>
-                <a href="{{ route('user.quiz.preview.play', $quiz->id) }}" class="px-10 py-3 bg-white text-[#090F31] font-bold rounded-full hover:bg-gray-200 transition-colors shadow-lg text-lg text-center min-w-[200px]">
+                <a href="{{ route('user.quiz.play', $quiz->id) }}" class="px-10 py-3 bg-white text-[#090F31] font-bold rounded-full hover:bg-gray-200 transition-colors shadow-lg text-lg text-center min-w-[200px]">
                     Mulai Kuis
                 </a>
             </div>

@@ -1,24 +1,33 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MateriController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\QuizController as AdminQuizController;
 use App\Http\Controllers\Admin\SimulasiController as AdminSimulasiController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\MateriController as UserMateriController;
 use App\Http\Controllers\User\SimulasiController;
 use App\Http\Controllers\User\QuizController as UserQuizController;
+use App\Http\Controllers\User\ProfileController as UserProfileController;
+
+use App\Http\Controllers\Auth\GoogleAuthController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 // Dashboard & Fitur User
+
+// Google OAuth
+Route::middleware('guest')->group(function () {
+    Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+});
 
 Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(function () {
 
@@ -27,13 +36,22 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
         ->name('dashboard');
 
     // Profile
-    Route::get('/profile', [ProfileController::class, 'edit'])
+    Route::get('/profile', [UserProfileController::class, 'edit'])
         ->name('profile');
 
-    Route::patch('/profile', [ProfileController::class, 'update'])
+    Route::patch('/profile', [UserProfileController::class, 'update'])
         ->name('profile.update');
 
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
+    Route::post('/profile/avatar', [UserProfileController::class, 'updateAvatar'])
+        ->name('profile.avatar');
+
+    Route::delete('/profile/avatar', [UserProfileController::class, 'deleteAvatar'])
+        ->name('profile.avatar.delete');
+
+    Route::patch('/profile/password', [UserProfileController::class, 'updatePassword'])
+        ->name('profile.password');
+
+    Route::delete('/profile', [UserProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
     // Materi
@@ -44,30 +62,30 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
         ->name('materi.detail');
 
     // Simulasi
-    Route::view('/simulasi', 'user.simulasi')->name('simulasi');
+    Route::get('/simulasi', [SimulasiController::class, 'index'])->name('simulasi');
     Route::get('/materi/{materi}/simulasi', [SimulasiController::class, 'show'])->name('simulasi.show');
     Route::get('/materi/{materi}/simulasi/play', [SimulasiController::class, 'play'])->name('simulasi.play');
     Route::post('/materi/{materi}/simulasi/submit', [SimulasiController::class, 'submit'])->name('simulasi.submit');
 
-    // Quiz
-    Route::get('/quiz', [UserQuizController::class, 'index'])
+    // Kuis
+    Route::get('/kuis', [UserQuizController::class, 'index'])
         ->name('quiz');
 
-    Route::get('/quiz/{quiz}', [UserQuizController::class, 'show'])
+    Route::get('/kuis/{quiz}', [UserQuizController::class, 'show'])
         ->name('quiz.preview');
         
-    Route::get('/quiz/{quiz}/play', [UserQuizController::class, 'show'])
-        ->name('quiz.preview.play');
+    Route::get('/kuis/{quiz}/play', [UserQuizController::class, 'play'])
+        ->name('quiz.play');
 
-    Route::post('/quiz/{quiz}/submit', [UserQuizController::class, 'submit'])
+    Route::post('/kuis/{quiz}/submit', [UserQuizController::class, 'submit'])
         ->name('quiz.preview.submit');
 
-    // Hasil Quiz
+    // Hasil Kuis
   
-    Route::get('/hasil-quiz', [UserQuizController::class, 'riwayat'])
+    Route::get('/hasil-kuis', [UserQuizController::class, 'riwayat'])
         ->name('quiz.riwayat');
 
-    Route::get('/hasil-quiz/{quizResult}', [UserQuizController::class, 'hasil'])
+    Route::get('/hasil-kuis/{quizResult}', [UserQuizController::class, 'hasil'])
         ->name('quiz.hasil');
 });
 
@@ -85,21 +103,28 @@ Route::middleware(['auth', 'admin'])
         // Pengguna
         Route::get('/pengguna', [PenggunaController::class, 'index'])
             ->name('pengguna');
+        Route::patch('/pengguna/{user}', [PenggunaController::class, 'update'])
+            ->name('pengguna.update');
+        Route::delete('/pengguna/{user}', [PenggunaController::class, 'destroy'])
+            ->name('pengguna.destroy');
 
-        // ===== Profile Admin =====
-        Route::get('/profile', [ProfileController::class, 'edit'])
+        // Profil
+        Route::get('/profile', [AdminProfileController::class, 'edit'])
             ->name('profile');
 
-        Route::patch('/profile', [ProfileController::class, 'update'])
+        Route::patch('/profile', [AdminProfileController::class, 'update'])
             ->name('profile.update');
 
-        // CRUD Materi
+        Route::patch('/profile/password', [AdminProfileController::class, 'updatePassword'])
+            ->name('profile.password');
+
+        // Materi
         Route::resource('materi', MateriController::class);
 
-        // CRUD Simulasi
+        // Simulasi
         Route::resource('simulasi', AdminSimulasiController::class);
 
-        // CRUD Quiz
+        // Quiz
         Route::resource('quiz', AdminQuizController::class)
             ->except(['show']);
     });

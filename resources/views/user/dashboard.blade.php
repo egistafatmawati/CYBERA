@@ -96,7 +96,7 @@
     <div class="bg-white p-6 lg:p-8 shadow-lg mb-8" style="border-radius: 20px;">
         <div class="flex justify-between items-center mb-6">
             <h3 class="font-bold text-[16px]" style="color: #090F31;">Kemajuan Belajar</h3>
-            <p class="text-sm font-semibold" style="color: #090F31;">Rata-rata: <span class="text-[#FFCC00] font-bold">0</span>/100</p>
+            <p class="text-sm font-semibold" style="color: #090F31;">Rata-rata: <span class="text-[#FFCC00] font-bold">{{ $rataRata }}</span>/100</p>
         </div>
         
         <div class="w-full bg-[#090F31] rounded-xl p-4 md:p-6 relative" style="height: 550px;">
@@ -116,13 +116,17 @@
         Chart.defaults.font.family = 'Inter';
         Chart.defaults.font.size = 11;
 
+        const rawData = @json($kemajuan);
+        const chartLabels = rawData.length > 0 ? rawData.map(item => item.materi) : ['Belum ada kuis dikerjakan'];
+        const chartScores = rawData.length > 0 ? rawData.map(item => item.skor) : [0];
+
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Desain Siber', 'Phishing', 'Malware', 'Ransomware', 'Social Engineering', 'Password Security', 'Data Breach'],
+                labels: chartLabels,
                 datasets: [{
                     label: 'Kemajuan Belajar',
-                    data: [100, 50, 100, 15, 50, 80, 80],
+                    data: chartScores,
                     borderColor: '#FFC107',
                     backgroundColor: '#FFC107',
                     borderWidth: 2,

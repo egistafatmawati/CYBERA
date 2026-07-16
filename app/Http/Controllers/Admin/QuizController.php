@@ -12,9 +12,23 @@ class QuizController extends Controller
 {
     public function index()
     {
-        $quizzes = Quiz::with('materi')->withCount('questions')->latest()->paginate(10);
-
-        return view('admin.quiz', compact('quizzes'));
+        $quizzes = Quiz::with([
+            'materi',
+            'questions.options'
+        ])
+        ->withCount('questions')
+        ->latest()
+        ->paginate(10);
+        $totalQuiz = Quiz::count();
+        $totalSoal = Quiz::withCount('questions')
+        ->get()
+        ->sum('questions_count');
+        
+        return view('admin.quiz', compact(
+            'quizzes',
+            'totalQuiz',
+            'totalSoal'
+            ));
     }
 
     public function create()
@@ -36,7 +50,7 @@ class QuizController extends Controller
         $quiz = Quiz::create($validated);
 
         return redirect()
-            ->route('admin.quiz.edit', $quiz)
+            ->route('admin.quiz.index')
             ->with('success', 'Quiz berhasil dibuat. Silakan tambahkan soal.');
     }
 
@@ -44,7 +58,7 @@ class QuizController extends Controller
     {
         $quiz->load('questions.options', 'materi');
 
-        return view('admin.quiz.edit', compact('quiz'));
+        return view('admin.quiz.index', compact('quiz'));
     }
 
     public function update(Request $request, Quiz $quiz)
@@ -103,7 +117,7 @@ class QuizController extends Controller
         });
 
         return redirect()
-            ->route('admin.quiz.edit', $quiz)
+            ->route('admin.quiz.index')
             ->with('success', 'Quiz berhasil diperbarui.');
     }
 
