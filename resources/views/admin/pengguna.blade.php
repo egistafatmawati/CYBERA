@@ -2,15 +2,15 @@
 
 @section('content')
 
-<div class="max-w-7xl mx-auto space-y-6">
+<div class="max-w-6xl mx-auto space-y-6">
 
     <!-- Header -->
     <div class="mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-[#090F31] mb-2" style="font-family: 'Inter', sans-serif;">
             Manajemen Pengguna
         </h1>
-        <p class="text-gray-600 text-sm">
-            <span class="font-bold text-[#090F31]">{{ $totalTerdaftar }}</span> Terdaftar, <span class="font-bold text-[#FFCC00]">{{ $totalAktif }}</span> Aktif
+        <p class="text-gray-700 text-base md:text-lg">
+            <span class="font-extrabold text-[#090F31]">{{ $totalTerdaftar }}</span> Terdaftar, <span class="font-extrabold text-[#FFCC00]">{{ $totalAktif }}</span> Aktif
         </p>
     </div>
 
@@ -35,15 +35,15 @@
             <table class="w-full text-left border-collapse">
                 <!-- Table Head -->
                 <thead>
-                    <tr class="bg-gray-50 border-b border-gray-200 text-xs text-[#090F31] font-bold uppercase tracking-wider">
-                    <th class="px-6 py-4">Pengguna</th>
-                    <th class="px-6 py-4">Role</th>
-                    <th class="px-6 py-4">Kuis</th>
-                    <th class="px-6 py-4">Rata-rata</th>
-                    <th class="px-6 py-4">Bergabung</th>
-                    <th class="px-6 py-4 text-center">Aksi</th>
-                </tr>
-            </thead>
+                    <tr class="bg-gray-50 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
+                        <th class="px-6 py-5 text-center">Pengguna</th>
+                        <th class="px-6 py-5 text-center">Role</th>
+                        <th class="px-6 py-5 text-center">Kuis</th>
+                        <th class="px-6 py-5 text-center">Rata-rata</th>
+                        <th class="px-6 py-5 text-center">Bergabung</th>
+                        <th class="px-6 py-5 text-center">Aksi</th>
+                    </tr>
+                </thead>
                 <!-- Table Body -->
                 <tbody class="text-sm">
                     @forelse($penggunas as $p)
@@ -58,38 +58,38 @@
                         $kuisCount = $p->quizResults->count();
                         $rataRata = $kuisCount > 0 ? round($p->quizResults->avg('skor')) : 0;
                     @endphp
-                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                    <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
                         <!-- Pengguna -->
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-5">
                             <div class="flex items-center gap-4">
-                                @if($p->avatar)
-                                    <img src="{{ asset('storage/' . $p->avatar) }}" alt="{{ $p->name }}" class="w-10 h-10 rounded-full object-cover shrink-0">
+                                @if($p->foto)
+                                    <img src="{{ asset('storage/' . $p->foto) }}" alt="{{ $p->name }}" class="w-11 h-11 rounded-full object-cover shrink-0">
                                 @else
-                                    <div class="w-10 h-10 rounded-full bg-[#FFCC00]/10 flex items-center justify-center shrink-0">
-                                        <span class="text-[#FFB300] font-bold text-xs">{{ $inisial }}</span>
+                                    <div class="w-11 h-11 rounded-full bg-[#FFCC00]/10 flex items-center justify-center shrink-0">
+                                        <span class="text-[#FFB300] font-bold text-[13px]">{{ $inisial }}</span>
                                     </div>
                                 @endif
                                 <div>
                                     <div class="font-bold text-[14px] text-[#090F31]">{{ $p->name }}</div>
-                                    <div class="text-[11px] text-gray-500">{{ $p->email }}</div>
+                                    <div class="text-[12px] text-gray-400 mt-0.5">{{ $p->email }}</div>
                                 </div>
                             </div>
                         </td>
 
                         <!-- Role -->
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center rounded-full bg-cyan-50 px-3 py-1 text-[12px] font-bold text-cyan-500">
+                        <td class="px-6 py-5 text-center align-middle">
+                            <span class="inline-flex items-center justify-center rounded-full bg-cyan-50 px-3 py-1 text-[12px] font-bold text-cyan-500">
                                 Peserta
                             </span>
                         </td>
 
                         <!-- Kuis -->
-                        <td class="px-6 py-4 text-gray-600 text-xs font-medium">
+                        <td class="px-6 py-5 text-center text-gray-600 text-[13px] font-medium align-middle">
                             {{ $kuisCount }} selesai
                         </td>
 
                         <!-- Rata-rata -->
-                        <td class="px-6 py-4 font-bold text-sm">
+                        <td class="px-6 py-5 text-center font-bold text-[14px] align-middle">
                             @if($rataRata < 60)
                                 <span class="text-[#CC0000]">{{ $rataRata }}/100</span>
                             @elseif($rataRata < 80)
@@ -100,13 +100,13 @@
                         </td>
 
                         <!-- Bergabung -->
-                        <td class="px-6 py-4 text-gray-500 text-xs">
+                        <td class="px-6 py-5 text-center text-gray-500 text-[12px] align-middle">
                             {{ $p->created_at->translatedFormat('d F Y') }}
                         </td>
 
                         <!-- Aksi -->
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-center gap-3">
+                        <td class="px-6 py-5 align-middle">
+                            <div class="flex items-center justify-center gap-4">
                                 <button onclick="openEditUserModal('{{ $p->id }}', '{{ addslashes($p->name) }}', '{{ addslashes($p->email) }}')" class="text-green-500 hover:text-green-600 transition-colors" title="Edit">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>

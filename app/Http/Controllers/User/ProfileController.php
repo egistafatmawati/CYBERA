@@ -17,6 +17,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        \Log::info("Profile loaded. User ID: " . $request->user()->id . ", Foto: " . ($request->user()->foto ?? 'NULL'));
         // Kirim data user ke view
         return view('user.profile', [
             'user' => $request->user(),
@@ -31,7 +32,7 @@ class ProfileController extends Controller
         $user = $request->user();
         
         // Validasi input hanya name dan email
-        $request->validate([
+        $request->validateWithBag('profileUpdate', [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
         ]);
@@ -53,26 +54,37 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update avatar profil
+     * Update foto profil
      */
-    public function updateAvatar(Request $request): RedirectResponse
+    public function updateFoto(Request $request): RedirectResponse
     {
         $user = $request->user();
         
-        // Validasi hanya avatar
-        $request->validate([
-            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // max 2MB
+        // Validasi hanya foto
+        $request->validateWithBag('fotoUpdate', [
+            'foto' => [
+                'required',
+                'image',
+                'mimes:jpeg,png,jpg,gif',
+                'max:5120'
+            ],
+        ], [
+            'foto.required' => 'Foto wajib dipilih.',
+            'foto.image'    => 'Foto harus berupa gambar.',
+            'foto.mimes'    => 'Foto harus berformat JPG, JPEG, PNG, atau GIF.',
+            'foto.max'      => 'Ukuran foto maksimal 5 MB.',
         ]);
 
-        // Hapus avatar lama kalau ada
-        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-            Storage::disk('public')->delete($user->avatar);
+        // Hapus foto lama kalau ada
+        if ($user->foto && Storage::disk('public')->exists($user->foto)) {
+            Storage::disk('public')->delete($user->foto);
         }
         
-        // Simpan avatar baru
-        $avatarPath = $request->file('avatar')->store('avatars', 'public');
-        $user->avatar = $avatarPath;
-        $user->save();
+        // Simpan foto baru
+        $fotoPath = $request->file('foto')->store('foto', 'public');
+        
+        $user->update(['foto' => $fotoPath]);
+        $user->refresh();
 
         // Kembali dengan pesan sukses
         return redirect()->route('user.profile')
@@ -85,7 +97,7 @@ class ProfileController extends Controller
     public function updatePassword(Request $request): RedirectResponse
     {
         // Validasi password
-        $request->validate([
+        $request->validateWithBag('passwordUpdate', [
             'current_password' => ['required', 'current_password'], // cek password lama
             'password' => ['required', 'confirmed', 'min:8'], // password baru min 8 karakter
         ]);
@@ -95,31 +107,30 @@ class ProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('user.profile')
-            ->with('success', 'Password berhasil diperbarui!');
+        return back()->with('success', 'Password berhasil diperbarui!');
     }
 
     /**
      * Hapus foto profil
      */
-    public function deleteAvatar(Request $request): RedirectResponse
+    public function deleteFoto(Request $request): RedirectResponse
     {
         $user = $request->user();
-        
+
         // Cek apakah ada foto
-        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+        if ($user->foto && Storage::disk('public')->exists($user->foto)) {
             // Hapus file foto
-            Storage::disk('public')->delete($user->avatar);
-            // Hapus data foto di database
-            $user->avatar = null;
-            $user->save();
+            Storage::disk('public')->delete($user->foto);
+            // Set foto menjadi null di database
+            $user->update(['foto' => null]);
+            $user->refresh();
             
             return redirect()->route('user.profile')
                 ->with('success', 'Foto profil berhasil dihapus!');
         }
 
         return redirect()->route('user.profile')
-            ->with('error', 'Tidak ada foto profil untuk dihapus!');
+            ->with('error', 'Belum ada foto profil yang dapat dihapus.');
     }
 
     /**
@@ -135,8 +146,8 @@ class ProfileController extends Controller
         $user = $request->user();
 
         // Hapus foto profil juga
-        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-            Storage::disk('public')->delete($user->avatar);
+        if ($user->foto && Storage::disk('public')->exists($user->foto)) {
+            Storage::disk('public')->delete($user->foto);
         }
 
         // Logout dan hapus akun

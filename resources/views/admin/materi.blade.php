@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="max-w-7xl mx-auto space-y-6">
+<div class="max-w-6xl mx-auto space-y-6">
 
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between">
@@ -10,8 +10,8 @@
             <h1 class="text-3xl md:text-4xl font-bold text-[#090F31] mb-2" style="font-family: 'Inter', sans-serif;">
                 Manajemen Materi
             </h1>
-            <p class="text-gray-600 text-sm">
-                <span class="font-bold text-[#090F31]">{{ $materis->count() }}</span> Materi pembelajaran
+            <p class="text-gray-700 text-base md:text-lg">
+                <span class="font-extrabold text-[#090F31]">{{ $materis->count() }}</span> Materi pembelajaran
             </p>
         </div>
     </div>
@@ -29,9 +29,9 @@
             <table class="w-full text-left border-collapse">
                 <!-- Table Head -->
                 <thead>
-                    <tr class="bg-gray-100 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
-                        <th class="px-6 py-5 text-center w-1/3">Materi</th>
-                        <th class="px-6 py-5 text-center w-1/2">Deskripsi</th>
+                    <tr class="bg-gray-50 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
+                        <th class="px-6 py-5 text-center w-1/6">Materi</th>
+                        <th class="px-6 py-5 text-center w-1/6">Deskripsi</th>
                         <th class="px-6 py-5 text-center w-1/6">Aksi</th>
                     </tr>
                 </thead>
@@ -40,7 +40,7 @@
                     @forelse($materis as $m)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                         <!-- Judul -->
-                        <td class="px-6 py-5 text-center font-medium text-[#090F31]">
+                        <td class="px-6 py-5 text-left font-medium text-[#090F31]">
                             {{ $m->judul }}
                         </td>
 

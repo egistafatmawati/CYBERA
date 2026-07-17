@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="max-w-7xl mx-auto space-y-6">
+<div class="max-w-6xl mx-auto space-y-6">
 
     <!-- Header -->
     <div class="mb-8 flex justify-between items-center">
@@ -10,8 +10,8 @@
             <h1 class="text-3xl md:text-4xl font-bold text-[#090F31] mb-2" style="font-family: 'Inter', sans-serif;">
                 Manajemen Simulasi
             </h1>
-            <p class="text-gray-600 text-sm">
-                <span class="font-bold text-[#090F31]">{{ $simulasis->count() }}</span> Materi pembelajaran
+            <p class="text-gray-700 text-base md:text-lg">
+                <span class="font-extrabold text-[#090F31]">{{ $simulasis->count() }}</span> Materi pembelajaran
             </p>
         </div>
     </div>
@@ -22,15 +22,15 @@
     </div>
     @endif
 
-    <!-- Table Card -->
-    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+        <!-- Table Card -->
+        <div class="bg-white border border-gray-200 overflow-hidden shadow-sm">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <!-- Table Head -->
                 <thead>
-                    <tr class="bg-gray-100 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
-                        <th class="px-6 py-5 text-center w-1/4">Simulasi</th>
-                        <th class="px-6 py-5 text-center w-5/12">Deskripsi</th>
+                    <tr class="bg-[#F4F4F4] border-b border-gray-200 text-sm text-black font-bold uppercase tracking-wider">
+                        <th class="px-6 py-5 text-center w-1/6">Simulasi</th>
+                        <th class="px-6 py-5 text-center w-1/6">Deskripsi</th>
                         <th class="px-6 py-5 text-center w-1/6">Skenario</th>
                         <th class="px-6 py-5 text-center w-1/6">Aksi</th>
                     </tr>
@@ -38,14 +38,14 @@
                 <!-- Table Body -->
                 <tbody class="text-sm">
                     @forelse($simulasis as $s)
-                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                    <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors bg-white">
                         <!-- Judul -->
-                        <td class="px-6 py-5 text-center font-medium text-[#090F31]">
+                        <td class="pl-12 pr-6 py-5 text-left font-medium text-[#090F31]">
                             {{ $s->judul }}
                         </td>
 
                         <!-- Deskripsi -->
-                        <td class="px-6 py-5 text-gray-600 text-[13px] leading-relaxed text-center pr-12">
+                        <td class="px-6 py-5 text-gray-600 text-[13px] leading-relaxed text-center">
                             <div class="max-w-[320px] mx-auto text-left break-words">
                                 {{ $s->deskripsi }}
                             </div>
@@ -59,15 +59,20 @@
                         </td>
 
                         <!-- Aksi -->
-                        <td class="px-6 py-5 text-center flex items-center justify-center gap-2">
-                            <button onclick='openSimulasiModal(@json($s))' class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-md border border-[#00E676] text-[#00E676] hover:bg-[#00E676] hover:text-white transition-colors font-medium text-xs">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-                                </svg>
-                                Edit
-                            </button>
+                        <td class="px-6 py-5 text-center align-middle">
+                            <div class="flex items-center justify-center gap-2">
+                                <button
+                                    onclick='openSimulasiModal(@json($s))'
+                                    class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-md border border-[#00E676] text-[#00E676] hover:bg-[#00E676] hover:text-white transition-colors font-medium text-xs">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                        </path>
+                                    </svg>
+                                    Edit
+                                </button>
+                            </div>
                         </td>
-                    </tr>
                     @empty
                     <tr>
                         <td colspan="4" class="px-6 py-10 text-center text-gray-500">
@@ -75,9 +80,8 @@
                         </td>
                     </tr>
                     @endforelse
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
 </div>
 

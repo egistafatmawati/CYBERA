@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class UserMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
@@ -14,9 +14,9 @@ class AdminMiddleware
             return redirect('/login');
         }
 
-        if (auth()->user()->role !== 'admin') {
-            return redirect()->route('user.dashboard')
-                ->with('error', 'Anda tidak memiliki akses ke halaman admin.');
+        if (auth()->user()->role !== 'pengguna') {
+            return redirect()->route('admin.dashboard')
+                ->with('error', 'Anda tidak memiliki akses ke halaman pengguna.');
         }
 
         return $next($request);

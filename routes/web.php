@@ -29,7 +29,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 });
 
-Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(function () {
+Route::middleware(['auth', 'verified', 'user'])->prefix('user')->name('user.')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [UserDashboardController::class, 'index'])
@@ -42,11 +42,11 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     Route::patch('/profile', [UserProfileController::class, 'update'])
         ->name('profile.update');
 
-    Route::post('/profile/avatar', [UserProfileController::class, 'updateAvatar'])
-        ->name('profile.avatar');
+    Route::post('/profile/foto', [UserProfileController::class, 'updateFoto'])
+        ->name('profile.foto');
 
-    Route::delete('/profile/avatar', [UserProfileController::class, 'deleteAvatar'])
-        ->name('profile.avatar.delete');
+    Route::delete('/profile/foto', [UserProfileController::class, 'deleteFoto'])
+        ->name('profile.foto.delete');
 
     Route::patch('/profile/password', [UserProfileController::class, 'updatePassword'])
         ->name('profile.password');

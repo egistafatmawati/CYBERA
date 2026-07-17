@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="max-w-7xl mx-auto space-y-8">
+<div class="max-w-6xl mx-auto space-y-8">
 
     <!-- Header -->
     <div class="mb-8">

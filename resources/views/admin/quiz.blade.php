@@ -2,19 +2,18 @@
 
 @section('content')
 @php
-// $quizzes variable is injected by Admin\QuizController
 @endphp
 
-<div class="max-w-7xl mx-auto space-y-6">
+<div class="max-w-6xl mx-auto space-y-6">
 
    <!-- Header -->
     <div class="mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-[#090F31] mb-2" style="font-family: 'Inter', sans-serif;">
             Manajemen Kuis
         </h1>
-        <p class="text-gray-600 text-sm">
-            <span class="font-bold text-[#090F31]">{{ $totalQuiz }}</span> Kuis,
-            total <span class="font-bold text-[#090F31]">{{ $totalSoal }}</span> soal
+        <p class="text-gray-700 text-base md:text-lg">
+            <span class="font-extrabold text-[#090F31]">{{ $totalQuiz }}</span> Kuis,
+            total <span class="font-extrabold text-[#090F31]">{{ $totalSoal }}</span> soal
         </p>
     </div>
 
@@ -24,8 +23,8 @@
             <table class="w-full text-left border-collapse">
                 <!-- Table Head -->
                 <thead>
-                    <tr class="bg-gray-100 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
-                        <th class="px-6 py-5 text-center w-1/4">Kuis</th>
+                    <tr class="bg-gray-50 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
+                        <th class="px-6 py-5 text-center w-1/6">Kuis</th>
                         <th class="px-6 py-5 text-center w-1/6">Soal</th>
                         <th class="px-6 py-5 text-center w-1/6">Aksi</th>
                     </tr>
@@ -35,7 +34,7 @@
                     @foreach($quizzes as $quiz)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                         <!-- Judul Kuis -->
-                        <td class="px-6 py-5 text-center font-medium text-[#090F31]">
+                        <td class="px-6 py-5 text-left font-medium text-[#090F31]">
                             {{ $quiz->judul }}
                         </td>
 
