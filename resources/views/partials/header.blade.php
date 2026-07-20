@@ -1,4 +1,4 @@
-<header class="flex items-center justify-between px-8 py-4 bg-[#090F31] text-[#FFFFFF]" style="font-family: 'Inter', sans-serif;">
+<header class="flex items-center justify-between px-8 py-4 {{ request()->routeIs('login', 'register') || request()->is('login', 'register') ? 'bg-transparent' : 'bg-[#090F31]' }} text-[#FFFFFF]" style="font-family: 'Inter', sans-serif;">
     <!-- Logo -->
     <div class="flex items-center">
         <!-- Ganti src dengan path logo Anda (misalnya asset('images/logo.png')) -->
@@ -15,16 +15,16 @@
 
     @auth
     <!-- User Actions (Logged In) -->
-    <div class="flex items-center space-x-6">
+    <div class="flex items-center space-x-4">
         <!-- Profile Icon -->
-        <a href="{{ route('user.profile') }}" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#FFFFFF] hover:border-[#FFCC00] hover:text-[#FFCC00] transition-colors duration-200">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+        <a href="{{ route('user.profile') }}" class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 bg-transparent hover:border-[#FFCC00] hover:text-[#FFCC00] text-gray-200 transition-colors duration-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
         </a>
 
         <!-- Logout Button -->
-        <button type="button" onclick="document.getElementById('logoutModal').classList.remove('hidden')" class="px-6 py-2 bg-[#CC0000] hover:bg-red-700 text-[#FFFFFF] rounded-md font-semibold transition-colors duration-200">
+        <button type="button" onclick="document.getElementById('logoutModal').classList.remove('hidden')" class="px-5 py-2 bg-[#CC0000] hover:bg-red-700 text-[#FFFFFF] rounded-2xl text-base font-medium transition-colors duration-200 shadow-sm">
             Logout
         </button>
     </div>

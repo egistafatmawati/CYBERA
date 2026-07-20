@@ -55,7 +55,7 @@
                         <td class="px-6 py-5 text-center">
                             <div class="flex items-center justify-center gap-2">
                                 <!-- Tombol Edit -->
-                                <button onclick="openEditMateriModal({{ $m->id }}, `{{ addslashes($m->judul) }}`, `{{ addslashes($m->deskripsi) }}`, `{{ addslashes($m->isi) }}`)"
+                                <button onclick='openEditMateriModal(@json($m))'
                                     class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-md border border-[#00E676] text-[#00E676] hover:bg-[#00E676] hover:text-white transition-colors font-medium text-xs">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
@@ -195,14 +195,14 @@
     }
 
     // === MODAL EDIT ===
-    function openEditMateriModal(id, judul, deskripsi, isi) {
-        document.getElementById('editJudul').value = judul;
-        document.getElementById('editDeskripsi').value = deskripsi;
-        document.getElementById('editIsi').value = isi;
+    function openEditMateriModal(materi) {
+        document.getElementById('editJudul').value = materi.judul;
+        document.getElementById('editDeskripsi').value = materi.deskripsi;
+        document.getElementById('editIsi').value = materi.isi;
 
         // Set form action ke route update yang benar
         const form = document.getElementById('editMateriForm');
-        form.action = `/admin/materi/${id}`;
+        form.action = `/admin/materi/${materi.id}`;
 
         const modal = document.getElementById('editMateriModal');
         modal.classList.remove('hidden');

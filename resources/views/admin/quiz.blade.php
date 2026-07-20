@@ -99,7 +99,7 @@
         initModal(event) {
             this.quizId = event.detail.id;
             this.judul = event.detail.judul;
-            this.deskripsi = event.detail.judul;
+            this.deskripsi = event.detail.deskripsi;
             this.soals = event.detail.soals.length > 0 ? event.detail.soals : [];
             this.actionUrl = `{{ url('admin/quiz') }}/${this.quizId}`;
         },
@@ -151,7 +151,7 @@
                 <!-- Deskripsi -->
                 <div>
                     <label class="block text-sm font-bold mb-2">Deskripsi</label>
-                    <input type="text" name="deskripsi" x-model="judul" class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]">
+                    <textarea name="deskripsi" x-model="deskripsi" rows="3" class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] resize-none"></textarea>
                 </div>
 
 

@@ -45,6 +45,7 @@ class QuizController extends Controller
             'materi_id' => 'required|exists:materis,id|unique:quizzes,materi_id',
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
+            'tips' => 'nullable|string',
         ]);
 
         $quiz = Quiz::create($validated);
@@ -66,6 +67,7 @@ class QuizController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
+            'tips' => 'nullable|string',
 
             'questions' => 'required|array|min:1',
             'questions.*.id' => 'nullable|exists:quiz_questions,id',
@@ -83,6 +85,7 @@ class QuizController extends Controller
             $quiz->update([
                 'judul' => $validated['judul'],
                 'deskripsi' => $validated['deskripsi'] ?? null,
+                'tips' => $validated['tips'] ?? null,
             ]);
 
             $keptIds = [];

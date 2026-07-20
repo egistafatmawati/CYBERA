@@ -6,27 +6,28 @@
     // The data is now coming from $quizzes variable provided by the Controller.
 @endphp
 
-<div class="w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-8 pb-20">
-    
-    <!-- Banner Section -->
-    <div class="relative w-full overflow-hidden mb-16" style="border-radius: 20px;">
+<section class="pt-2 pb-16 px-8">
+    <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[420px] flex items-center justify-center">
         <!-- Background Image -->
-        <div class="absolute top-0 left-0 w-full h-[650px] z-0">
+        <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#090F31]/80 to-[#090F31]/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020510]/100 via-[#020510]/60 to-transparent"></div>
         </div>
         
         <!-- Text Content -->
-        <div class="relative z-10 text-center py-20 md:py-28 px-6">
-            <h1 class="text-3xl md:text-5xl lg:text-5xl leading-tight mb-6 text-white" style="font-family: 'Audiowide', sans-serif;">
-                Kuis Evaluasi <br />
-                <span style="color: #FFCC00; display: block; margin-top: 10px;">Keamanan Siber</span>
+        <div class="relative max-w-4xl mx-auto text-center z-10 px-6">
+            <h1 class="text-3xl md:text-4xl lg:text-[42px] leading-tight mb-6 text-white tracking-wide" style="font-family: 'Audiowide', sans-serif;">
+                Kuis Evaluasi <span style="color: #FFCC00;">Keamanan Siber</span>
             </h1>
-            <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-sm md:text-base text-gray-300 max-w-2xl mx-auto text-center leading-relaxed">
                 Pilih topik untuk memulai kuis. Setiap kuis terdiri dari soal-soal yang menguji pemahaman Anda tentang topik spesifik.
             </p>
         </div>
     </div>
+</section>
+
+<!-- Container Konten Utama -->
+<div class="w-[90%] lg:w-[85%] mx-auto pb-20 relative">
 
     <!-- Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
@@ -47,22 +48,24 @@
             $imageIndex = ($loop->index % 7) + 2; // images/card 2.png to card 8.png
             $image = 'images/card ' . $imageIndex . '.png';
         @endphp
-        <div class="bg-white overflow-hidden shadow-xl transform hover:-translate-y-2 transition-transform duration-300 flex flex-col" style="border-radius: 20px;">
-            <div class="relative h-56 bg-gray-200">
-                <img src="{{ asset($image) }}" alt="{{ $quiz->judul }}" class="w-full h-full object-cover">
+        <div class="bg-transparent overflow-hidden shadow-xl transform hover:-translate-y-2 transition-transform duration-300 flex flex-col" style="border-radius: 20px;">
+            <div class="relative h-56 bg-transparent overflow-hidden">
+                <img src="{{ asset($image) }}" alt="{{ $quiz->judul }}" class="absolute top-0 left-0 w-full object-cover" style="height: calc(100% + 24px); object-position: top;">
                 <!-- Icon Overlapping (Bottom Left) -->
-                <div class="absolute w-10 h-10 rounded-md flex items-center justify-center shadow-lg" style="bottom: 1.5rem; left: 1.5rem; background-color: #FFCC00; color: #090F31;">
+                <div class="absolute w-10 h-10 rounded-md flex items-center justify-center shadow-lg z-20" style="bottom: 1.5rem; left: 1.5rem; background-color: #FFCC00; color: #090F31;">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         {!! $icon !!}
                     </svg>
                 </div>
             </div>
-            <div class="p-6 flex flex-col flex-grow">
+            <div class="p-6 flex flex-col flex-grow bg-white relative z-10">
                 <h3 class="font-bold text-[17px] mb-3" style="color: #090F31; font-family: 'Audiowide', sans-serif;">{{ $quiz->judul }}</h3>
                 <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">{{ $quiz->deskripsi }}</p>
-                <a href="{{ route('user.quiz.preview', ['quiz' => $quiz->id]) }}" style="color: #FFCC00;" class="font-bold text-sm flex items-center hover:text-yellow-500 transition-colors">
-                    Mulai Kuis <span class="ml-2 text-lg">→</span>
-                </a>
+                <div class="flex items-center justify-between mt-auto">
+                    <a href="{{ route('user.quiz.preview', ['quiz' => $quiz->id]) }}" style="color: #FFCC00;" class="font-bold text-sm flex items-center hover:text-yellow-500 transition-colors">
+                        Mulai Kuis <span class="ml-2 text-lg">→</span>
+                    </a>
+                </div>
             </div>
         </div>
         @endforeach

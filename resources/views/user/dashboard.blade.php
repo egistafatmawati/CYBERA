@@ -1,24 +1,23 @@
 @extends('layouts.user')
 
 @section('content')
-<div class="w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-8">
-    
-    <!-- Banner Section -->
-    <div class="relative w-full overflow-hidden mb-6" style="border-radius: 20px;">
+<!-- Hero Section -->
+<section class="pt-2 pb-16 px-8">
+    <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[420px] flex items-center justify-center">
         <!-- Background Image -->
-        <div class="absolute top-0 left-0 w-full h-[650px] z-0">
+        <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#090F31]/80 to-[#090F31]/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020510]/100 via-[#020510]/60 to-transparent"></div>
         </div>
         
         <!-- Text Content -->
-        <div class="relative z-10 text-center py-12 md:py-16 lg:py-20 px-6">
-            <h1 class="text-3xl md:text-5xl lg:text-5xl leading-tight mb-6" style="font-family: 'Audiowide', sans-serif;">
+        <div class="relative max-w-4xl mx-auto text-center z-10 px-6">
+            <h1 class="text-3xl md:text-4xl lg:text-[42px] leading-tight mb-6 text-white tracking-wide" style="font-family: 'Audiowide', sans-serif;">
                 Tingkatkan Kesadaran <br />
                 <span class="text-[#FFCC00]">Keamanan Siber</span> Anda Melalui <br />
                 Simulasi Interaktif</span>
             </h1>
-            <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-sm md:text-base text-gray-300 max-w-2xl mx-auto text-center leading-relaxed">
                 Selamat datang di CYBERA, platform edukasi keamanan siber yang 
                 dikembangkan untuk mendukung peningkatan kesadaran dan 
                 pemahaman pengguna terhadap berbagai risiko keamanan informasi 
@@ -26,9 +25,12 @@
             </p>
         </div>
     </div>
+</section>
 
+<!-- Container Konten Utama -->
+<div class="w-[90%] lg:w-[85%] mx-auto pb-20 relative">
     <!-- Feature Cards — Welcome Page Style Flex -->
-    <div class="flex flex-col md:flex-row justify-center max-w-full mx-auto w-full" style="margin-bottom: 3rem; gap: 2rem;">
+    <div class="flex flex-col md:flex-row justify-center max-w-full mx-auto w-full" style="margin-bottom: 3rem; gap: 2.5rem;">
         
         <!-- Materi -->
         <a href="{{ route('user.materi') }}" style="flex: 1 1 0%; border-radius: 20px;" class="bg-white p-6 shadow-xl flex gap-4 transition-transform hover:-translate-y-2 duration-300">

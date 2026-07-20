@@ -2,8 +2,89 @@
 
 @section('content')
 
-{{-- Alpine.js untuk interaktivitas halaman --}}
-<div class="w-full max-w-[1440px] mx-auto px-6 lg:px-10 py-8 pb-20 relative" 
+{{-- NOTIFIKASI SUKSES (Style seperti Reset Password Login) --}}
+@if(session('success'))
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300" x-data="{ show: true }" x-show="show" x-transition>
+        <div class="bg-white rounded-[35px] w-full max-w-[380px] mx-4 px-8 py-10 text-center shadow-2xl relative" @click.away="show = false">
+            
+            <!-- Icon -->
+            <div class="mx-auto mb-6 w-20 h-20 rounded-full bg-[#0CD939] flex items-center justify-center shadow-lg shadow-green-500/30">
+                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+            
+            <!-- Text -->
+            <h2 class="text-xl sm:text-2xl font-bold text-[#0CD939] tracking-wide uppercase">
+                {!! nl2br(e(str_replace(' berhasil diperbarui!', "\nBERHASIL!", strtoupper(session('success'))))) !!}
+            </h2>
+            
+            <!-- Tombol Close (Opsional) -->
+            <button @click="show = false" class="absolute top-4 right-5 text-gray-400 hover:text-gray-700 outline-none">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" x-data="{ show: true }" x-show="show" x-transition>
+        <div class="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center shadow-2xl relative w-full max-w-sm mx-4" @click.away="show = false">
+            <button @click="show = false" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="w-20 h-20 bg-[#CC0000] rounded-full flex items-center justify-center mb-5 shadow-[0_0_15px_rgba(204,0,0,0.4)]">
+                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-[#CC0000] text-center tracking-wide mb-2">Gagal</h3>
+            <div class="text-gray-600 text-center text-sm font-medium">
+                {{ session('error') }}
+            </div>
+        </div>
+    </div>
+@endif
+
+{{-- Tampilkan error validasi (kecuali untuk form reset password yang ditampilkan inline) --}}
+@if($errors->hasBag('profileUpdate') || $errors->hasBag('fotoUpdate') || ($errors->any() && !$errors->hasBag('passwordUpdate')))
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" x-data="{ show: true }" x-show="show" x-transition>
+        <div class="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center shadow-2xl relative w-full max-w-sm mx-4" @click.away="show = false">
+            <button @click="show = false" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="w-20 h-20 bg-[#CC0000] rounded-full flex items-center justify-center mb-5 shadow-[0_0_15px_rgba(204,0,0,0.4)]">
+                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-[#CC0000] text-center tracking-wide mb-2">Validasi Gagal</h3>
+            <div class="text-gray-600 text-center text-sm font-medium space-y-1">
+                @foreach($errors->getBags() as $bag => $errorBag)
+                    @if($bag !== 'passwordUpdate')
+                        @foreach($errorBag->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
+<!-- Hero Section -->
+<section class="pt-2 pb-16 px-8">
+    <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[250px] md:h-[300px] flex items-center justify-center">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020510]/100 via-[#020510]/60 to-transparent"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Container Konten Utama -->
+<div class="w-[90%] lg:w-[85%] mx-auto pb-20 relative" 
      x-data="{
         isEditing: false,           // mode edit profil (true/false)
         nama: '{{ $user->name }}',  // data nama dari database
@@ -12,85 +93,9 @@
         previewFoto: @js($user->foto ? asset('storage/' . $user->foto) : null), // preview foto dari storage
      }"
      x-init="">
-    
-    {{-- NOTIFIKASI SUKSES (Style seperti Reset Password Login) --}}
-    @if(session('success'))
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300" x-data="{ show: true }" x-show="show" x-transition>
-            <div class="bg-white rounded-[35px] w-full max-w-[380px] mx-4 px-8 py-10 text-center shadow-2xl relative" @click.away="show = false">
-                
-                <!-- Icon -->
-                <div class="mx-auto mb-6 w-20 h-20 rounded-full bg-[#0CD939] flex items-center justify-center shadow-lg shadow-green-500/30">
-                    <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
-                    </svg>
-                </div>
-                
-                <!-- Text -->
-                <h2 class="text-xl sm:text-2xl font-bold text-[#0CD939] tracking-wide uppercase">
-                    {!! nl2br(e(str_replace(' berhasil diperbarui!', "\nBERHASIL!", strtoupper(session('success'))))) !!}
-                </h2>
-                
-                <!-- Tombol Close (Opsional) -->
-                <button @click="show = false" class="absolute top-4 right-5 text-gray-400 hover:text-gray-700 outline-none">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-        </div>
-    @endif
-    
-    @if(session('error'))
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" x-data="{ show: true }" x-show="show" x-transition>
-            <div class="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center shadow-2xl relative w-full max-w-sm mx-4" @click.away="show = false">
-                <button @click="show = false" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-                <div class="w-20 h-20 bg-[#CC0000] rounded-full flex items-center justify-center mb-5 shadow-[0_0_15px_rgba(204,0,0,0.4)]">
-                    <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold text-[#CC0000] text-center tracking-wide mb-2">Gagal</h3>
-                <div class="text-gray-600 text-center text-sm font-medium">
-                    {{ session('error') }}
-                </div>
-            </div>
-        </div>
-    @endif
-    
-    {{-- Tampilkan error validasi (kecuali untuk form reset password yang ditampilkan inline) --}}
-    @if($errors->hasBag('profileUpdate') || $errors->hasBag('fotoUpdate') || ($errors->any() && !$errors->hasBag('passwordUpdate')))
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" x-data="{ show: true }" x-show="show" x-transition>
-            <div class="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center shadow-2xl relative w-full max-w-sm mx-4" @click.away="show = false">
-                <button @click="show = false" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-                <div class="w-20 h-20 bg-[#CC0000] rounded-full flex items-center justify-center mb-5 shadow-[0_0_15px_rgba(204,0,0,0.4)]">
-                    <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold text-[#CC0000] text-center tracking-wide mb-2">Validasi Gagal</h3>
-                <div class="text-gray-600 text-center text-sm font-medium space-y-1">
-                    @foreach($errors->getBags() as $bag => $errorBag)
-                        @if($bag !== 'passwordUpdate')
-                            @foreach($errorBag->all() as $error)
-                                <p>{{ $error }}</p>
-                            @endforeach
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    @endif
-
-    {{-- BANNER --}}
-    <div class="w-full h-48 md:h-72 overflow-hidden relative shadow-[0_10px_40px_rgba(0,0,0,0.3)] rounded-3xl">
-        <img src="{{ asset('images/card1.png') }}" class="w-full h-full object-cover opacity-70" alt="Banner">
-        <div class="absolute inset-0 bg-gradient-to-t from-[#050a24] via-[#050a24]/50 to-transparent"></div>
-    </div>
-
+     
     {{-- AREA PROFIL --}}
-    <div class="w-full max-w-4xl mx-auto relative -mt-24 md:-mt-32">
+    <div class="w-full max-w-full mx-auto relative -mt-40 md:-mt-52">
         
         {{-- FOTO PROFIL --}}
         <div class="flex flex-col items-center">

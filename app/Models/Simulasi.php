@@ -12,10 +12,12 @@ class Simulasi extends Model
         'slug',
         'deskripsi',
         'skenario',
+        'tips',
     ];
 
     protected $casts = [
         'skenario' => 'array',
+        'tips' => 'array',
     ];
 
     public function materi()

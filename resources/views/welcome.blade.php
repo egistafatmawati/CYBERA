@@ -22,26 +22,32 @@
 
     <!-- Main Content -->
     <main class="flex-grow">
-        <!-- Hero Section -->
-        <section class="relative bg-[#090F31] text-white py-24 md:py-32 px-6 overflow-hidden">
-            <!-- Dekorasi Background (opsional/placeholder) -->
-            <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#090F31]/80 to-[#090F31]/30"></div>
-        </div>
+                <!-- Hero Section -->
+        <section class="bg-[#090F31] pt-4 pb-16 px-6 md:px-8">
+            <!-- Container utama diubah jadi card dengan rounded-3xl dan shadow -->
+            <div class="w-full px-8 mx-auto relative rounded-[2rem] overflow-hidden shadow-2xl min-h-[400px] md:min-h-[500px] flex items-center justify-center">
+                
+                <!-- Dekorasi Background gambar rasi bintang / node -->
+                <div class="absolute inset-0 z-0">
+                    <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
+                    <!-- Layer gradient gelap untuk kontras text -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#020510]/100 via-[#020510]/60 to-transparent"></div>
+                </div>
 
-
-            <div class="relative max-w-4xl mx-auto text-center z-10">
-                <h1 class="text-3xl md:text-5xl lg:text-5xl leading-tight mb-6" style="font-family: 'Audiowide', sans-serif;">
-                    Tingkatkan Kesadaran <br />
-                    <span class="text-[#FFCC00]">Keamanan Siber</span> Anda Melalui <br />
-                    Simulasi Interaktif
-                </h1>
-                <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                    Selamat datang di CYBERA, platform edukasi keamanan siber yang dikembangkan untuk mendukung peningkatan kesadaran dan pemahaman pengguna terhadap berbagai risiko keamanan informasi di era digital.
-                </p>
+                <!-- Konten Text Hero -->
+                <div class="relative max-w-4xl mx-auto text-center z-10 px-6 py-12">
+                    <h1 class="text-3xl md:text-5xl lg:text-5xl leading-tight mb-6 text-white" style="font-family: 'Audiowide', sans-serif;">
+                        Tingkatkan Kesadaran <br />
+                        <span class="text-[#FFCC00]">Keamanan Siber</span> Anda Melalui <br />
+                        Simulasi Interaktif
+                    </h1>
+                    <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                        Selamat datang di CYBERA, platform edukasi keamanan siber yang dikembangkan untuk mendukung peningkatan kesadaran dan pemahaman pengguna terhadap berbagai risiko keamanan informasi di era digital.
+                    </p>
+                </div>
             </div>
         </section>
+
 
         <!-- Steps / Cards Section -->
         <section class="py-20 px-6 bg-white">

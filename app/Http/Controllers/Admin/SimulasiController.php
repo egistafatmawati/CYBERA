@@ -31,6 +31,7 @@ class SimulasiController extends Controller
             'materi_id' => 'required|exists:materis,id',
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
+            'tips' => 'nullable|array',
             'skenario' => 'required|array',
         ]);
 
@@ -39,6 +40,7 @@ class SimulasiController extends Controller
             'judul' => $request->judul,
             'slug' => Str::slug($request->judul),
             'deskripsi' => $request->deskripsi,
+            'tips' => $request->tips,
             'skenario' => $request->skenario,
         ]);
 
@@ -65,6 +67,7 @@ class SimulasiController extends Controller
             'materi_id' => 'required|exists:materis,id',
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
+            'tips' => 'nullable|array',
             'skenario' => 'required|array',
         ]);
 
@@ -73,6 +76,7 @@ class SimulasiController extends Controller
             'judul' => $request->judul,
             'slug' => Str::slug($request->judul),
             'deskripsi' => $request->deskripsi,
+            'tips' => $request->tips,
             'skenario' => $request->skenario,
         ]);
 

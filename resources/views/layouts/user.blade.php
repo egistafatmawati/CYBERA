@@ -23,7 +23,8 @@
             @yield('content')
         </main>
 
-        <!-- Unified Footer -->
-        @include('partials.footer')
+
+
+        @stack('scripts')
     </body>
 </html>
