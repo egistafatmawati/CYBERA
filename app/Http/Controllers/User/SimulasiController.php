@@ -14,7 +14,22 @@ class SimulasiController extends Controller
      */
     public function index()
     {
-        $simulasis = Simulasi::with('materi')->latest()->get();
+        $simulasis = Simulasi::with('materi')
+            ->orderByRaw("
+                CASE 
+                    WHEN judul LIKE '%Phishing%' THEN 1 
+                    WHEN judul LIKE '%Website%' THEN 2 
+                    WHEN judul LIKE '%Password%' THEN 3 
+                    WHEN judul LIKE '%Social%' THEN 4 
+                    WHEN judul LIKE '%Malware%' THEN 5 
+                    WHEN judul LIKE '%Ransomware%' THEN 6 
+                    WHEN judul LIKE '%Clear Screen%' THEN 7 
+                    ELSE 99 
+                END ASC
+            ")
+            ->orderBy('id', 'asc')
+            ->get();
+            
         return view('user.simulasi', compact('simulasis'));
     }
 

@@ -12,11 +12,21 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        
+        $middleware->web(append: [
+            \App\Http\Middleware\PreventBackHistory::class,
+        ]);
 
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'user' => \App\Http\Middleware\UserMiddleware::class,
         ]);
+
+        $middleware->redirectUsersTo(function (Request $request) {
+            return auth()->check() && auth()->user()->role === 'admin' 
+                ? route('admin.dashboard') 
+                : route('user.dashboard');
+        });
 
     })
     ->withExceptions(function (Exceptions $exceptions): void {

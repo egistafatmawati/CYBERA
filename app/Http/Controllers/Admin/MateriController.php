@@ -12,7 +12,20 @@ class MateriController extends Controller
    
     public function index()
     {
-        $materis = Materi::latest()->get();
+        $materis = Materi::orderByRaw("
+            CASE 
+                WHEN judul LIKE '%Dasar Keamanan Siber%' THEN 1 
+                WHEN judul LIKE '%Phishing%' THEN 2 
+                WHEN judul LIKE '%Malware%' THEN 3 
+                WHEN judul LIKE '%Ransomware%' THEN 4 
+                WHEN judul LIKE '%Social Engineering%' THEN 5 
+                WHEN judul LIKE '%Password Security%' THEN 6 
+                WHEN judul LIKE '%Clear Screen%' THEN 7 
+                ELSE 99 
+            END ASC
+        ")
+        ->orderBy('id', 'asc')
+        ->get();
 
         return view('admin.materi', compact('materis'));
     }

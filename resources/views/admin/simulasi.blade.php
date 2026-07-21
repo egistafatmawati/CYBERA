@@ -248,26 +248,7 @@
                     </div>
                 </div>
 
-                <!-- Tips -->
-                <div class="border border-gray-700 rounded-xl p-4 md:p-6 bg-white/5 relative mb-4">
-                    <div class="flex justify-between items-center mb-4">
-                        <label class="block text-sm font-bold text-[#FFCC00]">Tips Simulasi</label>
-                        <button type="button" @click="addTip()" class="bg-[#FFCC00] text-black text-xs font-bold px-3 py-1.5 rounded hover:bg-yellow-500 shadow-sm">
-                            + Tambah Tips
-                        </button>
-                    </div>
-                    
-                    <div class="space-y-3">
-                        <template x-for="(tip, tIndex) in tips" :key="tIndex">
-                            <div class="flex gap-2">
-                                <input type="text" x-model="tips[tIndex]" :name="`tips[]`" placeholder="Masukkan tips simulasi..." required class="flex-1 bg-[#050a24] border border-gray-700 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
-                                <button type="button" @click="removeTip(tIndex)" x-show="tips.length > 1" class="px-3 py-2 bg-red-500/20 text-red-400 rounded-lg border border-red-500/30 hover:bg-red-500 hover:text-white transition-colors" title="Hapus Tips">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                </button>
-                            </div>
-                        </template>
-                    </div>
-                </div>
+
 
                 <div class="pt-4 pb-2 flex justify-between items-center border-t border-gray-800">
                     <h3 class="text-white font-bold text-lg" x-text="`Skenario (${skenarios.length})`"></h3>

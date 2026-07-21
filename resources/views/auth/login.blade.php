@@ -49,7 +49,13 @@
                     </h2>
                 </div>
 
+                @if(session('success'))
+                <div class="bg-green-100/10 border border-green-500/50 text-green-400 px-4 py-3 rounded-lg mb-6 text-sm text-center font-medium backdrop-blur-sm shadow-sm">
+                    {{ session('success') }}
+                </div>
+                @endif
                 
+
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 

@@ -17,7 +17,19 @@ class QuizController extends Controller
             'questions.options'
         ])
         ->withCount('questions')
-        ->latest()
+        ->orderByRaw("
+            CASE 
+                WHEN judul LIKE '%Dasar Keamanan Siber%' THEN 1 
+                WHEN judul LIKE '%Phishing%' THEN 2 
+                WHEN judul LIKE '%Malware%' THEN 3 
+                WHEN judul LIKE '%Ransomware%' THEN 4 
+                WHEN judul LIKE '%Social Engineering%' THEN 5 
+                WHEN judul LIKE '%Password Security%' THEN 6 
+                WHEN judul LIKE '%Clear Screen%' THEN 7 
+                ELSE 99 
+            END ASC
+        ")
+        ->orderBy('id', 'asc')
         ->paginate(10);
         $totalQuiz = Quiz::count();
         $totalSoal = Quiz::withCount('questions')
