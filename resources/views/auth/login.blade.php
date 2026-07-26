@@ -16,6 +16,19 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <style>
+        /* Mencegah background putih saat autofill browser aktif */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+            -webkit-text-fill-color: white !important;
+            transition: background-color 5000s ease-in-out 0s;
+            caret-color: white;
+        }
+    </style>
 </head>
 <body class="font-['Inter'] antialiased text-white min-h-screen flex flex-col relative selection:bg-[#FFC107] selection:text-[#090F31]">
 
@@ -63,7 +76,7 @@
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-bold text-white mb-1.5">Email atau Username</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" 
-                               class="block w-full bg-transparent border border-white/70 text-white placeholder-white/80 focus:border-[#FFC107] focus:ring-[#FFC107] rounded-md px-3 py-2.5 text-sm transition-colors duration-200" 
+                               class="block w-full bg-transparent border border-white/70 text-white placeholder-white/80 focus:border-[#FFC107] focus:ring-[#FFC107] rounded-xl px-4 py-3 text-sm transition-colors duration-200" 
                                placeholder="Masukkan email atau username">
                         <x-input-error :messages="$errors->get('email')" class="mt-2 text-[#FFC107] text-xs" />
                     </div>
@@ -73,7 +86,7 @@
                         <label for="password" class="block text-sm font-bold text-white mb-1.5">Password</label>
                         <div class="relative">
                             <input id="password" type="password" name="password" required autocomplete="current-password" 
-                                   class="block w-full bg-transparent border border-white/70 text-white placeholder-white/80 focus:border-[#FFC107] focus:ring-[#FFC107] rounded-md px-3 py-2.5 text-sm transition-colors duration-200" 
+                                   class="block w-full bg-transparent border border-white/70 text-white placeholder-white/80 focus:border-[#FFC107] focus:ring-[#FFC107] rounded-xl px-4 py-3 text-sm transition-colors duration-200" 
                                    placeholder="Masukkan Password Anda">
                             
                             <!-- Show / Hide Password Button -->
@@ -88,21 +101,21 @@
                     </div>
 
                     <!-- Reset Password Button -->
-                    <div class="flex justify-end mb-6">
+                    <div class="flex justify-end mt-2 mb-6">
                         @if (Route::has('password.request'))
-                            <button type="button" onclick="document.getElementById('forgotPasswordModal').classList.remove('hidden')" class="text-xs text-red-600 hover:text-red-400 hover:underline transition-colors font-medium">
+                            <button type="button" onclick="document.getElementById('forgotPasswordModal').classList.remove('hidden')" class="text-xs text-[#FF3333] hover:text-[#FF6666] hover:underline transition-colors font-medium">
                                 Reset Password?
                             </button>
                         @endif
                     </div>
 
                     <!-- Login Button -->
-                    <button type="submit" class="w-full bg-[#FFC107] hover:bg-yellow-400 text-black font-bold py-2.5 px-4 rounded-md transform hover:scale-[1.02] transition-all duration-200 mb-4 shadow-md text-sm">
+                    <button type="submit" class="w-full bg-[#FFC107] hover:bg-yellow-400 text-black font-bold py-3.5 px-4 rounded-xl transform hover:scale-[1.02] transition-all duration-200 mb-4 shadow-md text-sm">
                         Login
                     </button>
                     
                     <!-- Google Login Button -->
-                    <a href="{{ route('auth.google') }}" class="w-full bg-white hover:bg-gray-100 text-gray-800 font-bold py-2.5 px-4 rounded-md flex items-center justify-center border border-gray-300 transform hover:scale-[1.02] transition-all duration-200 mb-6 shadow-sm text-sm">
+                    <a href="{{ route('auth.google') }}" class="w-full bg-white hover:bg-gray-100 text-gray-800 font-bold py-3.5 px-4 rounded-xl flex items-center justify-center border border-gray-300 transform hover:scale-[1.02] transition-all duration-200 mb-6 shadow-sm text-sm">
                         <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>

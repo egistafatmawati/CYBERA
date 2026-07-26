@@ -202,10 +202,10 @@
                                     </div>
                                 </div>
 
-                                <!-- Penjelasan Jawaban (tidak disubmit ke controller krn tidak diwajibkan validasi) -->
+                                <!-- Penjelasan Jawaban -->
                                 <div>
                                     <label class="block text-sm font-bold mb-2">Penjelasan Jawaban</label>
-                                    <textarea x-model="soal.penjelasan" rows="2" class="w-full bg-[#0b112c] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] resize-none"></textarea>
+                                    <textarea :name="`questions[${index}][penjelasan]`" x-model="soal.penjelasan" rows="2" class="w-full bg-[#0b112c] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] resize-none"></textarea>
                                 </div>
                             </div>
                         </div>

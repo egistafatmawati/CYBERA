@@ -91,11 +91,11 @@
                 </div>
 
                 <!-- Buttons -->
-                <div class="flex flex-col md:flex-row justify-center gap-6 mt-8">
-                    <a href="{{ route('user.quiz') }}" class="px-12 py-3 bg-[#FFCC00] text-[#090F31] font-bold rounded-full hover:bg-yellow-500 transition-colors shadow-lg text-lg text-center min-w-[200px]">
+                <div class="flex justify-center gap-4 md:gap-6 mt-8">
+                    <a href="{{ route('user.quiz') }}" class="inline-block py-3 px-6 md:px-10 bg-[#FFCC00] text-[#090F31] font-bold rounded-full hover:bg-yellow-500 transition-colors shadow-lg text-sm md:text-base text-center min-w-[140px] md:min-w-[180px]">
                         Kembali
                     </a>
-                    <a href="{{ route('user.quiz.play', $quiz->id) }}" class="px-12 py-3 bg-[#0b112c] text-[#FFCC00] font-bold rounded-full hover:bg-[#151c3d] transition-colors shadow-lg text-lg text-center min-w-[200px] border border-[#0b112c]">
+                    <a href="{{ route('user.quiz.play', $quiz->id) }}" class="inline-block py-3 px-6 md:px-10 bg-[#0b112c] text-[#FFCC00] font-bold rounded-full hover:bg-[#151c3d] transition-colors shadow-lg text-sm md:text-base text-center min-w-[140px] md:min-w-[180px] border border-[#0b112c]">
                         Mulai Kuis
                     </a>
                 </div>

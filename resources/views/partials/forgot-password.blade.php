@@ -22,7 +22,7 @@
                 <div class="mb-4">
                     <label class="block text-white text-sm font-bold mb-2">Email</label>
                     <input id="reset_email" type="email" name="email" required 
-                           class="w-full rounded-md border border-gray-400 bg-transparent text-white placeholder-gray-400 px-4 py-2.5 outline-none focus:border-[#FFC107] focus:ring-1 focus:ring-[#FFC107]" 
+                           class="w-full rounded-xl border border-gray-400 bg-transparent text-white placeholder-gray-400 px-4 py-3 outline-none focus:border-[#FFC107] focus:ring-1 focus:ring-[#FFC107]" 
                            placeholder="Masukkan email">
                 </div>
 
@@ -31,7 +31,7 @@
                     <label class="block text-white text-sm font-bold mb-2">Password Baru</label>
                     <div class="relative">
                         <input id="reset_password" type="password" name="password" required 
-                               class="w-full rounded-md border border-gray-400 bg-transparent text-white placeholder-gray-400 px-4 py-2.5 pr-12 outline-none focus:border-[#FFC107] focus:ring-1 focus:ring-[#FFC107]" 
+                               class="w-full rounded-xl border border-gray-400 bg-transparent text-white placeholder-gray-400 px-4 py-3 pr-12 outline-none focus:border-[#FFC107] focus:ring-1 focus:ring-[#FFC107]" 
                                placeholder="Masukkan password">
                         <button type="button" onclick="const p = document.getElementById('reset_password'); p.type = p.type === 'password' ? 'text' : 'password';" class="absolute inset-y-0 right-0 pr-4 flex items-center text-white/70 hover:text-white outline-none">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,7 +47,7 @@
                     <label class="block text-white text-sm font-bold mb-2">Verifikasi Password</label>
                     <div class="relative">
                         <input id="reset_password_confirmation" type="password" name="password_confirmation" required 
-                               class="w-full rounded-md border border-gray-400 bg-transparent text-white placeholder-gray-400 px-4 py-2.5 pr-12 outline-none focus:border-[#FFC107] focus:ring-1 focus:ring-[#FFC107]" 
+                               class="w-full rounded-xl border border-gray-400 bg-transparent text-white placeholder-gray-400 px-4 py-3 pr-12 outline-none focus:border-[#FFC107] focus:ring-1 focus:ring-[#FFC107]" 
                                placeholder="Masukkan password">
                         <button type="button" onclick="const p = document.getElementById('reset_password_confirmation'); p.type = p.type === 'password' ? 'text' : 'password';" class="absolute inset-y-0 right-0 pr-4 flex items-center text-white/70 hover:text-white outline-none">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,12 +62,12 @@
                 <div class="flex justify-center gap-3">
                     <!-- Kembali -->
                     <button type="button" onclick="document.getElementById('forgotPasswordModal').classList.add('hidden')"
-                            class="w-1/2 py-2.5 rounded-xl bg-white text-black text-sm font-bold text-center flex items-center justify-center transition duration-300 hover:bg-gray-200">
+                            class="w-1/2 py-3.5 rounded-xl bg-white text-black text-sm font-bold text-center flex items-center justify-center transition duration-300 hover:bg-gray-200">
                         Kembali
                     </button>
                     <!-- Reset -->
                     <button type="button" onclick="showSuccessModal()"
-                            class="w-1/2 py-2.5 rounded-xl bg-[#FFCC00] text-black text-sm font-bold flex items-center justify-center transition duration-300 hover:bg-yellow-400">
+                            class="w-1/2 py-3.5 rounded-xl bg-[#FFCC00] text-black text-sm font-bold flex items-center justify-center transition duration-300 hover:bg-yellow-400">
                         Reset
                     </button>
                 </div>

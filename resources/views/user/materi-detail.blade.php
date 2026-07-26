@@ -22,32 +22,34 @@
     }
     .konten-materi p { 
         margin-bottom: 1rem; 
-        text-align: left; /* Teks rata kiri */
+        text-align: justify; /* Teks rata kanan kiri */
         line-height: 1.7; 
-        font-size: 1rem;
+        font-size: 1.125rem;
     }
     .konten-materi ul {
         list-style-type: disc !important; 
         list-style-position: outside !important;
         padding-left: 1.5rem; 
         margin-bottom: 1.5rem; 
-        text-align: left; /* Teks rata kiri */
+        text-align: justify; /* Teks rata kanan kiri */
         line-height: 1.7;
+        font-size: 1.125rem;
     }
     .konten-materi ol {
         list-style-type: decimal !important; 
         list-style-position: outside !important;
         padding-left: 1.5rem; 
         margin-bottom: 1.5rem; 
-        text-align: left; /* Teks rata kiri */
+        text-align: justify; /* Teks rata kanan kiri */
         line-height: 1.7;
+        font-size: 1.125rem;
     }
     .konten-materi li { margin-bottom: 0.5rem; }
     .konten-materi div { display: flex; flex-direction: column; gap: 1rem; }
 </style>
 
 <!-- Hero Section -->
-<section class="pt-2 px-8 bg-[#090F31]">
+<section class="pt-2 pb-16 px-8 bg-[#090F31]">
     <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[420px] flex items-center justify-center">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
@@ -71,7 +73,7 @@
     <div class="w-full px-16 text-[#090F31]">
         
         <!-- Deskripsi Utama di atas -->
-        <p class="text-base text-[#090F31] leading-relaxed mb-10 text-left">
+        <p class="text-lg text-[#090F31] leading-relaxed mb-10 text-justify">
             {{ $materi->deskripsi }}
         </p>
 

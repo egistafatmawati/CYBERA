@@ -15,8 +15,8 @@
             </div>
             
             <!-- Text -->
-            <h2 class="text-xl sm:text-2xl font-bold text-[#0CD939] tracking-wide uppercase">
-                {!! nl2br(e(str_replace(' berhasil diperbarui!', "\nBERHASIL!", strtoupper(session('success'))))) !!}
+            <h2 class="text-xl sm:text-2xl font-bold text-[#0CD939] tracking-wide capitalize">
+                {!! nl2br(e(str_replace(' berhasil', "\nBerhasil", session('success')))) !!}
             </h2>
             
             <!-- Tombol Close (Opsional) -->

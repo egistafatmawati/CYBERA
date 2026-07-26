@@ -29,7 +29,7 @@
                 <span style="display: block; margin-top: 10px;">Simulasi Nyata</span>
             </h1>
             <p class="text-sm md:text-base text-gray-300 max-w-2xl mx-auto text-center leading-relaxed">
-                Hadapi skenario keamanan siber yang realistis. Dari mengenali email phishing hingga mendeteksi manipulasi sosial — latih insting Anda melindungi diri dari ancaman digital.
+                Hadapi skenario keamanan siber yang realistis. Dari mengenali email phishing hingga mendeteksi manipulasi sosial dan latih insting Anda melindungi diri dari ancaman digital.
             </p>
         </div>
     </div>

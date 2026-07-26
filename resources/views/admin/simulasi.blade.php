@@ -54,7 +54,11 @@
                         <!-- Skenario -->
                         <td class="px-6 py-5 text-center">
                             <span class="px-3 py-1 bg-cyan-50 text-cyan-500 text-[11px] font-bold rounded-full">
-                                {{ is_array($s->skenario) ? count($s->skenario) : 0 }} skenario
+                                @php
+                                    $s_arr = is_string($s->skenario) ? json_decode($s->skenario, true) : $s->skenario;
+                                    $s_count = is_array($s_arr) ? count($s_arr) : 0;
+                                @endphp
+                                {{ $s_count }} skenario
                             </span>
                         </td>
 
