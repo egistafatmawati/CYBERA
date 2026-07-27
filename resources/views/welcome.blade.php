@@ -21,7 +21,7 @@
     @include('partials.header')
 
     <!-- Isi Utama -->
-    <main class="flex-grow pt-[80px]">
+    <main class="flex-grow">
         <!-- Bagian Hero -->
         <section class="bg-[#090F31] pt-4 pb-16 px-6 md:px-8">
             <!-- Container card -->
