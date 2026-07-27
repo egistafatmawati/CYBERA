@@ -42,7 +42,7 @@
 
     </div>
 
-    <!-- Bottom Copyright Box -->
+    <!-- Kotak Hak Cipta Bawah -->
     <div class="max-w-7xl mx-auto mt-12">
         <div class="bg-[#FFFFFF] text-[#090F31] font-bold text-center text-sm py-3 rounded-xl shadow-sm">
             @ 2026 CYBERA - Seluruh hak cipta dilindungi.

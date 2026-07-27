@@ -7,18 +7,18 @@
 
     <title>Login - CYBERA</title>
 
-    <!-- Fonts -->
+    <!-- Font -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 
-    <!-- Scripts -->
+    <!-- Script -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <style>
-        /* Mencegah background putih saat autofill browser aktif */
+        /* Cegah background autofill */
         input:-webkit-autofill,
         input:-webkit-autofill:hover, 
         input:-webkit-autofill:focus, 
@@ -37,16 +37,16 @@
         @include('partials.header')
     </div>
 
-    <!-- Background Image -->
+    <!-- Background -->
     <div class="fixed inset-0 z-[-1]" style="background-image: url('{{ asset('images/card1.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
     
-    <!-- Overlay Hitam Kebiruan agar form lebih jelas -->
+    <!-- Overlay -->
     <div class="fixed inset-0 z-[-1] bg-[#090F31] opacity-40"></div>
 
-    <!-- Konten Tengah -->
+    <!-- Konten -->
     <div class="flex-grow flex items-center justify-center p-4 z-10">
         
-        <!-- Card Login (Glassmorphism Effect) -->
+        <!-- Card Login -->
         <div class="w-full max-w-[430px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-[28px] p-8 flex flex-col justify-center shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
             
             <div class="w-full mx-auto">
@@ -72,7 +72,7 @@
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
-                    <!-- Email Address -->
+                    <!-- Email -->
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-bold text-white mb-1.5">Email atau Username</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" 
@@ -89,7 +89,7 @@
                                    class="block w-full bg-transparent border border-white/70 text-white placeholder-white/80 focus:border-[#FFC107] focus:ring-[#FFC107] rounded-xl px-4 py-3 text-sm transition-colors duration-200" 
                                    placeholder="Masukkan Password Anda">
                             
-                            <!-- Show / Hide Password Button -->
+                            <!-- Toggle Password -->
                             <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-white/80 hover:text-white transition-colors outline-none">
                                 <svg id="eyeIcon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -100,7 +100,7 @@
                         <x-input-error :messages="$errors->get('password')" class="mt-2 text-[#FFC107] text-xs" />
                     </div>
 
-                    <!-- Reset Password Button -->
+                    <!-- Lupa Password -->
                     <div class="flex justify-end mt-2 mb-6">
                         @if (Route::has('password.request'))
                             <button type="button" onclick="document.getElementById('forgotPasswordModal').classList.remove('hidden')" class="text-xs text-[#FF3333] hover:text-[#FF6666] hover:underline transition-colors font-medium">
@@ -109,12 +109,12 @@
                         @endif
                     </div>
 
-                    <!-- Login Button -->
+                    <!-- Tombol Login -->
                     <button type="submit" class="w-full bg-[#FFC107] hover:bg-yellow-400 text-black font-bold py-3.5 px-4 rounded-xl transform hover:scale-[1.02] transition-all duration-200 mb-4 shadow-md text-sm">
                         Login
                     </button>
                     
-                    <!-- Google Login Button -->
+                    <!-- Login Google -->
                     <a href="{{ route('auth.google') }}" class="w-full bg-white hover:bg-gray-100 text-gray-800 font-bold py-3.5 px-4 rounded-xl flex items-center justify-center border border-gray-300 transform hover:scale-[1.02] transition-all duration-200 mb-6 shadow-sm text-sm">
                         <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -125,7 +125,7 @@
                         Lanjut dengan Google
                     </a>
 
-                    <!-- Register Link -->
+                    <!-- Register -->
                     <p class="text-center text-xs text-gray-300">
                         Belum punya akun? <a href="{{ route('register') }}" class="text-[#FFC107] hover:underline font-bold">Register</a>
                     </p>
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <!-- Script for Show/Hide Password -->
+    <!-- Script Toggle Password -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const togglePassword = document.getElementById('togglePassword');

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('app.name', 'CYBERA') }} - Admin</title>
         
-        <!-- Fonts -->
+        <!-- Font -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,10 +19,10 @@
             <!-- Sidebar -->
             @include('layouts.sidebar')
 
-            <!-- Main Content Area -->
+            <!-- Area Konten Utama -->
             <div class="flex-1 ml-64 flex flex-col min-h-screen bg-gray-50">
                 
-                <!-- Page Content -->
+                <!-- Konten Halaman -->
                 <main class="flex-grow p-8">
                     @yield('content')
                 </main>

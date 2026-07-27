@@ -17,11 +17,11 @@
         </p>
     </div>
 
-    <!-- Table Card -->
+    <!-- Kartu Tabel -->
     <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
-                <!-- Table Head -->
+                <!-- Kepala Tabel -->
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
                         <th class="px-6 py-5 text-center w-1/6">Kuis</th>
@@ -29,7 +29,7 @@
                         <th class="px-6 py-5 text-center w-1/6">Aksi</th>
                     </tr>
                 </thead>
-                <!-- Table Body -->
+                <!-- Badan Tabel -->
                 <tbody class="text-sm">
                     @foreach($quizzes as $quiz)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
@@ -87,7 +87,7 @@
     </div>
 </div>
 
-<!-- Edit Quiz Modal (Alpine.js Powered) -->
+<!-- Modal Edit Kuis (Alpine.js Powered) -->
 <div id="editQuizModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity p-4 md:p-8"
     x-data="{
         quizId: null,
@@ -121,7 +121,7 @@
     @open-edit-modal.window="initModal($event); $el.classList.remove('hidden'); $el.classList.add('flex')"
     @close-edit-modal.window="$el.classList.add('hidden'); $el.classList.remove('flex')">
     
-    <!-- Modal Box -->
+    <!-- Kotak Modal -->
     <div class="bg-[#0b112c] text-white rounded-3xl w-full max-w-5xl flex flex-col max-h-[90vh] shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden border border-gray-700" @click.stop>
 
     <!-- Header: Keluar -->
@@ -134,7 +134,7 @@
         </button>
     </div>
 
-    <!-- Form Content -->
+    <!-- Konten Form -->
     <form id="editQuizForm" :action="actionUrl" method="POST" class="flex-1 overflow-y-auto custom-scrollbar flex flex-col">
         @csrf
         @method('PUT')
@@ -163,7 +163,7 @@
                     </button>
                 </div>
 
-                <!-- Soal List (Dinamis dengan Alpine.js) -->
+                <!-- List Soal (Dinamis dengan Alpine.js) -->
                 <div class="space-y-8 pb-10">
                     <template x-for="(soal, index) in soals" :key="index">
                         <div>
@@ -189,13 +189,13 @@
                                         <template x-for="(opsiTeks, opsiIndex) in soal.opsi" :key="opsiIndex">
                                             <div class="flex items-center gap-4">
                                                 <input type="hidden" :name="`questions[${index}][opsis][${opsiIndex}][kode]`" :value="String.fromCharCode(65 + opsiIndex)">
-                                                <!-- Custom Radio Button for Jawaban Benar -->
+                                                <!-- Radio Button Kustom untuk Jawaban Benar -->
                                                 <div class="relative flex items-center justify-center shrink-0">
                                                     <input type="radio" :name="`questions[${index}][jawaban_benar]`" :value="String.fromCharCode(65 + opsiIndex)" :checked="soal.jawaban_benar === opsiIndex" @change="soal.jawaban_benar = opsiIndex" class="peer appearance-none w-6 h-6 border border-gray-500 rounded-full checked:border-[#FFCC00] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#FFCC00] focus:ring-offset-2 focus:ring-offset-[#0b112c]">
                                                     <!-- Titik kuning di tengah radio button -->
                                                     <div class="absolute w-3 h-3 bg-[#FFCC00] rounded-full hidden peer-checked:block pointer-events-none"></div>
                                                 </div>
-                                                <!-- Input Text Opsi -->
+                                                <!-- Input Teks Opsi -->
                                                 <input type="text" :name="`questions[${index}][opsis][${opsiIndex}][teks_opsi]`" x-model="soals[index].opsi[opsiIndex]" class="flex-1 bg-[#0b112c] border border-gray-600 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]">
                                             </div>
                                         </template>
@@ -214,7 +214,7 @@
             </div>
         </div>
 
-        <!-- Footer Buttons -->
+        <!-- Tombol Footer -->
         <div class="bg-[#0b112c] border-t border-gray-800 p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] mt-auto shrink-0 z-10 relative">
             <div class="max-w-4xl mx-auto flex gap-4">
                 <button type="button" @click="$dispatch('close-edit-modal')" class="flex-1 bg-white text-black font-bold py-3.5 rounded-xl hover:bg-gray-200 transition-colors">

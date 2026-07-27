@@ -5,7 +5,7 @@
     /* Sembunyikan footer khusus di halaman materi detail */
     footer { display: none !important; }
 
-    /* Styling Teks Materi */
+    /* Gaya Teks Materi */
     .konten-materi {
         color: #090F31;
         font-family: 'Inter', sans-serif;
@@ -48,16 +48,16 @@
     .konten-materi div { display: flex; flex-direction: column; gap: 1rem; }
 </style>
 
-<!-- Hero Section -->
+<!-- Bagian Hero -->
 <section class="pt-2 pb-16 px-8 bg-[#090F31]">
     <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[420px] flex items-center justify-center">
-        <!-- Background Image -->
+        <!-- Gambar Latar -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/materi 1.png') }}" alt="{{ $materi->judul }}" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-[#090F31]/95 to-[#090F31]/60"></div>
         </div>
         
-        <!-- Text Content -->
+        <!-- Teks Utama -->
         <div class="relative max-w-4xl mx-auto text-center z-10 px-6">
             <h1 class="text-3xl md:text-5xl lg:text-5xl leading-tight mb-6 text-white" style="font-family: 'Audiowide', sans-serif;">
                 {{ $materi->judul }}
@@ -67,7 +67,7 @@
     </div>
 </section>
 
-<!-- Section Konten Utama (Background Putih Penuh Edge-to-Edge) -->
+<!-- Bagian Konten Utama (Latar Putih Penuh Ujung ke Ujung) -->
 <section class="bg-white w-full py-16 flex-grow">
     <!-- Menggunakan px-8 agar garis kiri teks sejajar sempurna dengan garis kiri gambar Hero -->
     <div class="w-full px-16 text-[#090F31]">
@@ -82,7 +82,7 @@
             {!! $materi->isi !!}
         </div>
 
-        <!-- Navigation Buttons (Model minimalis pill button) -->
+        <!-- Tombol Navigasi (Model minimalis pill button) -->
         <div class="flex flex-row justify-between items-center mt-20">
             @if($prev)
                 <a href="{{ route('user.materi.detail', $prev->id) }}" class="inline-block bg-[#FFCC00] text-[#090F31] font-bold py-2.5 px-8 rounded-full hover:bg-yellow-500 transition-colors shadow-sm text-sm md:text-base text-center min-w-[140px]">

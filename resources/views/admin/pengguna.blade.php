@@ -29,11 +29,11 @@
         </div>
     @endif
 
-    <!-- Table Card -->
+    <!-- Kartu Tabel -->
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
-                <!-- Table Head -->
+                <!-- Kepala Tabel -->
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
                         <th class="px-6 py-5 text-center">Pengguna</th>
@@ -44,7 +44,7 @@
                         <th class="px-6 py-5 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <!-- Table Body -->
+                <!-- Badan Tabel -->
                 <tbody class="text-sm">
                     @forelse($penggunas as $p)
                     @php
@@ -131,16 +131,16 @@
     </div>
 </div>
 
-<!-- Edit Pengguna Modal -->
+<!-- Modal Edit Pengguna -->
 <div id="editUserModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
     <div class="bg-[#0b112c] text-white rounded-2xl w-full max-w-sm mx-4 p-8 border border-[#1e2a6d] shadow-2xl relative">
         
-        <!-- Title -->
+        <!-- Judul -->
         <h2 class="text-2xl text-center mb-8" style="font-family: 'Audiowide', sans-serif;">
             Edit Pengguna
         </h2>
 
-        <!-- Form -->
+        <!-- Formulir -->
         <form id="editUserForm" action="" method="POST" class="space-y-6">
             @csrf
             @method('PATCH')
@@ -156,7 +156,7 @@
                 <label class="block text-sm font-bold mb-2">Email</label>
                 <div class="relative">
                     <input type="email" name="email" id="editEmail" placeholder="Masukkan email" required class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
-                    <!-- Eye Icon (from user's design image) -->
+                    <!-- Ikon Mata -->
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -166,7 +166,7 @@
                 </div>
             </div>
 
-            <!-- Buttons -->
+            <!-- Tombol -->
             <div class="flex gap-4 pt-4">
                 <button type="button" onclick="closeEditUserModal()" class="flex-1 bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors">
                     Kembali
@@ -179,21 +179,21 @@
     </div>
 </div>
 
-<!-- Delete Pengguna Modal -->
+<!-- Modal Hapus Pengguna -->
 <div id="deleteUserModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
     <div class="bg-white text-black rounded-3xl w-full max-w-sm mx-4 p-8 pt-10 pb-10 shadow-2xl relative flex flex-col items-center">
         
-        <!-- Question Mark Icon -->
+        <!-- Ikon Tanda Tanya -->
         <div class="w-16 h-16 rounded-full bg-[#C80000] flex items-center justify-center mb-6">
             <span class="text-white text-4xl font-bold font-sans">?</span>
         </div>
 
-        <!-- Title -->
+        <!-- Judul -->
         <h2 class="text-xl text-center font-bold text-[#C80000] mb-8 px-4 leading-snug">
             Apakah kamu yakin untuk menghapus Pengguna?
         </h2>
 
-        <!-- Buttons -->
+        <!-- Tombol -->
         <div class="flex gap-4 w-full">
             <button type="button" onclick="closeDeleteUserModal()" class="flex-1 bg-black text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors text-lg">
                 Batal
@@ -211,12 +211,12 @@
 </div>
 
 <script>
-    // Edit Modal Functions
+    // Fungsi Modal Edit
     function openEditUserModal(id, nama, email) {
         document.getElementById('editNama').value = nama;
         document.getElementById('editEmail').value = email;
         
-        // Update URL form
+        // Update form URL
         const form = document.getElementById('editUserForm');
         form.action = `/admin/pengguna/${id}`;
 
@@ -231,9 +231,9 @@
         modal.classList.remove('flex');
     }
 
-    // Delete Modal Functions
+    // Fungsi Modal Hapus
     function openDeleteUserModal(id) {
-        // Update URL form
+        // Update form URL
         const form = document.getElementById('deleteUserForm');
         form.action = `/admin/pengguna/${id}`;
 

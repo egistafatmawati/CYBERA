@@ -7,14 +7,14 @@
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300" x-data="{ show: true }" x-show="show" x-transition>
         <div class="bg-white rounded-[35px] w-full max-w-[380px] mx-4 px-8 py-10 text-center shadow-2xl relative" @click.away="show = false">
             
-            <!-- Icon -->
+            <!-- Ikon -->
             <div class="mx-auto mb-6 w-20 h-20 rounded-full bg-[#0CD939] flex items-center justify-center shadow-lg shadow-green-500/30">
                 <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
                 </svg>
             </div>
             
-            <!-- Text -->
+            <!-- Teks -->
             <h2 class="text-xl sm:text-2xl font-bold text-[#0CD939] tracking-wide capitalize">
                 {!! nl2br(e(str_replace(' berhasil', "\nBerhasil", session('success')))) !!}
             </h2>
@@ -72,10 +72,10 @@
     </div>
 @endif
 
-<!-- Hero Section -->
+<!-- Bagian Hero -->
 <section class="pt-2 pb-16 px-8">
     <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[250px] md:h-[300px] flex items-center justify-center">
-        <!-- Background Image -->
+        <!-- Gambar Latar -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-[#020510]/100 via-[#020510]/60 to-transparent"></div>
@@ -83,7 +83,7 @@
     </div>
 </section>
 
-<!-- Container Konten Utama -->
+<!-- Konten Utama -->
 <div class="w-[90%] lg:w-[85%] mx-auto pb-20 relative" 
      x-data="{
         isEditing: false,           // mode edit profil (true/false)
@@ -107,13 +107,13 @@
                        @change="
                            const file = $event.target.files[0];
                            if (file) {
-                               // Preview foto
+                               // Pratinjau foto
                                const reader = new FileReader();
                                reader.onload = (e) => {
                                    previewFoto = e.target.result;
                                };
                                reader.readAsDataURL(file);
-                               // Auto submit form
+                               // Kirim otomatis form
                                document.getElementById('fotoForm').submit();
                            }
                        ">

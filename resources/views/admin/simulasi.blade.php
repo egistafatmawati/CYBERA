@@ -22,11 +22,11 @@
     </div>
     @endif
 
-        <!-- Table Card -->
+        <!-- Kartu Tabel -->
         <div class="bg-white border border-gray-200 overflow-hidden shadow-sm">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
-                <!-- Table Head -->
+                <!-- Kepala Tabel -->
                 <thead>
                     <tr class="bg-[#F4F4F4] border-b border-gray-200 text-sm text-black font-bold uppercase tracking-wider">
                         <th class="px-6 py-5 text-center w-1/6">Simulasi</th>
@@ -35,7 +35,7 @@
                         <th class="px-6 py-5 text-center w-1/6">Aksi</th>
                     </tr>
                 </thead>
-                <!-- Table Body -->
+                <!-- Badan Tabel -->
                 <tbody class="text-sm">
                     @forelse($simulasis as $s)
                     <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors bg-white">
@@ -89,7 +89,7 @@
     </div>
 </div>
 
-<!-- Edit Simulasi Modal -->
+<!-- Modal Edit Simulasi -->
 <div id="editSimulasiModal" class="fixed inset-0 z-[100] items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity p-4"
     x-data="{
         isOpen: false,
@@ -184,7 +184,7 @@
     :class="isOpen ? 'flex' : 'hidden'"
     @open-simulasi-modal.window="initModal($event.detail.data)">
     
-    <!-- Modal Container -->
+    <!-- Wadah Modal -->
     <div class="bg-[#0b112c] text-white rounded-2xl w-full max-w-4xl flex flex-col max-h-[90vh] shadow-2xl relative border border-gray-700">
         
         <!-- Header: Keluar -->
@@ -198,7 +198,7 @@
             </button>
         </div>
 
-        <!-- Form Content (Scrollable) -->
+        <!-- Konten Form (Scrollable) -->
         <div class="flex-1 p-5 md:p-6 overflow-y-auto custom-scrollbar">
             <form id="simulasiForm" :action="isEdit ? `/admin/simulasi/${id}` : `{{ route('admin.simulasi.store') }}`" method="POST" class="space-y-6">
                 @csrf
@@ -268,7 +268,7 @@
                     </div>
                 </div>
 
-                <!-- Skenarios Loop -->
+                <!-- Looping Skenario -->
                 <template x-for="(skenario, sIndex) in skenarios" :key="sIndex">
                     <div class="mb-8">
                         <div class="flex justify-between items-center mb-3">
@@ -286,7 +286,7 @@
                                 <textarea x-model="skenario.skenario_teks" :name="`skenario[${sIndex}][skenario_teks]`" rows="4" required class="w-full bg-[#050a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"></textarea>
                             </div>
 
-                            <!-- Percakapan (Only for Social Engineering) -->
+                            <!-- Percakapan (Hanya untuk Social Engineering) -->
                             <template x-if="skenario.percakapan !== undefined">
                                 <div class="mb-5">
                                     <div class="flex justify-between items-center mb-3">
@@ -326,12 +326,12 @@
                                 <div class="space-y-3">
                                     <template x-for="(opt, oIndex) in skenario.opsi" :key="oIndex">
                                         <div class="flex items-center gap-3">
-                                            <!-- Radio for correct answer -->
+                                            <!-- Radio untuk jawaban benar -->
                                             <div class="relative flex items-center justify-center w-5 h-5 flex-shrink-0">
                                                 <input type="radio" :name="`skenario[${sIndex}][jawaban_benar]`" :value="oIndex" x-model="skenario.jawaban_benar" required class="peer appearance-none w-5 h-5 border border-gray-500 rounded-full checked:border-[#FFCC00] cursor-pointer transition-colors">
                                                 <div class="absolute w-2.5 h-2.5 bg-[#FFCC00] rounded-full hidden peer-checked:block pointer-events-none"></div>
                                             </div>
-                                            <!-- Option Text -->
+                                            <!-- Teks Opsi -->
                                             <input type="text" x-model="skenario.opsi[oIndex]" :name="`skenario[${sIndex}][opsi][${oIndex}]`" required class="flex-1 bg-[#050a24] border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors">
                                         </div>
                                     </template>
@@ -350,7 +350,7 @@
             </form>
         </div>
 
-        <!-- Footer Buttons -->
+        <!-- Tombol Footer -->
         <div class="bg-[#0b112c] border-t border-gray-800 p-5 md:p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] rounded-b-2xl">
             <div class="flex gap-4">
                 <button type="button" @click="closeModal()" class="flex-1 bg-white text-black font-bold py-3.5 rounded-xl hover:bg-gray-200 transition-colors">

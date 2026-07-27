@@ -1,16 +1,16 @@
 @extends('layouts.user')
 
 @section('content')
-<!-- Hero Section -->
+<!-- Bagian Hero -->
 <section class="pt-2 pb-16 px-8">
     <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[420px] flex items-center justify-center">
-        <!-- Background Image -->
+        <!-- Gambar Latar -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-[#020510]/100 via-[#020510]/60 to-transparent"></div>
         </div>
         
-        <!-- Text Content -->
+        <!-- Teks Utama -->
         <div class="relative max-w-4xl mx-auto text-center z-10 px-6">
             <h1 class="text-3xl md:text-4xl lg:text-[42px] leading-tight mb-6 text-white tracking-wide" style="font-family: 'Audiowide', sans-serif;">
                 Tingkatkan Kesadaran <br />
@@ -27,9 +27,9 @@
     </div>
 </section>
 
-<!-- Container Konten Utama -->
+<!-- Konten Utama -->
 <div class="w-[90%] lg:w-[85%] mx-auto pb-20 relative">
-    <!-- Feature Cards — Welcome Page Style Flex -->
+    <!-- Daftar Kartu Fitur -->
     <div class="flex flex-col md:flex-row justify-center max-w-full mx-auto w-full" style="margin-bottom: 3rem; gap: 2.5rem;">
         
         <!-- Materi -->
@@ -42,7 +42,7 @@
             <div class="flex flex-col text-left">
                 <h3 class="text-[#090F31] font-bold text-lg mb-2">Materi</h3>
                 <p class="text-sm leading-relaxed mb-4" style="color: rgba(9, 15, 49, 0.8);">Pelajari Topik Keamanan Siber</p>
-                <!-- Play Button -->
+                <!-- Tombol Putar -->
                 <div class="mt-auto">
                     <svg class="w-8 h-8" style="color: #FFCC00;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -62,7 +62,7 @@
             <div class="flex flex-col text-left">
                 <h3 class="text-[#090F31] font-bold text-lg mb-2">Simulasi</h3>
                 <p class="text-sm leading-relaxed mb-4" style="color: rgba(9, 15, 49, 0.8);">Uji kemampuan dengan skenario interaktif.</p>
-                <!-- Play Button -->
+                <!-- Tombol Putar -->
                 <div class="mt-auto">
                     <svg class="w-8 h-8" style="color: #FFCC00;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -82,7 +82,7 @@
             <div class="flex flex-col text-left">
                 <h3 class="text-[#090F31] font-bold text-lg mb-2">Kuis</h3>
                 <p class="text-sm leading-relaxed mb-4" style="color: rgba(9, 15, 49, 0.8);">Evaluasi pemahaman Anda dengan kuis.</p>
-                <!-- Play Button -->
+                <!-- Tombol Putar -->
                 <div class="mt-auto">
                     <svg class="w-8 h-8" style="color: #FFCC00;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -94,7 +94,7 @@
 
     </div>
 
-    <!-- Chart Section -->
+    <!-- Bagian Grafik -->
     <div class="bg-white p-6 lg:p-8 shadow-lg mb-8" style="border-radius: 20px;">
         <div class="flex justify-between items-center mb-6">
             <h3 class="font-bold text-[16px]" style="color: #090F31;">Kemajuan Belajar</h3>

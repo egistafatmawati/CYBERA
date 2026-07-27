@@ -16,13 +16,13 @@
 
 <section class="pt-2 pb-16 px-8">
     <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[420px] flex items-center justify-center">
-        <!-- Background Image -->
+        <!-- Gambar Latar -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-[#020510]/100 via-[#020510]/60 to-transparent"></div>
         </div>
         
-        <!-- Text Content -->
+        <!-- Teks Utama -->
         <div class="relative max-w-4xl mx-auto text-center z-10 px-6">
             <h1 class="text-3xl md:text-4xl lg:text-[42px] leading-tight mb-6 text-white tracking-wide" style="font-family: 'Audiowide', sans-serif;">
                 Uji Kemampuan Anda dengan <br />
@@ -35,24 +35,24 @@
     </div>
 </section>
 
-<!-- Container Konten Utama -->
+<!-- Konten Utama -->
 <div class="w-[90%] lg:w-[85%] mx-auto pb-20 relative">
 
-    <!-- Cards Grid -->
+    <!-- Daftar Kartu -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 w-full mx-auto">
         @foreach($simulasis as $index => $item)
         @php
             $iconIndex = $index % count($icons);
         @endphp
         <div class="bg-white p-6 min-h-[245px] shadow-lg flex gap-4 transition-transform hover:scale-[1.02]" style="border-radius: 20px;">
-            <!-- Icon -->
+            <!-- Ikon -->
             <div class="shrink-0 flex items-center justify-center rounded-md" style="width: 48px; height: 48px; background-color: #FFCC00;">
                 <svg class="w-6 h-6" style="color: #090F31;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     {!! $icons[$iconIndex] !!}
                 </svg>
             </div>
             
-            <!-- Content -->
+            <!-- Konten -->
             <div class="flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-[#090F31] mb-4 group-hover:text-[#FFCC00] transition-colors">
                             {{ $item->judul }}
@@ -61,7 +61,7 @@
                             {{ Str::limit($item->deskripsi, 250) }}
                         </p>
                 
-                <!-- Play Button Bottom Left -->
+                <!-- Tombol Mulai -->
                 <div class="mt-4 flex justify-start">
                     <a href="{{ route('user.simulasi.show', ['materi' => $item->materi_id]) }}" class="flex items-center justify-center transition-opacity hover:opacity-80">
                         <svg class="w-8 h-8" style="color: #FFCC00;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

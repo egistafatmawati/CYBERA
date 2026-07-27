@@ -1,4 +1,4 @@
-    <!-- Forgot Password Modal -->
+    <!-- Lupa Password Modal -->
     <div id="forgotPasswordModal" class="hidden">
         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
         
@@ -9,7 +9,7 @@
                 <img src="{{ asset('images/LOGO 1.png') }}" alt="CYBERA" class="h-14 object-contain">
             </div>
             
-            <!-- Title -->
+            <!-- Judul -->
             <div class="text-center mb-6">
                 <h1 class="text-[22px] text-white leading-tight font-normal" style="font-family:'Audiowide',sans-serif;">Reset Password</h1>
             </div>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 
-                <!-- Buttons -->
+                <!-- Tombol -->
                 <div class="flex justify-center gap-3">
                     <!-- Kembali -->
                     <button type="button" onclick="document.getElementById('forgotPasswordModal').classList.add('hidden')"
@@ -76,19 +76,19 @@
         </div>
     </div>
 
-    <!-- Success Modal Popup -->
+    <!-- Popup Berhasil -->
     <div id="successModal" class="hidden">
         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
         <div class="bg-white rounded-[35px] w-full max-w-[380px] mx-4 px-8 py-10 text-center shadow-2xl relative">
             
-            <!-- Icon -->
+            <!-- Ikon -->
             <div class="mx-auto mb-6 w-20 h-20 rounded-full bg-[#0CD939] flex items-center justify-center shadow-lg shadow-green-500/30">
                 <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
                 </svg>
             </div>
             
-            <!-- Text -->
+            <!-- Teks -->
             <h2 class="text-xl sm:text-2xl font-bold text-[#0CD939] tracking-wide">
                 RESET PASSWORD<br/>BERHASIL!
             </h2>
@@ -103,14 +103,14 @@
     
     <script>
         function showSuccessModal() {
-            // Hide reset modal
+            // Sembunyikan modal reset
             document.getElementById('forgotPasswordModal').classList.add('hidden');
             
-            // Show success modal
+            // Tampilkan modal sukses
             const success = document.getElementById('successModal');
             success.classList.remove('hidden');
             
-            // Auto close after 4 seconds
+            // Tutup otomatis setelah 4 detik
             setTimeout(() => {
                 success.classList.add('hidden');
             }, 4000);

@@ -16,18 +16,18 @@
         </div>
     </div>
 
-    <!-- Flash message -->
+    <!-- Pesan Flash -->
     @if(session('success'))
     <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
         {{ session('success') }}
     </div>
     @endif
 
-    <!-- Table Card -->
+    <!-- Kartu Tabel -->
     <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
-                <!-- Table Head -->
+                <!-- Kepala Tabel -->
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-200 text-sm text-[#090F31] font-bold uppercase tracking-wider">
                         <th class="px-6 py-5 text-center w-1/6">Materi</th>
@@ -35,7 +35,7 @@
                         <th class="px-6 py-5 text-center w-1/6">Aksi</th>
                     </tr>
                 </thead>
-                <!-- Table Body -->
+                <!-- Badan Tabel -->
                 <tbody class="text-sm">
                     @forelse($materis as $m)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
@@ -112,7 +112,7 @@
                     <textarea name="isi" rows="12" required class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none leading-relaxed"></textarea>
                 </div>
 
-                <!-- Buttons -->
+                <!-- Tombol -->
                 <div class="flex gap-4 pt-4">
                     <button type="button" onclick="closeAddMateriModal()" class="flex-1 bg-white text-black font-bold py-3.5 rounded-xl hover:bg-gray-200 transition-colors">
                         Batal
@@ -167,7 +167,7 @@
                     <textarea id="editIsi" name="isi" rows="12" required class="w-full bg-[#050a24] border border-gray-600 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none leading-relaxed"></textarea>
                 </div>
 
-                <!-- Buttons -->
+                <!-- Tombol -->
                 <div class="flex gap-4 pt-4">
                     <button type="button" onclick="closeEditMateriModal()" class="flex-1 bg-white text-black font-bold py-3.5 rounded-xl hover:bg-gray-200 transition-colors">
                         Batal
@@ -182,7 +182,7 @@
 </div>
 
 <script>
-    // === MODAL ADD ===
+    // === MODAL TAMBAH ===
     function openAddMateriModal() {
         const modal = document.getElementById('addMateriModal');
         modal.classList.remove('hidden');
@@ -216,7 +216,7 @@
 </script>
 
 <style>
-    /* Custom scrollbar for textareas inside dark modal */
+    /* Scrollbar kustom untuk textarea di dalam modal gelap */
     .custom-scrollbar::-webkit-scrollbar {
         width: 8px;
     }

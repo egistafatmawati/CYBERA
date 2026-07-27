@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('app.name', 'CYBERA') }}</title>
         
-        <!-- Fonts -->
+        <!-- Font -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,15 +15,15 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-['Inter'] antialiased bg-[#090F31] text-white flex flex-col min-h-screen">
-        <!-- Unified Header -->
+        <!-- Header -->
         @include('partials.header')
 
-        <!-- Main Content -->
+        <!-- Konten Utama -->
         <main class="flex-grow">
             @yield('content')
         </main>
 
-        <!-- Unified Footer -->
+        <!-- Footer -->
         @include('partials.footer')
 
         @stack('scripts')

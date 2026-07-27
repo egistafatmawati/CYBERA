@@ -5,7 +5,7 @@
         <img src="{{ asset('images/LOGO 2.png') }}?v={{ time() }}" alt="CYBERA Logo" class="h-8 md:h-10 lg:h-12">
     </div>
 
-    <!-- Navigation Links -->
+    <!-- Tautan Navigasi -->
     <nav class="flex items-center space-x-3 md:space-x-6 lg:space-x-10 text-xs md:text-sm lg:text-base font-medium">
         <a href="{{ route('user.dashboard') }}" class="{{ request()->routeIs('user.dashboard') ? 'text-[#FFCC00]' : 'hover:text-[#FFCC00]' }} transition-colors duration-200">Dashboard</a>
         <a href="{{ route('user.materi') }}" class="{{ request()->routeIs('user.materi*') ? 'text-[#FFCC00]' : 'hover:text-[#FFCC00]' }} transition-colors duration-200">Materi</a>
@@ -14,9 +14,9 @@
     </nav>
 
     @auth
-    <!-- User Actions (Logged In) -->
+    <!-- Aksi Pengguna (Login) -->
     <div class="flex items-center space-x-3 lg:space-x-4 shrink-0">
-        <!-- Profile Icon -->
+        <!-- Ikon Profil -->
         <a href="{{ route('user.profile') }}" class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 bg-transparent hover:border-[#FFCC00] hover:text-[#FFCC00] text-gray-200 transition-colors duration-200 overflow-hidden">
             @if(Auth::user()->foto)
                 <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="Profile" class="w-full h-full object-cover">
@@ -27,13 +27,13 @@
             @endif
         </a>
 
-        <!-- Logout Button -->
+        <!-- Tombol Keluar -->
         <button type="button" onclick="document.getElementById('logoutModal').classList.remove('hidden')" class="px-5 py-2 bg-[#CC0000] hover:bg-red-700 text-[#FFFFFF] rounded-2xl text-base font-medium transition-colors duration-200 shadow-sm">
             Logout
         </button>
     </div>
     @else
-    <!-- Guest Actions (Not Logged In) -->
+    <!-- Aksi Tamu (Belum Login) -->
     <div class="flex items-center space-x-2 md:space-x-4 shrink-0">
         <a href="{{ route('login') }}" class="px-6 py-2 bg-[#00E676] hover:bg-green-500 text-white rounded-md font-semibold transition-colors duration-200">
             Login

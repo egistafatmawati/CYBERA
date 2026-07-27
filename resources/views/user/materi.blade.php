@@ -1,16 +1,16 @@
 @extends('layouts.user')
 
 @section('content')
-<!-- Hero Section -->
+<!-- Bagian Hero -->
 <section class="pt-2 pb-16 px-8">
     <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[420px] flex items-center justify-center">
-        <!-- Background Image -->
+        <!-- Gambar Latar -->
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-[#020510]/100 via-[#020510]/60 to-transparent"></div>
         </div>
         
-        <!-- Text Content -->
+        <!-- Teks Utama -->
         <div class="relative z-10 text-center py-20 md:py-28 px-6">
             <h1 class="text-3xl md:text-5xl lg:text-[50px] leading-tight mb-6 text-white" style="font-family: 'Audiowide', sans-serif;">
                 Pelajari Keamanan Siber 
@@ -22,9 +22,9 @@
     </div>
 </section>
 
-<!-- Container Konten Utama -->
+<!-- Konten Utama -->
 <div class="w-[90%] lg:w-[85%] mx-auto pb-20 relative">
-    <!-- Cards Grid -->
+    <!-- Daftar Kartu -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
         @forelse($materis as $item)
         @php
@@ -46,7 +46,7 @@
         <div class="bg-transparent overflow-hidden shadow-xl transform hover:-translate-y-2 transition-transform duration-300 flex flex-col" style="border-radius: 20px;">
             <div class="relative h-56 bg-transparent overflow-hidden">
                 <img src="{{ asset($image) }}" alt="{{ $item->judul }}" class="absolute top-0 left-0 w-full object-cover" style="height: calc(100% + 24px); object-position: top;">
-                <!-- Icon Overlapping (Bottom Left) -->
+                <!-- Ikon Tumpang Tindih (Kiri Bawah) -->
                 <div class="absolute w-10 h-10 rounded-md flex items-center justify-center shadow-lg z-20" style="bottom: 1.5rem; left: 1.5rem; background-color: #FFCC00; color: #090F31;">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         {!! $icon !!}

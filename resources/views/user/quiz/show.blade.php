@@ -15,14 +15,14 @@
 @endphp
 
 <div class="bg-white min-h-screen w-full flex flex-col">
-    <!-- Top Dark Section -->
+    <!-- Bagian Gelap Atas -->
     <div class="bg-[#090F31] w-full pt-8 pb-16">
         <div class="w-full max-w-[1440px] mx-auto px-6 lg:px-10">
-            <!-- Banner Section -->
+            <!-- Bagian Banner -->
             <div class="relative w-full rounded-[20px] overflow-hidden shadow-xl bg-black">
                 <div class="absolute top-0 left-0 w-full h-[350px] z-0">
                     <img src="{{ $bannerImage }}" alt="{{ $quiz->judul }}" class="w-full h-full object-cover">
-                    <!-- Overlay to darken background slightly for text readability -->
+                    <!-- Efek gelap latar agar teks mudah dibaca -->
                     <div class="absolute inset-0 bg-gradient-to-t from-[#090F31]/90 to-[#090F31]/30"></div>
                 </div>
                 <div class="relative z-10 text-center py-20 px-6 h-[350px] flex flex-col justify-center items-center">
@@ -37,11 +37,11 @@
         </div>
     </div>
 
-    <!-- Bottom White Section -->
+    <!-- Bagian Putih Bawah -->
     <div class="bg-white w-full flex-grow pt-10 pb-20">
         <div class="w-full max-w-[1440px] mx-auto px-6 lg:px-10">
             @if(!isset($questions) || $questions->isEmpty())
-                <!-- Fallback if quiz has no questions -->
+                <!-- Jika kuis tidak memiliki pertanyaan -->
                 <div class="max-w-[1000px] mx-auto bg-[#0b112c] rounded-[20px] p-8 md:p-12 shadow-2xl text-center text-white border border-gray-800">
                     <div class="flex flex-col items-center justify-center gap-4">
                         <div class="bg-red-100 p-4 rounded-full text-red-600">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             @else
-                <!-- Intro / Summary Card -->
+                <!-- Kartu Intro / Ringkasan -->
                 <div id="quiz-intro-card" class="max-w-[1000px] mx-auto bg-[#0b112c] rounded-[20px] p-8 md:p-12 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.3)] mb-12 border border-gray-800">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="bg-[#FFCC00] p-2 rounded-lg text-[#090F31] shrink-0">
@@ -90,7 +90,7 @@
                     </p>
                 </div>
 
-                <!-- Buttons -->
+                <!-- Tombol -->
                 <div class="flex justify-center gap-4 md:gap-6 mt-8">
                     <a href="{{ route('user.quiz') }}" class="inline-block py-3 px-6 md:px-10 bg-[#FFCC00] text-[#090F31] font-bold rounded-full hover:bg-yellow-500 transition-colors shadow-lg text-sm md:text-base text-center min-w-[140px] md:min-w-[180px]">
                         Kembali

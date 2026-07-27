@@ -15,7 +15,7 @@
             
             <div class="space-y-6">
                 @foreach($questions as $index => $question)
-                    <!-- Question Container -->
+                    <!-- Kontainer Pertanyaan -->
                     <div class="bg-[#1e2443] text-white p-6 md:p-8 rounded-xl border border-[#333a64] shadow-lg relative">
                         <input type="hidden" name="jawaban[{{ $index }}][question_id]" value="{{ $question['id'] }}">
                         
@@ -24,7 +24,7 @@
                             <span>{{ $question['pertanyaan'] }}</span>
                         </h3>
 
-                        <!-- Answer Options -->
+                        <!-- Pilihan Jawaban -->
                         <div class="grid grid-cols-1 gap-4">
                             @foreach($question['opsis'] as $opsi)
                                 <div class="relative">
@@ -47,7 +47,7 @@
                 @endforeach
             </div>
 
-            <!-- Form Submission Buttons -->
+            <!-- Tombol Pengiriman Form -->
             <div class="flex justify-end mt-12 mb-8">
                 <button type="submit" class="px-12 py-3 bg-[#FFCC00] text-[#090F31] font-bold rounded-full hover:bg-yellow-500 transition-colors shadow-lg text-lg">
                     Selesai

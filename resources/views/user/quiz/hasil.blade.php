@@ -24,7 +24,7 @@
             @foreach($quizResult->details as $index => $detail)
                 @php
                     $question = $detail->question;
-                    // Note: This relies on lazy loading if not eager loaded by backend
+                    // Catatan: Ini bergantung pada lazy loading jika tidak dimuat awal oleh backend
                     $options = $question->options ?? collect(); 
                 @endphp
                 <div class="bg-[#1e2443] text-white p-6 md:p-8 rounded-xl border border-[#333a64] shadow-lg">
@@ -44,11 +44,11 @@
                                 $textClass = 'text-gray-300';
 
                                 if ($isCorrectAnswer) {
-                                    $bgClass = 'bg-[#00c853]'; // Bright green
+                                    $bgClass = 'bg-[#00c853]'; // Hijau terang
                                     $borderClass = 'border-[#00c853]';
                                     $textClass = 'text-white font-bold';
                                 } elseif ($isUserAnswer && !$detail->is_correct) {
-                                    $bgClass = 'bg-[#d50000]'; // Red for wrong answer
+                                    $bgClass = 'bg-[#d50000]'; // Merah untuk jawaban salah
                                     $borderClass = 'border-[#d50000]';
                                     $textClass = 'text-white font-bold';
                                 }
@@ -60,7 +60,7 @@
                         @endforeach
                     </div>
 
-                    <!-- Penjelasan Box -->
+                    <!-- Kotak Penjelasan -->
                     <div class="mt-8 border border-[#FFCC00]/50 bg-[#FFCC00]/10 rounded-lg p-6">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="bg-[#FFCC00] text-[#090F31] w-6 h-6 rounded flex items-center justify-center font-bold text-sm">

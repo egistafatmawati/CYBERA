@@ -34,11 +34,11 @@
         </div>
     @endif
 
-    <!-- Informasi Profil Card -->
+    <!-- Area Profil Utama -->
     <div class="bg-[#F4F4F4] rounded-xl border border-gray-300 overflow-hidden shadow-sm">
         <div class="p-6 md:p-8">
             <div class="flex items-center gap-4 mb-6">
-                <!-- Foto Placeholder -->
+                <!-- Info Profil Statis -->
                 <div class="w-16 h-16 rounded-full bg-[#090F31] flex items-center justify-center text-[#FFCC00] text-2xl font-bold shadow-inner">
                     {{ strtoupper(substr($user->name, 0, 1)) }}
                 </div>

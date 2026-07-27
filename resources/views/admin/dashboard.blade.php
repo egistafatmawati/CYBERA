@@ -10,7 +10,7 @@
         </h1>
     </div>
 
-    <!-- Stats Cards -->
+    <!-- Kartu Statistik -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         <!-- Total Pengguna -->
@@ -52,7 +52,7 @@
                     <h3 class="text-2xl font-bold text-green-500">{{ $rataRataSkor }}<span class="text-lg text-[#090F31]">/100</span></h3>
                 </div>
             </div>
-            <!-- Progress Bar at bottom of card -->
+            <!-- Bilah Kemajuan di bawah kartu -->
             <div class="absolute bottom-0 left-0 w-full h-1.5 flex px-6 pb-2">
                 <div class="w-full h-1.5 bg-[#090F31] rounded-full overflow-hidden flex">
                     <div class="bg-green-500 h-full" style="width: {{ $rataRataSkor }}%;"></div>
@@ -104,7 +104,7 @@
                 $count = $distribusiNilai[$range['key']] ?? 0;
                 $width = $totalAttempt > 0 ? round(($count / $totalAttempt) * 100) : 0;
             @endphp
-            <!-- Range {{ $range['label'] }} -->
+            <!-- Rentang {{ $range['label'] }} -->
             <div class="flex items-center text-sm">
                 <div class="w-16 shrink-0 font-medium text-[#090F31]">{{ $range['label'] }}</div>
                 <div class="flex-grow">

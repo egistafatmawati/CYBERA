@@ -1,13 +1,13 @@
 <aside class="w-64 fixed inset-y-0 left-0 bg-[#070b24] border-r border-[#1e2a6d] flex flex-col z-50 text-sm font-medium">
     
-    <!-- Logo Section -->
+    <!-- Bagian Logo -->
     <div class="px-6 py-6 border-b border-[#FFCC00]/50 flex justify-center">
         <a href="{{ route('admin.dashboard') }}" class="block">
             <img src="{{ asset('images/LOGO 2.png') }}?v={{ time() }}" alt="CYBERA Logo" class="h-10 object-contain mx-auto">
         </a>
     </div>
 
-    <!-- Navigation Links -->
+    <!-- Tautan Navigasi -->
     <nav class="flex-grow flex flex-col px-4 py-6 space-y-2 overflow-y-auto">
         
         <!-- Dashboard -->
@@ -68,7 +68,7 @@
 
     </nav>
 
-    <!-- Logout Section -->
+    <!-- Bagian Keluar -->
     <div class="p-4 border-t border-[#1e2a6d]">
         <button type="button" onclick="document.getElementById('logoutModal').classList.remove('hidden')" 
            class="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl transition-colors text-gray-300 hover:bg-[#CC0000]/20 hover:text-[#CC0000]">

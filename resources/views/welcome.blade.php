@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CYBERA - Cyber Education & Awareness</title>
 
-    <!-- Fonts -->
+    <!-- Font -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 
-    <!-- Scripts (Tailwind CSS via Vite) -->
+    <!-- Script (Tailwind CSS via Vite) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-['Inter'] antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -20,14 +20,14 @@
     <!-- Header -->
     @include('partials.header')
 
-    <!-- Main Content -->
-    <main class="flex-grow">
-                <!-- Hero Section -->
+    <!-- Isi Utama -->
+    <main class="flex-grow pt-[80px]">
+        <!-- Bagian Hero -->
         <section class="bg-[#090F31] pt-4 pb-16 px-6 md:px-8">
-            <!-- Container utama diubah jadi card dengan rounded-3xl dan shadow -->
+            <!-- Container card -->
             <div class="w-full px-8 mx-auto relative rounded-[2rem] overflow-hidden shadow-2xl min-h-[400px] md:min-h-[500px] flex items-center justify-center">
                 
-                <!-- Dekorasi Background gambar rasi bintang / node -->
+                <!-- Background dekorasi -->
                 <div class="absolute inset-0 z-0">
                     <img src="{{ asset('images/card1.png') }}" alt="Background" class="w-full h-full object-cover">
                     <!-- Layer gradient gelap untuk kontras text -->
@@ -49,7 +49,7 @@
         </section>
 
 
-        <!-- Steps / Cards Section -->
+        <!-- Bagian Langkah / Kartu -->
         <section class="py-20 px-6 bg-white">
             <div class="max-w-7xl mx-auto text-center mb-16">
                 <h2 class="text-3xl mb-4 text-[#090F31]" style="font-family: 'Audiowide', sans-serif;">
@@ -59,7 +59,7 @@
             </div>
 
             <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Card 1 -->
+                <!-- Kartu 1 -->
                 <div class="bg-[#090F31] rounded-2xl p-8 text-center flex flex-col items-center shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
                     <div class="w-16 h-16 bg-[#FFCC00] rounded-xl flex items-center justify-center mb-6 text-[#090F31]">
                         <!-- Icon User Add -->
@@ -71,7 +71,7 @@
                     <p class="text-gray-300 text-sm leading-relaxed">Buat akun dalam hitungan detik dan mulai perjalanan edukasi keamanan siber.</p>
                 </div>
 
-                <!-- Card 2 -->
+                <!-- Kartu 2 -->
                 <div class="bg-[#090F31] rounded-2xl p-8 text-center flex flex-col items-center shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
                     <div class="w-16 h-16 bg-[#FFCC00] rounded-xl flex items-center justify-center mb-6 text-[#090F31]">
                         <!-- Icon Book -->
@@ -83,7 +83,7 @@
                     <p class="text-gray-300 text-sm leading-relaxed">Akses materi edukasi lengkap tentang berbagai topik keamanan siber.</p>
                 </div>
 
-                <!-- Card 3 -->
+                <!-- Kartu 3 -->
                 <div class="bg-[#090F31] rounded-2xl p-8 text-center flex flex-col items-center shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
                     <div class="w-16 h-16 bg-[#FFCC00] rounded-xl flex items-center justify-center mb-6 text-[#090F31]">
                         <!-- Icon Monitor -->
@@ -95,7 +95,7 @@
                     <p class="text-gray-300 text-sm leading-relaxed">Praktikan pengetahuan Anda melalui simulasi interaktif berbasis skenario nyata.</p>
                 </div>
 
-                <!-- Card 4 -->
+                <!-- Kartu 4 -->
                 <div class="bg-[#090F31] rounded-2xl p-8 text-center flex flex-col items-center shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
                     <div class="w-16 h-16 bg-[#FFCC00] rounded-xl flex items-center justify-center mb-6 text-[#090F31]">
                         <!-- Icon Clipboard Check -->

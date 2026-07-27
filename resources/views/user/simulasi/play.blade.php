@@ -7,20 +7,20 @@
 
 @php
     $judulSimulasi = 'Simulasi ' . ($materi->judul ?? 'Keamanan Siber');
-    // Decode JSON string to array if it is a string
+    // Ubah string JSON jadi array jika masih string
     $skenarios = is_string($simulasi->skenario) ? json_decode($simulasi->skenario, true) : ($simulasi->skenario ?? []);
 @endphp
 
 <div class="min-h-screen flex flex-col">
     @if(count($skenarios) > 0)
         @foreach($skenarios as $index => $skenario)
-        <!-- Skenario Container -->
+        <!-- Wadah Skenario -->
         <div id="skenario-{{ $index }}" class="skenario-container {{ $index > 0 ? 'hidden' : 'flex' }} flex-col min-h-screen w-full">
             
-            <!-- Top Dark Section -->
+            <!-- Bagian Gelap Atas -->
             <div class="bg-[#090F31] pt-8 pb-12 flex-none">
                 <div class="w-full max-w-4xl mx-auto px-6">
-                    <!-- Header / Back Button -->
+                    <!-- Header / Tombol Kembali -->
                     <div class="flex items-center gap-4 mb-8">
                         <a href="{{ route('user.simulasi.show', ['materi' => $materi->id]) }}" class="flex items-center gap-2 text-[#FFCC00] font-bold hover:text-yellow-400 transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -28,10 +28,10 @@
                         </a>
                     </div>
 
-                    <!-- Skenario Box -->
+                    <!-- Kotak Skenario -->
                     <div class="border border-gray-400 rounded-xl p-6 md:p-8 bg-slate-800 shadow-lg text-gray-200">
                         @if(isset($skenario['percakapan']) && count($skenario['percakapan']) > 0)
-                            <!-- Layout Bubble Chat -->
+                            <!-- Tampilan Bubble Chat -->
                             <div class="space-y-6 mb-4 text-left">
                                 <p class="text-gray-300 border-b border-gray-600 pb-4 mb-4 text-sm">{{ $skenario['skenario_teks'] ?? $skenario['konten'] ?? '' }}</p>
                                 @foreach($skenario['percakapan'] as $chat)
@@ -44,14 +44,14 @@
                                 @endforeach
                             </div>
                         @else
-                            <!-- Layout Teks Biasa (Email dll) -->
+                            <!-- Tampilan Teks Biasa (Email dll) -->
                             <div class="space-y-4">
                                 <div class="leading-relaxed whitespace-pre-wrap text-[15px] text-left">
                                     @php
-                                        // Replace the dashed line from seeder with an actual <hr> for better visual
+                                        // Ganti garis putus-putus dengan tag <hr> untuk visual yang lebih baik
                                         $konten = $skenario['skenario_teks'] ?? $skenario['konten'] ?? '';
                                         $konten = preg_replace('/-{10,}/', '<hr class="border-gray-500 my-4">', $konten);
-                                        // Strip leading spaces from each line in case it was copy-pasted with indentations
+                                        // Hapus spasi tambahan di awal baris
                                         $konten = preg_replace('/^[ \t]+/m', '', $konten);
                                     @endphp
                                     {!! $konten !!}
@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <!-- Bottom White Section -->
+            <!-- Bagian Putih Bawah -->
             <div class="bg-white flex-grow pt-10 pb-32">
                 <div class="w-full max-w-4xl mx-auto px-6">
                     
@@ -129,7 +129,7 @@
         </div>
         @endforeach
     @else
-        <!-- Fallback if no scenarios -->
+        <!-- Jika skenario kosong -->
         <div class="bg-[#090F31] min-h-screen flex items-center justify-center">
             <div class="bg-white rounded-xl p-10 text-center shadow-lg max-w-md mx-auto">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Skenario belum tersedia.</h3>
@@ -155,16 +155,16 @@
         const container = document.getElementById(`opsi-container-${indexSkenario}`);
         const buttons = container.querySelectorAll('.opsi-btn');
 
-        // Reset all buttons style first (disable them)
+        // Matikan gaya tombol sebelumnya
         buttons.forEach((btn, idx) => {
             btn.classList.add('cursor-not-allowed');
             btn.classList.remove('hover:bg-gray-300');
             
             // Check if this button is the correct answer to highlight it anyway (optional)
-            // But per Figma, we highlight what the user clicked.
+            // Namun berdasarkan desain, kita sorot yang ditekan user
         });
 
-        // Highlight the clicked button
+        // Sorot tombol yang ditekan
         const clickedBtn = document.getElementById(`btn-${indexSkenario}-${opsiId}`);
         
         if (isBenar) {
@@ -177,12 +177,12 @@
             clickedBtn.classList.add('bg-[#CC0000]', 'border-[#CC0000]', 'text-white');
         }
 
-        // Tampilkan Penjelasan
+        // Munculkan Penjelasan
         const penjelasan = document.getElementById(`penjelasan-${indexSkenario}`);
         penjelasan.classList.remove('hidden');
         penjelasan.classList.add('animate-fade-in-up');
 
-        // Tampilkan Tombol Berikutnya
+        // Munculkan Tombol Berikutnya
         const navigasi = document.getElementById(`navigasi-${indexSkenario}`);
         navigasi.classList.remove('hidden');
     }
