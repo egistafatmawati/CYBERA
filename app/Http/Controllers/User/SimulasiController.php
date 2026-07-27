@@ -4,74 +4,62 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Materi;
+use App\Models\Simulasi;
 use Illuminate\Http\Request;
 
 class SimulasiController extends Controller
 {
     /**
-     * Tampilkan data simulasi (3 skenario) untuk sebuah materi.
-     * jawaban_benar TIDAK dikirim ke user di sini.
+     * Tampilkan daftar semua simulasi
+     */
+    public function index()
+    {
+        $simulasis = Simulasi::with('materi')
+            ->orderByRaw("
+                CASE 
+                    WHEN judul LIKE '%Phishing%' THEN 1 
+                    WHEN judul LIKE '%Website%' THEN 2 
+                    WHEN judul LIKE '%Password%' THEN 3 
+                    WHEN judul LIKE '%Social%' THEN 4 
+                    WHEN judul LIKE '%Malware%' THEN 5 
+                    WHEN judul LIKE '%Ransomware%' THEN 6 
+                    WHEN judul LIKE '%Clear Screen%' THEN 7 
+                    ELSE 99 
+                END ASC
+            ")
+            ->orderBy('id', 'asc')
+            ->get();
+            
+        return view('user.simulasi', compact('simulasis'));
+    }
+
+    /**
+     * Tampilkan detail simulasi untuk sebuah materi.
      */
     public function show(Materi $materi)
     {
-        $materi->load(['simulasi.skenarios.opsis']);
-
-        $skenarios = $materi->simulasi?->skenarios->map(function ($skenario) {
-            return [
-                'id' => $skenario->id,
-                'urutan' => $skenario->urutan,
-                'skenario' => $skenario->skenario,
-                'pertanyaan' => $skenario->pertanyaan,
-                'jenis_jawaban' => $skenario->jenis_jawaban,
-                'opsis' => $skenario->opsis->map(fn ($o) => [
-                    'kode' => $o->kode,
-                    'teks_opsi' => $o->teks_opsi,
-                ]),
-            ];
-        }) ?? collect();
-
-        return view('user.simulasi.show', compact('materi', 'skenarios'));
+        $simulasi = Simulasi::where('materi_id', $materi->id)->firstOrFail();
+        return view('user.simulasi.show', compact('materi', 'simulasi'));
     }
 
-    
-      //Submit jawaban simulasi (3 skenario sekaligus).
-    
+    /**
+     * Tampilkan halaman interaktif bermain simulasi.
+     */
+    public function play(Materi $materi)
+    {
+        $simulasi = Simulasi::where('materi_id', $materi->id)->firstOrFail();
+        return view('user.simulasi.play', compact('materi', 'simulasi'));
+    }
+
+    /**
+     * Submit jawaban simulasi.
+     */
     public function submit(Request $request, Materi $materi)
     {
-        $validated = $request->validate([
-            'jawaban' => 'required|array|size:3',
-            'jawaban.*.skenario_id' => 'required|exists:skenarios,id',
-            'jawaban.*.jawaban_user' => 'required|string',
-        ]);
-
-        $materi->load('simulasi.skenarios');
-
-        $hasil = [];
-
-        foreach ($validated['jawaban'] as $item) {
-            $skenario = $materi->simulasi->skenarios
-                ->firstWhere('id', $item['skenario_id']);
-
-            if (!$skenario) {
-                continue;
-            }
-
-            $benar = strtolower($item['jawaban_user']) === strtolower($skenario->jawaban_benar);
-
-            $hasil[] = [
-                'skenario_id' => $skenario->id,
-                'urutan' => $skenario->urutan,
-                'benar' => $benar,
-                'jawaban_benar' => $skenario->jawaban_benar,
-                'penjelasan' => $skenario->penjelasan,
-            ];
-        }
-
+        // Karena data skenario berupa JSON dan divalidasi langsung di sisi client (UI),
+        // Bisa langsung me-return response success.
         return response()->json([
-            'message' => 'Simulasi selesai dikerjakan.',
-            'hasil' => $hasil,
-            'jumlah_benar' => collect($hasil)->where('benar', true)->count(),
-            'total' => count($hasil),
+            'message' => 'Simulasi selesai dikerjakan.'
         ]);
     }
 }

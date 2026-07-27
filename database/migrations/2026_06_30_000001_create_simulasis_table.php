@@ -10,7 +10,19 @@ return new class extends Migration
     {
         Schema::create('simulasis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('materi_id')->unique()->constrained('materis')->onDelete('cascade');
+
+            $table->foreignId('materi_id')
+                ->unique()
+                ->constrained('materis')
+                ->cascadeOnDelete();
+
+            $table->string('judul');
+            $table->string('slug')->unique();
+            $table->text('deskripsi')->nullable();
+
+            // Semua skenario disimpan dalam JSON
+            $table->json('skenario');
+
             $table->timestamps();
         });
     }

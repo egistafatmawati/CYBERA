@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne; 
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Simulasi;
+use App\Models\Quiz;
+
 
 class Materi extends Model
 {

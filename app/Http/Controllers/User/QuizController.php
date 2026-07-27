@@ -11,6 +11,25 @@ use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
 {
+    public function index()
+    {
+        $quizzes = Quiz::with('materi')
+            ->orderByRaw("
+                CASE 
+                WHEN judul LIKE '%Dasar Keamanan Siber%' THEN 1 
+                WHEN judul LIKE '%Phishing%' THEN 2 
+                WHEN judul LIKE '%Malware%' THEN 3 
+                WHEN judul LIKE '%Ransomware%' THEN 4 
+                WHEN judul LIKE '%Social Engineering%' THEN 5 
+                WHEN judul LIKE '%Password Security%' THEN 6 
+                WHEN judul LIKE '%Clear Screen%' THEN 7 
+                ELSE 99 
+                END ASC
+            ")
+            ->orderBy('id', 'asc')
+            ->get();
+        return view('user.quiz', compact('quizzes'));
+    }
     
      // Tampilkan soal quiz untuk dikerjakan.
      // jawaban_benar TIDAK ikut dikirim ke frontend.
@@ -33,6 +52,23 @@ class QuizController extends Controller
         });
 
         return view('user.quiz.show', compact('quiz', 'questions'));
+    }
+
+    public function play(Quiz $quiz)
+    {
+        $quiz->load(['questions.options']);
+
+        $questions = $quiz->questions->map(function ($q) {
+            return [
+                'id' => $q->id,
+                'urutan' => $q->urutan,
+                'pertanyaan' => $q->pertanyaan,
+                'jenis_jawaban' => $q->jenis_jawaban,
+                'opsis' => $q->options
+            ];
+        });
+
+        return view('user.quiz.play', compact('quiz', 'questions'));
     }
 
     //Submit jawaban quiz, hitung skor, simpan Hasil Quiz + detail per soal.

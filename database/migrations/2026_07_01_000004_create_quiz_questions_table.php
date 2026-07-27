@@ -10,14 +10,19 @@ return new class extends Migration
     {
         Schema::create('quiz_questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('quiz_id')->constrained('quizzes')->onDelete('cascade');
+            $table->foreignId('quiz_id')
+                ->constrained('quizzes')
+                ->cascadeOnDelete();
             $table->unsignedInteger('urutan');
             $table->text('pertanyaan');
-            $table->string('jenis_jawaban'); // 'pilihan_ganda' | 'ya_tidak'
+            $table->enum('jenis_jawaban', [
+                'pilihan_ganda',
+                'ya_tidak'
+            ]);
             $table->string('jawaban_benar');
+            $table->text('penjelasan')->nullable();
             $table->timestamps();
-
-            $table->unique(['quiz_id', 'urutan']);
+            $table->unique(['quiz_id','urutan']);
         });
     }
 

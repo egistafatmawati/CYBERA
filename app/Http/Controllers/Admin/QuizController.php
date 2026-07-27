@@ -12,9 +12,35 @@ class QuizController extends Controller
 {
     public function index()
     {
-        $quizzes = Quiz::with('materi')->withCount('questions')->latest()->paginate(10);
-
-        return view('admin.quiz.index', compact('quizzes'));
+        $quizzes = Quiz::with([
+            'materi',
+            'questions.options'
+        ])
+        ->withCount('questions')
+        ->orderByRaw("
+            CASE 
+                WHEN judul LIKE '%Dasar Keamanan Siber%' THEN 1 
+                WHEN judul LIKE '%Phishing%' THEN 2 
+                WHEN judul LIKE '%Malware%' THEN 3 
+                WHEN judul LIKE '%Ransomware%' THEN 4 
+                WHEN judul LIKE '%Social Engineering%' THEN 5 
+                WHEN judul LIKE '%Password Security%' THEN 6 
+                WHEN judul LIKE '%Clear Screen%' THEN 7 
+                ELSE 99 
+            END ASC
+        ")
+        ->orderBy('id', 'asc')
+        ->paginate(10);
+        $totalQuiz = Quiz::count();
+        $totalSoal = Quiz::withCount('questions')
+        ->get()
+        ->sum('questions_count');
+        
+        return view('admin.quiz', compact(
+            'quizzes',
+            'totalQuiz',
+            'totalSoal'
+            ));
     }
 
     public function create()
@@ -36,7 +62,7 @@ class QuizController extends Controller
         $quiz = Quiz::create($validated);
 
         return redirect()
-            ->route('admin.quiz.edit', $quiz)
+            ->route('admin.quiz.index')
             ->with('success', 'Quiz berhasil dibuat. Silakan tambahkan soal.');
     }
 
@@ -44,7 +70,7 @@ class QuizController extends Controller
     {
         $quiz->load('questions.options', 'materi');
 
-        return view('admin.quiz.edit', compact('quiz'));
+        return view('admin.quiz.index', compact('quiz'));
     }
 
     public function update(Request $request, Quiz $quiz)
@@ -59,6 +85,7 @@ class QuizController extends Controller
             'questions.*.pertanyaan' => 'required|string',
             'questions.*.jenis_jawaban' => 'required|in:pilihan_ganda,ya_tidak',
             'questions.*.jawaban_benar' => 'required|string',
+            'questions.*.penjelasan' => 'nullable|string',
 
             'questions.*.opsis' => 'nullable|array',
             'questions.*.opsis.*.kode' => 'required_with:questions.*.opsis|string|max:1',
@@ -81,6 +108,7 @@ class QuizController extends Controller
                         'pertanyaan' => $data['pertanyaan'],
                         'jenis_jawaban' => $data['jenis_jawaban'],
                         'jawaban_benar' => $data['jawaban_benar'],
+                        'penjelasan' => $data['penjelasan'] ?? null,
                     ]
                 );
 
@@ -103,7 +131,7 @@ class QuizController extends Controller
         });
 
         return redirect()
-            ->route('admin.quiz.edit', $quiz)
+            ->route('admin.quiz.index')
             ->with('success', 'Quiz berhasil diperbarui.');
     }
 

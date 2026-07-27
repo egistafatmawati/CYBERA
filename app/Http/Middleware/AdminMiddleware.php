@@ -15,8 +15,8 @@ class AdminMiddleware
         }
 
         if (auth()->user()->role !== 'admin') {
-            return redirect('/dashboard')
-                ->with('error', 'Anda tidak memiliki akses.');
+            return redirect()->route('user.dashboard')
+                ->with('error', 'Anda tidak memiliki akses ke halaman admin.');
         }
 
         return $next($request);

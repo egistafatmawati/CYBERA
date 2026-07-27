@@ -14,6 +14,7 @@ class QuizQuestion extends Model
         'pertanyaan',
         'jenis_jawaban',
         'jawaban_benar',
+        'penjelasan',
     ];
 
     public function quiz(): BelongsTo

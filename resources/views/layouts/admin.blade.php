@@ -1,16 +1,35 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin CYBERA</title>
-</head>
-<body>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ config('app.name', 'CYBERA') }} - Admin</title>
+        
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 
-    <h2>Admin CYBERA</h2>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-['Inter'] antialiased bg-gray-50 text-gray-900">
+        <div class="flex min-h-screen">
+            <!-- Sidebar -->
+            @include('layouts.sidebar')
 
-    <hr>
-
-    @yield('content')
-
-</body>
+            <!-- Area Konten Utama -->
+            <div class="flex-1 ml-64 flex flex-col min-h-screen bg-gray-50">
+                
+                <!-- Konten Halaman -->
+                <main class="flex-grow p-8">
+                    @yield('content')
+                </main>
+                
+            </div>
+        </div>
+        
+        @include('partials.logout-modal')
+    </body>
 </html>

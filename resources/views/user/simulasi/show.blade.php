@@ -1,104 +1,99 @@
-<x-app-layout>
-    <div
-        x-data="simulasiApp({{ $skenarios->toJson() }}, '{{ route('user.simulasi.submit', $materi) }}', '{{ route('user.materi.show', $materi) }}')"
-        class="max-w-4xl mx-auto py-8 px-6"
-    >
-        <a href="{{ route('user.simulasi.index') }}" class="text-yellow-400">&larr; Keluar</a>
+@extends('layouts.user')
 
-        <template x-for="s in [current]" :key="s.id">
-            <div>
-                <div class="bg-[#2a2f52] text-white rounded-xl p-6 mt-6 whitespace-pre-line" x-text="s.skenario"></div>
+@section('content')
+<style>
+    footer { display: none !important; }
+</style>
 
-                <div class="mt-8">
-                    <p class="font-semibold mb-3" x-text="s.pertanyaan"></p>
+@php
+    // Ambil tips dari database jika ada, jika belum diisi maka gunakan array kosong atau fallback default
+    $tips = $simulasi->tips ?? [];
+    
+    // Fallback sementara jika kebetulan tips di database masih kosong agar tampilan tidak rusak saat dicek
+    if (empty($tips)) {
+        $tips = [
+            'Periksa alamat pengirim — domain harus resmi dan tidak mencurigakan.',
+            'Waspadai nada mendesak atau mengancam seperti "AKUN ANDA AKAN DIBLOKIR!".',
+            'Jangan klik tautan mencurigakan — arahkan kursor untuk melihat URL sebenarnya.',
+            'Email resmi biasanya menyapa dengan nama Anda, bukan "Pengguna" atau "Nasabah".'
+        ];
+    }
 
-                    <template x-if="s.jenis_jawaban === 'ya_tidak'">
-                        <div class="space-y-3">
-                            <button type="button" @click="pilih('ya')"
-                                class="w-full text-left p-4 rounded-lg border"
-                                :class="warnaOpsi('ya')">
-                                A. Ya
-                            </button>
-                            <button type="button" @click="pilih('tidak')"
-                                class="w-full text-left p-4 rounded-lg border"
-                                :class="warnaOpsi('tidak')">
-                                B. Tidak
-                            </button>
-                        </div>
-                    </template>
+    // Pemetaan custom judul untuk kotak tips berdasarkan judul simulasi
+    $judulSimulasiLower = strtolower(trim($simulasi->judul));
+    
+    $tipsTitle = match($judulSimulasiLower) {
+        'simulasi phishing email' => 'Tips Mengenali Phishing',
+        'simulasi website palsu' => 'Ciri-Ciri Website Palsu',
+        'simulasi password security' => 'Apa yang Akan Anda Pelajari:',
+        'simulasi social engineering' => 'Taktik Social Engineering yang Akan Anda Hadapi:',
+        'simulasi ransomware' => 'Yang Akan Anda Pelajari:',
+        'simulasi malware detection' => 'Yang Akan Anda Pelajari:',
+        'simulasi clear screen & digital hygiene' => 'Yang Akan Anda Pelajari:',
+        default => 'Tips ' . str_replace('Simulasi ', '', $simulasi->judul)
+    };
+@endphp
 
-                    <template x-if="s.jenis_jawaban === 'pilihan_ganda'">
-                        <div class="space-y-3">
-                            <template x-for="o in s.opsis" :key="o.kode">
-                                <button type="button" @click="pilih(o.kode)"
-                                    class="w-full text-left p-4 rounded-lg border"
-                                    :class="warnaOpsi(o.kode)">
-                                    <span x-text="o.kode + '. ' + o.teks_opsi"></span>
-                                </button>
-                            </template>
-                        </div>
-                    </template>
-                </div>
-
-                <div x-show="terjawab" x-cloak class="mt-6 border rounded-lg p-4">
-                    <p class="font-bold flex items-center gap-2">⚠ Penjelasan</p>
-                    <p class="mt-2 text-sm" x-text="s.penjelasan"></p>
-                </div>
-
-                <div class="flex justify-end mt-6">
-                    <button type="button" @click="next()" x-show="terjawab"
-                        class="bg-[#0b1330] text-yellow-400 font-semibold px-6 py-3 rounded-lg">
-                        <span x-text="isLast ? 'Selesai' : 'Berikutnya'"></span>
-                    </button>
-                </div>
-            </div>
-        </template>
+<!-- Bagian Hero -->
+<section class="pt-2 pb-16 px-8 bg-[#090F31]">
+    <!-- Bagian Banner -->
+    <div class="relative w-full rounded-[2rem] overflow-hidden shadow-2xl h-[420px] flex items-center justify-center">
+        <div class="absolute top-0 left-0 w-full h-[420px] z-0">
+            <!-- Bisa diganti dengan gambar dinamis nanti -->
+            <img src="{{ asset('images/bg simulasi.png') }}" alt="{{ $simulasi->judul }}" class="w-full h-full object-cover">
+            <!-- Efek gelap latar agar teks mudah dibaca -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#090F31]/80 to-[#090F31]/30"></div>
+        </div>
+        <div class="relative z-10 text-center px-6 flex flex-col justify-center items-center">
+            <h1 class="text-3xl md:text-5xl lg:text-5xl leading-tight mb-4 text-white font-bold tracking-wide" style="font-family: 'Audiowide', sans-serif;">
+                {{ $simulasi->judul }}
+            </h1>
+            <p class="text-gray-200 text-sm md:text-base max-w-3xl mx-auto leading-relaxed">
+                {{ $simulasi->deskripsi }}
+            </p>
+        </div>
     </div>
+</section>
 
-    <script>
-        function simulasiApp(skenarios, submitUrl, redirectUrl) {
-            return {
-                skenarios: skenarios,
-                index: 0,
-                terjawab: false,
-                jawabanUser: null,
-                jawabanTersimpan: [],
-                get current() { return this.skenarios[this.index]; },
-                get isLast() { return this.index === this.skenarios.length - 1; },
-                pilih(kode) {
-                    if (this.terjawab) return; // sudah dijawab, tidak bisa ganti
-                    this.jawabanUser = kode;
-                    this.terjawab = true;
-                    this.jawabanTersimpan.push({
-                        skenario_id: this.current.id,
-                        jawaban_user: kode,
-                    });
-                },
-                warnaOpsi(kode) {
-                    if (!this.terjawab) return 'border-gray-500 text-white';
-                    if (kode === this.current.jawaban_benar) return 'bg-green-500 border-green-600 text-black';
-                    if (kode === this.jawabanUser) return 'bg-red-500 border-red-600 text-black';
-                    return 'border-gray-500 text-white opacity-50';
-                },
-                next() {
-                    if (this.isLast) {
-                        fetch(submitUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            },
-                            body: JSON.stringify({ jawaban: this.jawabanTersimpan }),
-                        }).finally(() => {
-                            window.location.href = redirectUrl;
-                        });
-                        return;
-                    }
-                    this.index++;
-                    this.terjawab = false;
-                    this.jawabanUser = null;
-                },
-            };
-        }
-    </script>
-</x-app-layout>
+<!-- Konten Utama (Background Putih Penuh Edge-to-Edge) -->
+<section class="bg-white w-full py-16 flex-grow">
+    <div class="max-w-5xl mx-auto px-6">
+        
+        <!-- Bagian Tips -->
+        <div class="w-full mx-auto bg-[#090F31] rounded-[20px] p-8 md:p-12 shadow-2xl mb-16">
+            <div class="flex items-center gap-4 mb-8">
+                <!-- Ikon Lampu Kuning -->
+                <div class="bg-[#FFCC00] p-2 rounded-lg text-[#090F31]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" style="font-family: 'Audiowide', sans-serif;">
+                    {{ $tipsTitle }}
+                </h2>
+            </div>
+            <ul class="space-y-2">
+                @foreach($tips as $tip)
+                    <li class="flex items-start gap-3 text-[#FFCC00]">
+                        <span class="mt-2 text-[8px]">●</span>
+                        <span class="text-lg">{{ $tip }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <!-- Tombol Aksi -->
+        <div class="flex justify-center gap-6">
+            <a href="{{ route('user.simulasi') }}"
+                class="inline-block bg-[#FFCC00] text-[#090F31] font-bold py-3 px-10 rounded-full hover:bg-yellow-500 transition-colors shadow-sm text-base text-center min-w-[180px]">
+                Kembali
+            </a>
+            <a href="{{ route('user.simulasi.play', ['materi' => $materi->id]) }}"
+                class="inline-block bg-[#090F31] text-[#FFCC00] font-bold py-3 px-10 rounded-full hover:bg-blue-900 transition-colors shadow-sm text-base text-center min-w-[180px]">
+                Mulai Simulasi
+            </a>
+        </div>
+    </div>
+</section>
+
+@endsection

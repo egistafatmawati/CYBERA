@@ -1,12 +1,31 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>CYBERA</title>
-</head>
-<body>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ config('app.name', 'CYBERA') }}</title>
+        
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 
-    @yield('content')
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-['Inter'] antialiased bg-[#090F31] text-white flex flex-col min-h-screen">
+        <!-- Header -->
+        @include('partials.header')
 
-</body>
+        <!-- Konten Utama -->
+        <main class="flex-grow">
+            @yield('content')
+        </main>
+
+        <!-- Footer -->
+        @include('partials.footer')
+
+        @stack('scripts')
+    </body>
 </html>
