@@ -9,6 +9,11 @@
     // Ambil tips dari database jika ada, jika belum diisi maka gunakan array kosong atau fallback default
     $tips = $simulasi->tips ?? [];
     
+    // Pastikan $tips berbentuk array jika terlanjur tersimpan sebagai string biasa di database
+    if (is_string($tips)) {
+        $tips = [$tips];
+    }
+
     // Fallback sementara jika kebetulan tips di database masih kosong agar tampilan tidak rusak saat dicek
     if (empty($tips)) {
         $tips = [
